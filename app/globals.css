@@ -1,26 +1,73 @@
 @import "tailwindcss";
 
 :root {
+  /* Base surfaces */
   --background: #ffffff;
-  --foreground: #171717;
+  --foreground: #14161a;
+  --surface: #f6f6f7;
+  --surface-muted: #ececee;
+  --border: #e2e4e8;
+
+  /* Brand — bold & energetic */
+  --primary: #ff3d2e; /* main CTA / accent — buttons, active nav, prices */
+  --primary-hover: #e6301f;
+  --primary-foreground: #ffffff;
+  --secondary: #14161a; /* near-black, used for nav/headers/high-contrast text */
+  --secondary-foreground: #ffffff;
+
+  /* Status colors (order lifecycle) */
+  --success: #1db954; /* delivered / accepted */
+  --warning: #f5a524; /* pending / preparing */
+  --danger: #e5484d; /* rejected / cancelled */
+  --info: #4361ee; /* out for delivery */
+
+  /* Type & shape */
+  --font-display: var(--font-space-grotesk);
+  --font-sans: var(--font-inter);
+  --font-mono: var(--font-geist-mono);
+  --radius: 0.875rem;
+  --radius-sm: 0.5rem;
+  --radius-lg: 1.25rem;
 }
 
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
-}
+  --color-surface: var(--surface);
+  --color-surface-muted: var(--surface-muted);
+  --color-border: var(--border);
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+  --color-primary: var(--primary);
+  --color-primary-hover: var(--primary-hover);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-secondary: var(--secondary);
+  --color-secondary-foreground: var(--secondary-foreground);
+
+  --color-success: var(--success);
+  --color-warning: var(--warning);
+  --color-danger: var(--danger);
+  --color-info: var(--info);
+
+  --font-display: var(--font-display);
+  --font-sans: var(--font-sans);
+  --font-mono: var(--font-mono);
+
+  --radius: var(--radius);
+  --radius-sm: var(--radius-sm);
+  --radius-lg: var(--radius-lg);
 }
 
 body {
   background: var(--background);
   color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  font-family: var(--font-sans), Arial, Helvetica, sans-serif;
+}
+
+h1,
+h2,
+h3,
+h4 {
+  font-family: var(--font-display), var(--font-sans), sans-serif;
+  font-weight: 700;
+  letter-spacing: -0.02em;
 }
