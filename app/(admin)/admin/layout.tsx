@@ -1,5 +1,4 @@
 import NavLinks from "@/components/navLink";
-import { User2Icon } from "lucide-react";
 
 export default function AdminLayout({
   children,
@@ -8,8 +7,8 @@ export default function AdminLayout({
 }) {
   return (
     <div className="flex min-h-screen ">
-      <aside className="w-64 shrink-0 sticky top-0 h-screen overflow-y-auto border-r border-border bg-white px-4 py-6">
-        <div className="mb-8 px-2 bg-red-500 w-max">
+      <aside className="w-64 shrink-0 sticky top-0 h-screen overflow-y-auto border-r border-border bg-[#f5f5f5] px-4 py-6">
+        <div className="mb-8 px-2 ">
           <h2 className="text-2xl font-serif text-primary">Restore Admin</h2>
           <p>Manage Users And Drivers</p>
         </div>

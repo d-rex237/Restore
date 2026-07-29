@@ -340,7 +340,10 @@ export const mockRoleRequests: MockRoleRequest[] = [
     userName: "Achiri Divine",
     requestedRole: "driver",
     status: "pending",
-    extraData: { vehicleType: "Motorbike", plate: "LT 1234 CM" },
+    extraData: {
+      vehicleType: "Motorbike",
+      plate: "LT 1234 CM",
+    },
     createdAt: "2026-07-27T09:00:00Z",
   },
   {
@@ -348,7 +351,7 @@ export const mockRoleRequests: MockRoleRequest[] = [
     userId: "u2",
     userName: "Ngwa Precious",
     requestedRole: "provider",
-    status: "pending",
+    status: "rejected",
     extraData: {
       restaurantName: "Precious Bites",
       address: "Sonac Street, Bamenda",
@@ -361,8 +364,95 @@ export const mockRoleRequests: MockRoleRequest[] = [
     userName: "Tabi Emmanuel",
     requestedRole: "driver",
     status: "approved",
-    extraData: { vehicleType: "Bicycle", plate: "N/A" },
+    extraData: {
+      vehicleType: "Bicycle",
+      plate: "N/A",
+    },
     createdAt: "2026-07-20T10:00:00Z",
+  },
+  {
+    id: "req4",
+    userId: "u4",
+    userName: "Fonyuy Brenda",
+    requestedRole: "provider",
+    status: "pending",
+    extraData: {
+      restaurantName: "Brenda's Kitchen",
+      address: "Commercial Avenue, Bamenda",
+    },
+    createdAt: "2026-07-25T12:45:00Z",
+  },
+  {
+    id: "req5",
+    userId: "u5",
+    userName: "Neba Collins",
+    requestedRole: "driver",
+    status: "rejected",
+    extraData: {
+      vehicleType: "Car",
+      plate: "NW 4587 AB",
+    },
+    createdAt: "2026-07-24T08:15:00Z",
+  },
+  {
+    id: "req6",
+    userId: "u6",
+    userName: "Atanga Ruth",
+    requestedRole: "provider",
+    status: "approved",
+    extraData: {
+      restaurantName: "Ruth's Grill",
+      address: "Up Station, Bamenda",
+    },
+    createdAt: "2026-07-22T15:30:00Z",
+  },
+  {
+    id: "req7",
+    userId: "u7",
+    userName: "Mbah Junior",
+    requestedRole: "driver",
+    status: "pending",
+    extraData: {
+      vehicleType: "Tricycle",
+      plate: "NW 9032 TR",
+    },
+    createdAt: "2026-07-23T16:10:00Z",
+  },
+  {
+    id: "req8",
+    userId: "u8",
+    userName: "Tiku Linda",
+    requestedRole: "provider",
+    status: "approved",
+    extraData: {
+      restaurantName: "Linda's Fast Food",
+      address: "Mile 2 Nkwen, Bamenda",
+    },
+    createdAt: "2026-07-21T13:05:00Z",
+  },
+  {
+    id: "req9",
+    userId: "u9",
+    userName: "Nfor Michael",
+    requestedRole: "driver",
+    status: "approved",
+    extraData: {
+      vehicleType: "Motorbike",
+      plate: "NW 7781 BK",
+    },
+    createdAt: "2026-07-19T09:45:00Z",
+  },
+  {
+    id: "req10",
+    userId: "u10",
+    userName: "Kengne Esther",
+    requestedRole: "provider",
+    status: "pending",
+    extraData: {
+      restaurantName: "Esther's Delight",
+      address: "Old Town, Bamenda",
+    },
+    createdAt: "2026-07-18T17:20:00Z",
   },
 ];
 
