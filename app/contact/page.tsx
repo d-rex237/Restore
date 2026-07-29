@@ -71,14 +71,14 @@ export default function ContactPage() {
               We usually respond to inquiries within 1-2 hours.
             </p>
 
-            {/* ✅ Contact Form using Web3Forms */}
+            {/* ✅ Contact Form connected to your Formspree */}
             <form 
-              action="https://api.web3forms.com/submit" 
+              action="https://formspree.io/f/xqerjprp" 
               method="POST" 
               className="space-y-5"
             >
-              {/* ⚠️ REPLACE THIS WITH YOUR WEB3FORMS OR FORMSPREE ACCESS KEY */}
-              <input type="hidden" name="access_key" value="YOUR_WEB3FORMS_ACCESS_KEY" />
+              {/* Hidden field so you know it came from the Contact page */}
+              <input type="hidden" name="_subject" value="New Contact Form Message - Restor" />
 
               <div className="grid sm:grid-cols-2 gap-5">
                 <div>
@@ -95,7 +95,7 @@ export default function ContactPage() {
                   <label className="block text-sm font-medium mb-2 text-foreground">Email Address</label>
                   <input 
                     type="email" 
-                    name="email" 
+                    name="_replyto" 
                     placeholder="hello@example.com" 
                     className="w-full p-3 rounded-xl border border-border bg-background focus:outline-none focus:ring-2 focus:ring-primary text-foreground placeholder:text-foreground/50"
                     required 
