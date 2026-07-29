@@ -15,7 +15,6 @@ import {
 import { GiNoodles } from "react-icons/gi";
 import { useTheme } from "next-themes";
 import { useEffect, useState } from "react";
-// ✅ 1. IMPORT AOS
 import AOS from "aos";
 import "aos/dist/aos.css";
 
@@ -27,22 +26,22 @@ const categories = [
   { name: "Drinks", icon: <FaGlassMartiniAlt className="w-10 h-10 text-orange-500" /> },
 ];
 
-// ✅ POPULAR DISHES DATA - Prices reduced to 5,000 FCFA or below
+// ✅ POPULAR DISHES DATA - Using guaranteed dummyimage.com
 const dishes = [
   { 
     id: 1, 
-    name: "Ndolé", 
+    name: "Corn Fufu & Katikati", 
     price: 3500, 
     rating: 5, 
-    image: "/images/hero-food.png",
-    description: "Bitter leaves cooked with peanuts, fish, and beef."
+    image: "https://dummyimage.com/600x400/ff9800/fff&text=Corn+Fufu+%26+Katikati",
+    description: "Smooth corn fufu served with rich, savory katikati vegetable stew."
   },
   { 
     id: 2, 
     name: "Poulet DG", 
     price: 4500, 
     rating: 5, 
-    image: "/images/hero-food.png",
+    image: "https://dummyimage.com/600x400/d32f2f/fff&text=Poulet+DG",
     description: "Spicy chicken stew with plantains and vegetables."
   },
   { 
@@ -50,7 +49,7 @@ const dishes = [
     name: "Eru", 
     price: 3000, 
     rating: 5, 
-    image: "/images/hero-food.png",
+    image: "https://dummyimage.com/600x400/4caf50/fff&text=Eru+Soup",
     description: "Water leaf and eru vegetable soup with smoked fish."
   },
   { 
@@ -58,19 +57,19 @@ const dishes = [
     name: "Kondré", 
     price: 2000, 
     rating: 5, 
-    image: "/images/hero-food.png",
+    image: "https://dummyimage.com/600x400/795548/fff&text=Kondr%C3%A9",
     description: "Traditional fried plantains with spicy pepper sauce."
   },
 ];
 
-// ✅ CHEF'S SPECIAL DATA - Prices reduced to 5,000 FCFA or below
+// ✅ CHEF'S SPECIAL DATA - Using guaranteed dummyimage.com
 const chefSpecials = [
   { 
     id: 7, 
     name: "Achu Soup", 
     price: 4000, 
     rating: 5, 
-    image: "/images/hero-food.png", 
+    image: "https://dummyimage.com/600x400/ffeb3b/000&text=Achu+Soup", 
     desc: "Cocoyam fufu served with traditional yellow achu soup and assorted meats."
   },
   { 
@@ -78,7 +77,7 @@ const chefSpecials = [
     name: "Pepper Soup", 
     price: 2500, 
     rating: 5, 
-    image: "/images/hero-food.png", 
+    image: "https://dummyimage.com/600x400/b71c1c/fff&text=Pepper+Soup", 
     desc: "Spicy traditional broth featuring goat meat, crayfish, and local spices."
   },
 ];
@@ -91,18 +90,16 @@ export default function FeaturedSection() {
     setMounted(true);
   }, []);
 
-  // ✅ 2. INITIALIZE AOS
   useEffect(() => {
     AOS.init({
-      duration: 800, // Animation speed (in milliseconds)
-      once: true,    // Only animate once when scrolling down
+      duration: 800,
+      once: true,
     });
   }, []);
 
   if (!mounted) return null;
   const isDark = theme === "dark";
 
-  // Helper function to format FCFA with spaces (e.g. 3 500 FCFA)
   const formatFCFA = (amount: number) => {
     return amount.toString().replace(/\B(?=(\d{3})+(?!\d))/g, " ");
   };
@@ -114,8 +111,6 @@ export default function FeaturedSection() {
         {/* ================= HERO BANNER ================= */}
         <div className="relative w-full h-[400px] md:h-[500px] rounded-3xl overflow-hidden mb-20 flex-shrink-0">
           <div className="absolute inset-0 bg-black/40 z-10"></div>
-          
-          {/* 👇 YOUR VIDEO BACK IN HERE 👇 */}
           <video 
             autoPlay 
             loop 
@@ -128,25 +123,17 @@ export default function FeaturedSection() {
           </video>
 
           <div className="relative z-20 h-full flex flex-col items-center justify-center text-center text-white px-4">
-            
-            {/* ✅ 1. LIVE BADGE */}
             <div data-aos="fade-down" className="inline-flex items-center gap-2 bg-white/20 backdrop-blur-sm border border-white/30 px-4 py-1.5 rounded-full text-sm font-medium mb-6">
               <span className="w-2 h-2 bg-green-400 rounded-full animate-pulse"></span>
               <span>1,200+ Orders Today</span>
             </div>
-
-            {/* ✅ 2. MAIN HEADLINE */}
             <h1 data-aos="fade-up" className="text-4xl md:text-6xl font-bold leading-tight mb-6 max-w-3xl drop-shadow-md">
               Experience Taste <br /> Like Never Before
             </h1>
-
-            {/* ✅ 3. SUBTEXT */}
             <p data-aos="fade-up" data-aos-delay="100" className="text-lg md:text-xl text-white/80 max-w-2xl mb-8 font-light">
               Discover the authentic flavors of Cameroon with fresh ingredients, 
               fast delivery, and a dining experience you'll never forget.
             </p>
-
-            {/* ✅ 4. BUTTONS */}
             <div data-aos="fade-up" data-aos-delay="200" className="flex flex-col sm:flex-row gap-4">
               <Link href="/menu" className="bg-white text-gray-900 font-bold py-3 px-8 rounded-full hover:bg-gray-100 transition shadow-lg">
                 View Menu
@@ -187,7 +174,7 @@ export default function FeaturedSection() {
               <div 
                 key={dish.id} 
                 data-aos="fade-up" 
-                data-aos-delay={index * 100} // Staggered delay for each card!
+                data-aos-delay={index * 100}
                 className={`rounded-2xl overflow-hidden shadow-md hover:shadow-xl transition-all duration-300 border ${
                   isDark ? "bg-surface border-border" : "bg-white border-gray-100"
                 }`}
@@ -260,12 +247,9 @@ export default function FeaturedSection() {
                   isDark ? "bg-surface border-border" : "bg-white border-gray-100"
                 }`}
               >
-                {/* Left Image */}
                 <div className="relative w-full md:w-2/5 h-48 md:h-auto bg-gray-200">
                   <Image src={dish.image} alt={dish.name} fill className="object-cover" />
                 </div>
-                
-                {/* Right Content */}
                 <div className="p-6 w-full md:w-3/5 flex flex-col justify-center">
                   <div className="flex justify-between items-start mb-1">
                     <h3 className="font-bold text-xl text-foreground">{dish.name}</h3>
@@ -298,7 +282,6 @@ export default function FeaturedSection() {
           </p>
 
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-            {/* Testimonial 1 */}
             <div data-aos="fade-up" data-aos-delay="100" className={`p-6 rounded-2xl border border-border shadow-sm ${
               isDark ? "bg-gray-800" : "bg-white"
             }`}>
@@ -319,7 +302,6 @@ export default function FeaturedSection() {
               </div>
             </div>
 
-            {/* Testimonial 2 */}
             <div data-aos="fade-up" data-aos-delay="200" className={`p-6 rounded-2xl border border-border shadow-sm ${
               isDark ? "bg-gray-800" : "bg-white"
             }`}>
@@ -340,7 +322,6 @@ export default function FeaturedSection() {
               </div>
             </div>
 
-            {/* Testimonial 3 */}
             <div data-aos="fade-up" data-aos-delay="300" className={`p-6 rounded-2xl border border-border shadow-sm ${
               isDark ? "bg-gray-800" : "bg-white"
             }`}>
