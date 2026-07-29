@@ -6,6 +6,8 @@ import { usePathname } from "next/navigation";
 import Logo from "./logo";
 import { useTheme } from "next-themes";
 import { FaSun, FaMoon, FaSearch, FaShoppingCart, FaChevronDown } from "react-icons/fa"; 
+// ✅ 1. Import useClerk
+import { useClerk } from "@clerk/nextjs";
 
 export default function Navbar() {
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
@@ -13,6 +15,9 @@ export default function Navbar() {
   const { theme, setTheme } = useTheme();
   const [mounted, setMounted] = useState(false);
   const pathname = usePathname();
+  
+  // ✅ 2. Initialize Clerk hook
+  const { openSignIn } = useClerk();
 
   const dropdownRef = useRef<HTMLDivElement | null>(null);
 
@@ -194,13 +199,13 @@ export default function Navbar() {
             </button>
           )}
 
-          {/* Sign In */}
-          <Link
-            href="/sign-in"
+          {/* ✅ 3. CHANGED TO A POPUP BUTTON INSTEAD OF A LINK */}
+          <button
+            onClick={() => openSignIn()} // Opens the Clerk modal popup!
             className="hidden sm:block rounded-lg bg-primary px-6 py-2.5 font-semibold text-primary-foreground hover:bg-primary-hover transition"
           >
             Sign In
-          </Link>
+          </button>
 
           {/* Hamburger Button */}
           <button
@@ -229,7 +234,13 @@ export default function Navbar() {
             <Link href="/become-driver" onClick={closeMenu} className="block font-medium text-foreground/80 hover:text-primary transition py-2">Become a Driver</Link>
           </div>
           
-          <Link href="/sign-in" onClick={closeMenu} className="rounded-lg bg-primary px-5 py-3 text-center font-semibold text-primary-foreground">Sign In</Link>
+          {/* ✅ Mobile Sign In Popup */}
+          <button
+            onClick={() => { openSignIn(); closeMenu(); }}
+            className="rounded-lg bg-primary px-5 py-3 text-center font-semibold text-primary-foreground"
+          >
+            Sign In
+          </button>
         </nav>
       </div>
     </header>

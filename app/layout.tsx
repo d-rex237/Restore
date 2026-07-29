@@ -4,6 +4,7 @@ import "./globals.css";
 import Navbar from "@/components/layout/Navbar";
 import Footer from "@/components/layout/Footer";
 import { Providers } from "./providers";
+import { ClerkProvider } from "@clerk/nextjs";  // <-- This line must be here!
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -26,18 +27,20 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html
-      lang="en"
-      className={`${geistSans.variable} ${geistMono.variable} h-full antialiased`}
-      suppressHydrationWarning  // ✅ Just remove the comment braces, keep the attribute
-    >
-      <body className="min-h-full flex flex-col bg-background text-foreground transition-colors duration-300">
-        <Providers>
-          <Navbar />
-          {children}
-          <Footer />
-        </Providers>
-      </body>
-    </html>
+    <ClerkProvider> {/* ✅ Wrap the ENTIRE HTML with ClerkProvider */}
+      <html
+        lang="en"
+        className={`${geistSans.variable} ${geistMono.variable} h-full antialiased`}
+        suppressHydrationWarning
+      >
+        <body className="min-h-full flex flex-col bg-background text-foreground transition-colors duration-300">
+          <Providers>
+            <Navbar />
+            {children}
+            <Footer />
+          </Providers>
+        </body>
+      </html>
+    </ClerkProvider>
   );
 }
