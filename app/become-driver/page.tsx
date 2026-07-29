@@ -1,7 +1,7 @@
 "use client";
 
 import Link from "next/link";
-import { FaMotorcycle, FaClock, FaMoneyBillWave, FaArrowRight, FaUpload } from "react-icons/fa";
+import { FaMotorcycle, FaClock, FaMoneyBillWave, FaArrowRight, FaUpload, FaLink } from "react-icons/fa";
 
 export default function BecomeDriverPage() {
   return (
@@ -45,17 +45,16 @@ export default function BecomeDriverPage() {
           </div>
         </div>
 
-        {/* ✅ UPDATED FORM WITH FILE UPLOADS (Web3Forms) */}
+        {/* FORM WITH VISUAL FILE UPLOAD + DRIVE LINK FALLBACK */}
         <div className="max-w-2xl mx-auto bg-card border border-border rounded-2xl shadow-lg p-8 md:p-12">
           <h2 className="text-2xl font-bold mb-6 text-center">Sign Up to Drive</h2>
           
           <form 
-            action="https://api.web3forms.com/submit" 
+            action="https://formspree.io/f/xqerjprp"
             method="POST"
             className="space-y-5"
           >
-            {/* ✅ REPLACE THIS WITH YOUR WEB3FORMS ACCESS KEY */}
-            <input type="hidden" name="access_key" value="YOUR_WEB3FORMS_ACCESS_KEY" />
+            <input type="hidden" name="_subject" value="New Driver Application - Restor" />
 
             <div>
               <label className="block text-sm font-medium mb-2">Full Name</label>
@@ -64,7 +63,7 @@ export default function BecomeDriverPage() {
             <div className="grid sm:grid-cols-2 gap-5">
               <div>
                 <label className="block text-sm font-medium mb-2">Email Address</label>
-                <input type="email" name="email" placeholder="driver@gmail.com" className="w-full p-3 rounded-xl border border-border bg-background focus:outline-none focus:ring-2 focus:ring-primary" required />
+                <input type="email" name="_replyto" placeholder="driver@gmail.com" className="w-full p-3 rounded-xl border border-border bg-background focus:outline-none focus:ring-2 focus:ring-primary" required />
               </div>
               <div>
                 <label className="block text-sm font-medium mb-2">Phone Number</label>
@@ -80,15 +79,34 @@ export default function BecomeDriverPage() {
               </select>
             </div>
 
-            {/* ✅ NEW: File Upload Section */}
+            {/* 📁 VISUAL FILE UPLOAD SECTION (For UI) */}
             <div className="border-2 border-dashed border-border rounded-xl p-6 text-center hover:bg-muted/50 transition cursor-pointer">
               <label className="cursor-pointer block">
                 <div className="flex flex-col items-center gap-2">
                   <FaUpload className="text-2xl text-primary" />
                   <span className="font-medium text-sm">Upload Driver's License / ID</span>
-                  <span className="text-xs text-foreground/50">(PDF, JPG, PNG - Max 5MB)</span>
+                  <span className="text-xs text-foreground/50">(PDF, JPG, PNG)</span>
                 </div>
-                <input type="file" name="document" className="hidden" accept=".pdf,.jpg,.jpeg,.png" required />
+                <input type="file" className="hidden" accept=".pdf,.jpg,.jpeg,.png" />
+              </label>
+            </div>
+
+            {/* 🔗 GOOGLE DRIVE FALLBACK LINK (Ensures you receive the document!) */}
+            <div className="border-2 border-border rounded-xl p-5 bg-muted/10">
+              <label className="block">
+                <div className="flex items-center gap-2 mb-2">
+                  <FaLink className="text-primary" />
+                  <span className="font-medium text-sm">Or paste a Google Drive / Dropbox link</span>
+                </div>
+                <p className="text-xs text-foreground/50 mb-2">
+                  If the upload doesn't work, please upload to Google Drive and paste the link below.
+                </p>
+                <input 
+                  type="url" 
+                  name="document_link" 
+                  placeholder="https://drive.google.com/file/d/..." 
+                  className="w-full p-3 rounded-xl border border-border bg-background focus:outline-none focus:ring-2 focus:ring-primary"
+                />
               </label>
             </div>
 
