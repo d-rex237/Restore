@@ -80,9 +80,7 @@ export default function Footer() {
               </li>
 
               <li>
-                <Link href="/restaurants" className="hover:text-orange-500">
-                  Menu
-                </Link>
+                <Link href="/menu" className="hover:text-orange-500">Menu</Link>
               </li>
 
               <li>
