@@ -4,6 +4,8 @@
 
 @custom-variant dark (&:is(.dark *));
 
+@custom-variant dark (&:where(.dark, .dark *));
+
 :root {
   /* Base surfaces */
   --surface: #f6f6f7;
@@ -11,19 +13,23 @@
   --border: oklch(0.922 0 0);
 
   /* Brand — bold & energetic */
-  --primary: oklch(0.205 0 0); /* main CTA / accent — buttons, active nav, prices */
+  --primary: oklch(
+    0.205 0 0
+  ); /* main CTA / accent — buttons, active nav, prices */
   --primary-hover: #e6301f;
   --primary-foreground: oklch(0.985 0 0);
-  --secondary: oklch(0.97 0 0); /* near-black, used for nav/headers/high-contrast text */
+  --secondary: oklch(
+    0.97 0 0
+  ); /* near-black, used for nav/headers/high-contrast text */
   --secondary-foreground: oklch(0.205 0 0);
 
-  /* Status colors (order lifecycle) */
-  --success: #1db954; /* delivered / accepted */
-  --warning: #f5a524; /* pending / preparing */
-  --danger: #e5484d; /* rejected / cancelled */
-  --info: #4361ee; /* out for delivery */
+  /* Status */
+  --success: #1db954;
+  --warning: #f5a524;
+  --danger: #e5484d;
+  --info: #4361ee;
 
-  /* Type & shape */
+  /* Fonts */
   --font-display: var(--font-space-grotesk);
   --font-sans: var(--font-inter);
   --font-mono: var(--font-geist-mono);
@@ -61,10 +67,6 @@
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
-  --color-surface: var(--surface);
-  --color-surface-muted: var(--surface-muted);
-  --color-border: var(--border);
-
   --color-primary: var(--primary);
   --color-primary-hover: var(--primary-hover);
   --color-primary-foreground: var(--primary-foreground);
@@ -164,12 +166,17 @@ h4 {
 
 @layer base {
   * {
-    @apply border-border outline-ring/50;
+    border-color: var(--border);
+    outline-color: color-mix(in srgb, var(--ring) 50%, transparent);
   }
-  body {
-    @apply bg-background text-foreground;
-  }
+
   html {
-    @apply font-sans;
+    font-family: var(--font-sans);
+  }
+
+  body {
+    background: var(--background);
+    color: var(--foreground);
+    font-family: var(--font-sans), Arial, Helvetica, sans-serif;
   }
 }
