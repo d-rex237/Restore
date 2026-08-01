@@ -62,7 +62,7 @@ export default function BecomeVendorPage() {
             </div>
             <div>
               <label className="block text-sm font-medium mb-2">Owner's Full Name</label>
-              <input type="text" name="owner_name" placeholder="John Doe" className="w-full p-3 rounded-xl border border-border bg-background focus:outline-none focus:ring-2 focus:ring-primary" required />
+              <input type="text" name="owner_name" placeholder="Owen Mane" className="w-full p-3 rounded-xl border border-border bg-background focus:outline-none focus:ring-2 focus:ring-primary" required />
             </div>
             <div className="grid sm:grid-cols-2 gap-5">
               <div>
