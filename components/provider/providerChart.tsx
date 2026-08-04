@@ -15,30 +15,49 @@ import {
   ChartTooltipContent,
   type ChartConfig,
 } from "@/components/ui/chart";
+import { mockOrders } from "@/lib/mock-data"; // adjust the path
 
 export const description = "A linear line chart";
-const chartData = [
-  { month: "January", desktop: 186 },
-  { month: "February", desktop: 305 },
-  { month: "March", desktop: 237 },
-  { month: "April", desktop: 73 },
-  { month: "May", desktop: 209 },
-  { month: "June", desktop: 214 },
-];
+
+const chartData = mockOrders.reduce(
+  (acc, order) => {
+    const day = new Date(order.createdAt).toLocaleString("en-US", {
+      month: "short",
+      day: "numeric",
+    });
+
+    const existing = acc.find((item) => item.day === day);
+
+    if (existing) {
+      existing.revenue += order.total;
+    } else {
+      acc.push({
+        day,
+        revenue: order.total,
+      });
+    }
+
+    return acc;
+  },
+  [] as { day: string; revenue: number }[],
+);
 const chartConfig = {
-  desktop: {
-    label: "Desktop",
+  revenue: {
+    label: "Revenue",
     color: "var(--chart-1)",
   },
 } satisfies ChartConfig;
 
-function page() {
+function ProviderChart() {
   return (
     <div>
       <Card>
         <CardHeader>
-          <CardTitle>Line Chart - Linear</CardTitle>
-          <CardDescription>January - June 2024</CardDescription>
+          <CardTitle>Monthly Revenue</CardTitle>
+
+          <CardDescription>
+            Revenue generated from customer orders
+          </CardDescription>
         </CardHeader>
         <CardContent>
           <ChartContainer config={chartConfig}>
@@ -52,20 +71,26 @@ function page() {
             >
               <CartesianGrid vertical={false} />
               <XAxis
-                dataKey="month"
+                dataKey="day"
                 tickLine={false}
                 axisLine={false}
                 tickMargin={8}
-                tickFormatter={(value) => value.slice(0, 3)}
+              />
+
+              <Line
+                dataKey="orders"
+                type="linear"
+                stroke="var(--color-orders)"
+                strokeWidth={2}
               />
               <ChartTooltip
                 cursor={false}
                 content={<ChartTooltipContent hideLabel />}
               />
               <Line
-                dataKey="desktop"
+                dataKey="revenue"
                 type="linear"
-                stroke="var(--color-desktop)"
+                stroke="var(--color-revenue)"
                 strokeWidth={2}
                 dot={false}
               />
@@ -85,4 +110,4 @@ function page() {
   );
 }
 
-export default page;
+export default ProviderChart;
