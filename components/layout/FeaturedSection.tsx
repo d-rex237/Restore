@@ -27,59 +27,59 @@ const categories = [
   { name: "Drinks", icon: <FaGlassMartiniAlt className="w-8 h-8 text-orange-500" /> },
 ];
 
-// ✅ POPULAR DISHES DATA - Using dummyimage for clean look
+// ✅ POPULAR DISHES DATA (real images)
 const dishes = [
-  { 
-    id: 1, 
-    name: "Corn Fufu & Katikati", 
-    price: 3500, 
-    rating: 5, 
-    image: "https://dummyimage.com/600x400/ff9800/fff&text=Corn+Fufu+%26+Katikati",
-    description: "Smooth corn fufu served with rich, savory katikati vegetable stew."
+  {
+    id: 1,
+    name: "Corn Fufu & Katikati",
+    price: 3500,
+    rating: 5,
+    image: "/images/corn-fufu-katikati.jpg",
+    description: "Smooth corn fufu served with rich, savory katikati vegetable stew.",
   },
-  { 
-    id: 2, 
-    name: "Poulet DG", 
-    price: 4500, 
-    rating: 5, 
-    image: "https://dummyimage.com/600x400/d32f2f/fff&text=Poulet+DG",
-    description: "Spicy chicken stew with plantains and vegetables."
+  {
+    id: 2,
+    name: "Poulet DG",
+    price: 4500,
+    rating: 5,
+    image: "/images/poulet.JFIF",
+    description: "Spicy chicken stew with plantains and vegetables.",
   },
-  { 
-    id: 3, 
-    name: "Eru", 
-    price: 3000, 
-    rating: 5, 
-    image: "https://dummyimage.com/600x400/4caf50/fff&text=Eru+Soup",
-    description: "Water leaf and eru vegetable soup with smoked fish."
+  {
+    id: 3,
+    name: "Eru",
+    price: 3000,
+    rating: 5,
+    image: "/images/eru.jpg",
+    description: "Water leaf and eru vegetable soup with smoked fish.",
   },
-  { 
-    id: 4, 
-    name: "Kondré", 
-    price: 2000, 
-    rating: 5, 
-    image: "https://dummyimage.com/600x400/795548/fff&text=Kondr%C3%A9",
-    description: "Traditional fried plantains with spicy pepper sauce."
+  {
+    id: 4,
+    name: "Kondré",
+    price: 2000,
+    rating: 5,
+    image: "/images/kondre.jpg",
+    description: "Traditional fried plantains with spicy pepper sauce.",
   },
 ];
 
-// ✅ CHEF'S SPECIAL DATA
+// ✅ CHEF'S SPECIAL DATA (real images)
 const chefSpecials = [
-  { 
-    id: 7, 
-    name: "Achu Soup", 
-    price: 4000, 
-    rating: 5, 
-    image: "https://dummyimage.com/600x400/ffeb3b/000&text=Achu+Soup", 
-    desc: "Cocoyam fufu served with traditional yellow achu soup and assorted meats."
+  {
+    id: 7,
+    name: "Achu Soup",
+    price: 4000,
+    rating: 5,
+    image: "/images/achu-soup.jpg",
+    desc: "Cocoyam fufu served with traditional yellow achu soup and assorted meats.",
   },
-  { 
-    id: 8, 
-    name: "Pepper Soup", 
-    price: 2500, 
-    rating: 5, 
-    image: "https://dummyimage.com/600x400/b71c1c/fff&text=Pepper+Soup", 
-    desc: "Spicy traditional broth featuring goat meat, crayfish, and local spices."
+  {
+    id: 8,
+    name: "Pepper Soup",
+    price: 2500,
+    rating: 5,
+    image: "/images/Peppersoup. webp",
+    desc: "Spicy traditional broth featuring goat meat, crayfish, and local spices.",
   },
 ];
 
@@ -183,7 +183,7 @@ export default function FeaturedSection() {
               <h2 className="text-2xl md:text-3xl font-bold text-foreground mb-1">Popular Dishes</h2>
               <p className="text-sm text-foreground/60">What our customers love most</p>
             </div>
-            <Link href="/restaurants" className="text-sm font-medium text-primary hover:underline flex items-center gap-1">
+            <Link href="/Menu" className="text-sm font-medium text-primary hover:underline flex items-center gap-1">
               View All <FaArrowRight className="w-3 h-3" />
             </Link>
           </div>
@@ -256,49 +256,57 @@ export default function FeaturedSection() {
             </div>
           </div>
         </div>
-
-        {/* ================= CHEF'S SPECIAL ================= */}
-        <div className="mb-16">
-          <div className="flex justify-between items-end mb-8">
-            <div>
-              <h2 className="text-2xl md:text-3xl font-bold text-foreground mb-1">Chef's Special</h2>
-              <p className="text-sm text-foreground/60">Handpicked by our top chefs</p>
-            </div>
-          </div>
-
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-            {chefSpecials.map((dish, index) => (
-              <div 
-                key={dish.id} 
-                data-aos="fade-up" 
-                data-aos-delay={index * 150}
-                className="group flex flex-col md:flex-row rounded-2xl overflow-hidden border border-border bg-card hover:shadow-lg transition-all duration-300"
-              >
-                <div className="relative w-full md:w-2/5 h-44 md:h-auto bg-muted">
-                  <Image src={dish.image} alt={dish.name} fill className="object-cover" />
-                  <div className="absolute top-3 left-3 bg-primary text-white text-[10px] font-bold px-3 py-1 rounded-full uppercase tracking-wider">
-                    Chef's Pick
-                  </div>
-                </div>
-                <div className="p-5 w-full md:w-3/5 flex flex-col justify-center">
-                  <div className="flex justify-between items-start mb-1">
-                    <h3 className="font-bold text-lg text-foreground">{dish.name}</h3>
-                    <span className="text-lg font-bold text-primary">
-                      {formatFCFA(dish.price)} FCFA
-                    </span>
-                  </div>
-                  <div className="flex text-yellow-500 text-[10px] mb-2">
-                    {[...Array(5)].map((_, i) => (<FaStar key={i} className="w-3 h-3" />))}
-                  </div>
-                  <p className="text-sm text-foreground/60 mb-3 line-clamp-2">{dish.desc}</p>
-                  <Link href="/restaurants" className="bg-primary text-white text-sm font-semibold py-1.5 px-4 rounded-full hover:bg-primary-hover transition w-fit shadow-sm">
-                    Order Now
-                  </Link>
-                </div>
-              </div>
-            ))}
+{/* ================= CHEF'S SPECIAL ================= */}
+<div className="mb-20">
+  <h2 className="text-3xl font-bold text-foreground mb-8">Chef's Special</h2>
+  <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+    {chefSpecials.map((dish, index) => (
+      <div
+        key={dish.id}
+        data-aos="fade-up"
+        data-aos-delay={index * 150}
+        className="group flex flex-col md:flex-row rounded-2xl overflow-hidden border border-border bg-card hover:shadow-xl transition-all duration-300"
+      >
+        {/* Image Section */}
+        <div className="relative w-full md:w-2/5 h-44 md:h-auto bg-muted">
+          <Image src={dish.image} alt={dish.name} fill className="object-cover" />
+          <div className="absolute top-3 left-3 bg-primary text-white text-xs font-bold px-3 py-1 rounded-full uppercase">
+            Chef's Pick
           </div>
         </div>
+
+        {/* Content Section */}
+        <div className="p-5 w-full md:w-3/5 flex flex-col justify-center">
+          <div className="flex justify-between items-start mb-2">
+            <h3 className="font-bold text-lg text-foreground">{dish.name}</h3>
+            <span className="text-lg font-bold text-primary">
+              {formatFCFA(dish.price)} FCFA
+            </span>
+          </div>
+
+          {/* Rating */}
+          <div className="flex text-yellow-500 text-xs mb-2">
+            {[...Array(dish.rating)].map((_, i) => (
+              <FaStar key={i} className="w-3 h-3" />
+            ))}
+          </div>
+
+          {/* Description */}
+          <p className="text-sm text-foreground/60 mb-4 line-clamp-2">{dish.desc}</p>
+
+          {/* CTA Button → now points to Menu */}
+          <Link
+            href="/Menu"
+            className="bg-gradient-to-r from-primary to-orange-500 text-white text-sm font-semibold py-2 px-5 rounded-full hover:opacity-90 transition w-fit shadow-md"
+          >
+            View Menu
+          </Link>
+        </div>
+      </div>
+    ))}
+  </div>
+</div>
+
 
         {/* ================= TESTIMONIALS SECTION ================= */}
         <div data-aos="fade-up" className="mb-10">
