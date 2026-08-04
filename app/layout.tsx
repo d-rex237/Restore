@@ -7,6 +7,7 @@ import { Providers } from "./providers";
 import { ClerkProvider } from "@clerk/nextjs";
 import { cn } from "@/lib/utils";
 import { CartProvider } from "@/lib/cart-context";
+import CartSidebar from "@/components/layout/CartSidebar"; // ✅ Added this import!
 
 const inter = Inter({ subsets: ["latin"], variable: "--font-sans" });
 
@@ -43,6 +44,7 @@ export default function RootLayout({
               <Navbar />
               {children}
               <Footer />
+              <CartSidebar /> {/* ✅ MUST BE HERE TO WORK! */}
             </CartProvider>
           </Providers>
         </body>

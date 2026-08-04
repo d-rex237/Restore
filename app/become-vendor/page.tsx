@@ -1,24 +1,18 @@
 "use client";
 
-import Footer from "@/components/layout/Footer_old";
-import Navbar from "@/components/layout/Navbar";
 import Link from "next/link";
-<<<<<<< HEAD
-import { FaStore, FaUsers, FaChartLine, FaArrowRight, FaUpload, FaLink } from "react-icons/fa";
-=======
 import {
   FaStore,
   FaUsers,
   FaChartLine,
   FaArrowRight,
   FaUpload,
+  FaLink,
 } from "react-icons/fa";
->>>>>>> d5b970d1decffe72952cfba5684b509a4bb36c37
 
 export default function BecomeVendorPage() {
   return (
     <div className="min-h-screen bg-background pt-10 pb-20">
-      <Navbar />
       <div className="max-w-6xl mx-auto px-6 lg:px-10">
         <div className="text-center mb-16">
           <div className="inline-flex items-center gap-2 bg-primary/10 text-primary px-4 py-2 rounded-full text-sm font-semibold mb-4">
@@ -66,16 +60,6 @@ export default function BecomeVendorPage() {
 
         {/* FORM WITH VISUAL FILE UPLOAD + DRIVE LINK FALLBACK */}
         <div className="max-w-2xl mx-auto bg-card border border-border rounded-2xl shadow-lg p-8 md:p-12">
-<<<<<<< HEAD
-          <h2 className="text-2xl font-bold mb-6 text-center">Apply to Partner</h2>
-          
-          <form 
-            action="https://formspree.io/f/xqerjprp"
-            method="POST"
-            className="space-y-5"
-          >
-            <input type="hidden" name="_subject" value="New Vendor Application - Restor" />
-=======
           <h2 className="text-2xl font-bold mb-6 text-center">
             Apply to Partner
           </h2>
@@ -85,13 +69,13 @@ export default function BecomeVendorPage() {
             method="POST"
             className="space-y-5"
           >
-            {/* ✅ REPLACE THIS WITH YOUR WEB3FORMS ACCESS KEY */}
+            {/* ✅ WEB3FORMS ACCESS KEY (Update this!) */}
             <input
               type="hidden"
               name="access_key"
               value="YOUR_WEB3FORMS_ACCESS_KEY"
             />
->>>>>>> d5b970d1decffe72952cfba5684b509a4bb36c37
+            <input type="hidden" name="_subject" value="New Vendor Application - Restor" />
 
             <div>
               <label className="block text-sm font-medium mb-2">
@@ -106,22 +90,13 @@ export default function BecomeVendorPage() {
               />
             </div>
             <div>
-<<<<<<< HEAD
-              <label className="block text-sm font-medium mb-2">Owner's Full Name</label>
-              <input type="text" name="owner_name" placeholder="Owen Mane" className="w-full p-3 rounded-xl border border-border bg-background focus:outline-none focus:ring-2 focus:ring-primary" required />
-            </div>
-            <div className="grid sm:grid-cols-2 gap-5">
-              <div>
-                <label className="block text-sm font-medium mb-2">Email Address</label>
-                <input type="email" name="_replyto" placeholder="hello@restaurant.com" className="w-full p-3 rounded-xl border border-border bg-background focus:outline-none focus:ring-2 focus:ring-primary" required />
-=======
               <label className="block text-sm font-medium mb-2">
                 Owner's Full Name
               </label>
               <input
                 type="text"
                 name="owner_name"
-                placeholder="John Doe"
+                placeholder="Owen Mane"
                 className="w-full p-3 rounded-xl border border-border bg-background focus:outline-none focus:ring-2 focus:ring-primary"
                 required
               />
@@ -138,7 +113,6 @@ export default function BecomeVendorPage() {
                   className="w-full p-3 rounded-xl border border-border bg-background focus:outline-none focus:ring-2 focus:ring-primary"
                   required
                 />
->>>>>>> d5b970d1decffe72952cfba5684b509a4bb36c37
               </div>
               <div>
                 <label className="block text-sm font-medium mb-2">
@@ -171,15 +145,23 @@ export default function BecomeVendorPage() {
               <label className="cursor-pointer block">
                 <div className="flex flex-col items-center gap-2">
                   <FaUpload className="text-2xl text-primary" />
-<<<<<<< HEAD
-                  <span className="font-medium text-sm">Upload Business Registration / ID</span>
-                  <span className="text-xs text-foreground/50">(PDF, JPG, PNG)</span>
+                  <span className="font-medium text-sm">
+                    Upload Business Registration / ID
+                  </span>
+                  <span className="text-xs text-foreground/50">
+                    (PDF, JPG, PNG - Max 5MB)
+                  </span>
                 </div>
-                <input type="file" className="hidden" accept=".pdf,.jpg,.jpeg,.png" />
+                <input
+                  type="file"
+                  name="document"
+                  className="hidden"
+                  accept=".pdf,.jpg,.jpeg,.png"
+                />
               </label>
             </div>
 
-            {/* 🔗 GOOGLE DRIVE FALLBACK LINK (Ensures you receive the document!) */}
+            {/* 🔗 GOOGLE DRIVE FALLBACK LINK */}
             <div className="border-2 border-border rounded-xl p-5 bg-muted/10">
               <label className="block">
                 <div className="flex items-center gap-2 mb-2">
@@ -194,21 +176,6 @@ export default function BecomeVendorPage() {
                   name="document_link" 
                   placeholder="https://drive.google.com/file/d/..." 
                   className="w-full p-3 rounded-xl border border-border bg-background focus:outline-none focus:ring-2 focus:ring-primary"
-=======
-                  <span className="font-medium text-sm">
-                    Upload Business Registration / ID
-                  </span>
-                  <span className="text-xs text-foreground/50">
-                    (PDF, JPG, PNG - Max 5MB)
-                  </span>
-                </div>
-                <input
-                  type="file"
-                  name="document"
-                  className="hidden"
-                  accept=".pdf,.jpg,.jpeg,.png"
-                  required
->>>>>>> d5b970d1decffe72952cfba5684b509a4bb36c37
                 />
               </label>
             </div>
@@ -222,7 +189,6 @@ export default function BecomeVendorPage() {
           </form>
         </div>
       </div>
-      <Footer />
     </div>
   );
 }

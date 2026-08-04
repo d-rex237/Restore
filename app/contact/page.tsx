@@ -27,6 +27,7 @@ export default function ContactPage() {
   return (
     <div className="min-h-screen bg-background pt-10 pb-20">
       <div className="max-w-6xl mx-auto px-6 lg:px-10">
+        
         {/* ================= PAGE HEADER ================= */}
         <div data-aos="fade-down" className="text-center mb-16">
           <h1 className="text-4xl md:text-5xl font-bold text-foreground mb-4">
@@ -43,9 +44,9 @@ export default function ContactPage() {
           <div
             data-aos="fade-up"
             data-aos-delay="100"
-            className="bg-card border border-border rounded-2xl p-6 text-center shadow-sm hover:shadow-md transition"
+            className="bg-card/50 border border-border/30 rounded-3xl p-6 text-center shadow-sm hover:bg-card hover:shadow-md transition-all duration-300"
           >
-            <div className="w-14 h-14 bg-primary/10 rounded-full flex items-center justify-center text-primary text-2xl mx-auto mb-4">
+            <div className="w-14 h-14 bg-gradient-to-r from-primary/20 to-orange-500/20 rounded-full flex items-center justify-center text-primary text-2xl mx-auto mb-4">
               <FaPhone />
             </div>
             <h3 className="font-bold text-lg text-foreground mb-1">Call Us</h3>
@@ -55,9 +56,9 @@ export default function ContactPage() {
           <div
             data-aos="fade-up"
             data-aos-delay="200"
-            className="bg-card border border-border rounded-2xl p-6 text-center shadow-sm hover:shadow-md transition"
+            className="bg-card/50 border border-border/30 rounded-3xl p-6 text-center shadow-sm hover:bg-card hover:shadow-md transition-all duration-300"
           >
-            <div className="w-14 h-14 bg-primary/10 rounded-full flex items-center justify-center text-primary text-2xl mx-auto mb-4">
+            <div className="w-14 h-14 bg-gradient-to-r from-primary/20 to-orange-500/20 rounded-full flex items-center justify-center text-primary text-2xl mx-auto mb-4">
               <FaEnvelope />
             </div>
             <h3 className="font-bold text-lg text-foreground mb-1">Email Us</h3>
@@ -67,9 +68,9 @@ export default function ContactPage() {
           <div
             data-aos="fade-up"
             data-aos-delay="300"
-            className="bg-card border border-border rounded-2xl p-6 text-center shadow-sm hover:shadow-md transition"
+            className="bg-card/50 border border-border/30 rounded-3xl p-6 text-center shadow-sm hover:bg-card hover:shadow-md transition-all duration-300"
           >
-            <div className="w-14 h-14 bg-primary/10 rounded-full flex items-center justify-center text-primary text-2xl mx-auto mb-4">
+            <div className="w-14 h-14 bg-gradient-to-r from-primary/20 to-orange-500/20 rounded-full flex items-center justify-center text-primary text-2xl mx-auto mb-4">
               <FaMapMarkerAlt />
             </div>
             <h3 className="font-bold text-lg text-foreground mb-1">Visit Us</h3>
@@ -81,10 +82,11 @@ export default function ContactPage() {
 
         {/* ================= CONTACT FORM & MAP SECTION ================= */}
         <div className="grid lg:grid-cols-2 gap-12 items-start">
+          
           {/* LEFT SIDE: Contact Form */}
           <div
             data-aos="fade-right"
-            className="bg-card border border-border rounded-2xl shadow-lg p-8 md:p-10"
+            className="bg-card/50 border border-border/30 rounded-3xl shadow-lg p-8 md:p-10 hover:shadow-xl transition-all duration-300"
           >
             <h2 className="text-2xl font-bold mb-6 text-foreground">
               Send us a Message
@@ -111,7 +113,7 @@ export default function ContactPage() {
                     type="text"
                     name="name"
                     placeholder="Telrah Ngwa"
-                    className="w-full p-3 rounded-xl border border-border bg-background focus:outline-none focus:ring-2 focus:ring-primary text-foreground placeholder:text-foreground/50"
+                    className="w-full p-3 rounded-2xl border border-border/30 bg-background/50 focus:bg-background focus:ring-2 focus:ring-primary outline-none transition-all text-foreground placeholder:text-foreground/50"
                     required
                   />
                 </div>
@@ -123,7 +125,7 @@ export default function ContactPage() {
                     type="email" 
                     name="_replyto" 
                     placeholder="hello@example.com" 
-                    className="w-full p-3 rounded-xl border border-border bg-background focus:outline-none focus:ring-2 focus:ring-primary text-foreground placeholder:text-foreground/50"
+                    className="w-full p-3 rounded-2xl border border-border/30 bg-background/50 focus:bg-background focus:ring-2 focus:ring-primary outline-none transition-all text-foreground placeholder:text-foreground/50"
                     required
                   />
                 </div>
@@ -137,7 +139,7 @@ export default function ContactPage() {
                   type="text"
                   name="subject"
                   placeholder="Order Issue, Partnership, etc..."
-                  className="w-full p-3 rounded-xl border border-border bg-background focus:outline-none focus:ring-2 focus:ring-primary text-foreground placeholder:text-foreground/50"
+                  className="w-full p-3 rounded-2xl border border-border/30 bg-background/50 focus:bg-background focus:ring-2 focus:ring-primary outline-none transition-all text-foreground placeholder:text-foreground/50"
                   required
                 />
               </div>
@@ -150,14 +152,14 @@ export default function ContactPage() {
                   name="message"
                   rows={5}
                   placeholder="Write your message here..."
-                  className="w-full p-3 rounded-xl border border-border bg-background focus:outline-none focus:ring-2 focus:ring-primary text-foreground placeholder:text-foreground/50 resize-none"
+                  className="w-full p-3 rounded-2xl border border-border/30 bg-background/50 focus:bg-background focus:ring-2 focus:ring-primary outline-none transition-all text-foreground placeholder:text-foreground/50 resize-none"
                   required
                 ></textarea>
               </div>
 
               <button
                 type="submit"
-                className="w-full bg-primary text-primary-foreground py-4 rounded-xl font-bold hover:bg-primary-hover transition flex items-center justify-center gap-3 shadow-lg shadow-primary/30"
+                className="w-full bg-gradient-to-r from-primary to-orange-500 text-white py-4 rounded-2xl font-bold hover:opacity-90 transition flex items-center justify-center gap-3 shadow-lg shadow-primary/30"
               >
                 Send Message <FaArrowRight />
               </button>
@@ -167,12 +169,12 @@ export default function ContactPage() {
           {/* RIGHT SIDE: Info / Map Placeholder */}
           <div
             data-aos="fade-left"
-            className="bg-card border border-border rounded-2xl shadow-lg overflow-hidden h-full min-h-[400px] relative flex flex-col items-center justify-center p-8 text-center"
+            className="bg-card/50 border border-border/30 rounded-3xl shadow-lg overflow-hidden h-full min-h-[400px] relative flex flex-col items-center justify-center p-8 text-center hover:shadow-xl transition-all duration-300"
           >
             <div className="absolute inset-0 bg-gradient-to-br from-primary/5 to-transparent"></div>
 
             <div className="relative z-10">
-              <div className="w-24 h-24 bg-primary/20 rounded-full flex items-center justify-center text-5xl mb-6 mx-auto">
+              <div className="w-24 h-24 bg-gradient-to-r from-primary/20 to-orange-500/20 rounded-full flex items-center justify-center text-5xl mb-6 mx-auto">
                 🇨🇲
               </div>
               <h3 className="text-2xl font-bold text-foreground mb-2">
@@ -189,7 +191,7 @@ export default function ContactPage() {
               </div>
 
               {/* ✅ UPDATED MAP: Bamenda City Chemist */}
-              <div className="mt-6 rounded-xl border border-border overflow-hidden">
+              <div className="mt-6 rounded-2xl border border-border/30 overflow-hidden shadow-sm">
                 <iframe
                   src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3963.2134577575367!2d10.1469284!3d5.951469!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x104ddeb220c1c801%3A0x9b42c0e874a1c2d!2sCity%20Chemist%20Bamenda!5e0!3m2!1sen!2sus!4v1700000000000!5m2!1sen!2sus"
                   width="100%"
