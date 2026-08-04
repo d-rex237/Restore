@@ -10,8 +10,6 @@ import {
 import { useEffect, useState } from "react";
 import AOS from "aos";
 import "aos/dist/aos.css";
-import Navbar from "@/components/layout/Navbar";
-import Footer from "@/components/layout/Footer_old";
 
 export default function ContactPage() {
   const [mounted, setMounted] = useState(false);
@@ -28,7 +26,6 @@ export default function ContactPage() {
 
   return (
     <div className="min-h-screen bg-background pt-10 pb-20">
-      <Navbar />
       <div className="max-w-6xl mx-auto px-6 lg:px-10">
         {/* ================= PAGE HEADER ================= */}
         <div data-aos="fade-down" className="text-center mb-16">
@@ -96,7 +93,6 @@ export default function ContactPage() {
               We usually respond to inquiries within 1-2 hours.
             </p>
 
-<<<<<<< HEAD
             {/* ✅ Contact Form connected to your Formspree */}
             <form 
               action="https://formspree.io/f/xqerjprp" 
@@ -105,20 +101,6 @@ export default function ContactPage() {
             >
               {/* Hidden field so you know it came from the Contact page */}
               <input type="hidden" name="_subject" value="New Contact Form Message - Restor" />
-=======
-            {/* ✅ Contact Form using Web3Forms */}
-            <form
-              action="https://api.web3forms.com/submit"
-              method="POST"
-              className="space-y-5"
-            >
-              {/* ⚠️ REPLACE THIS WITH YOUR WEB3FORMS OR FORMSPREE ACCESS KEY */}
-              <input
-                type="hidden"
-                name="access_key"
-                value="YOUR_WEB3FORMS_ACCESS_KEY"
-              />
->>>>>>> d5b970d1decffe72952cfba5684b509a4bb36c37
 
               <div className="grid sm:grid-cols-2 gap-5">
                 <div>
@@ -134,21 +116,13 @@ export default function ContactPage() {
                   />
                 </div>
                 <div>
-<<<<<<< HEAD
-                  <label className="block text-sm font-medium mb-2 text-foreground">Email Address</label>
+                  <label className="block text-sm font-medium mb-2 text-foreground">
+                    Email Address
+                  </label>
                   <input 
                     type="email" 
                     name="_replyto" 
                     placeholder="hello@example.com" 
-=======
-                  <label className="block text-sm font-medium mb-2 text-foreground">
-                    Email Address
-                  </label>
-                  <input
-                    type="email"
-                    name="email"
-                    placeholder="hello@example.com"
->>>>>>> d5b970d1decffe72952cfba5684b509a4bb36c37
                     className="w-full p-3 rounded-xl border border-border bg-background focus:outline-none focus:ring-2 focus:ring-primary text-foreground placeholder:text-foreground/50"
                     required
                   />
@@ -231,7 +205,6 @@ export default function ContactPage() {
           </div>
         </div>
       </div>
-      <Footer />
     </div>
   );
 }
