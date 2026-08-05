@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useState } from 'react';
+import React, { useState, forwardRef } from 'react';
 import { MenuItem } from '@/lib/types';
 import { useCart } from '@/lib/cart-context';
 
@@ -8,7 +8,8 @@ interface MenuCardProps {
   item: MenuItem;
 }
 
-const MenuCard = ({ item }: MenuCardProps) => {
+// ✅ ForwardRef allows the parent MenuPage to assign a reference to this card
+const MenuCard = forwardRef<HTMLDivElement, MenuCardProps>(({ item }, ref) => {
   const [quantity, setQuantity] = useState<number>(1);
   const { addToCart } = useCart();
 
@@ -18,10 +19,13 @@ const MenuCard = ({ item }: MenuCardProps) => {
   };
 
   return (
-    <div className="group bg-white dark:bg-gray-800 rounded-xl shadow-sm hover:shadow-xl border border-gray-200 dark:border-gray-700 overflow-hidden transition-all duration-300 hover:-translate-y-1">
+    <div 
+      ref={ref} // ✅ This is the ref that MenuPage uses to scroll!
+      className="group bg-card/50 border border-border/30 rounded-xl shadow-sm hover:shadow-xl hover:-translate-y-1 transition-all duration-300 overflow-hidden"
+    >
       
       {/* Image Section */}
-      <div className="relative h-48 bg-gray-100 dark:bg-gray-700 overflow-hidden">
+      <div className="relative h-48 bg-muted overflow-hidden">
         <img 
           src={item.image || '/images/placeholder-food.jpg'} 
           alt={item.name}
@@ -52,60 +56,60 @@ const MenuCard = ({ item }: MenuCardProps) => {
       {/* Content Section */}
       <div className="p-5">
         <div className="flex justify-between items-start mb-2">
-          <h3 className="text-lg font-bold text-gray-800 dark:text-white line-clamp-1">
+          <h3 className="text-lg font-bold text-foreground line-clamp-1">
             {item.name}
           </h3>
-          <span className="text-lg font-bold text-orange-600 dark:text-orange-400 whitespace-nowrap ml-2">
+          <span className="text-lg font-bold text-primary whitespace-nowrap ml-2">
             {item.price.toLocaleString()} FCFA
           </span>
         </div>
 
-        <p className="text-sm text-gray-600 dark:text-gray-300 mb-3 line-clamp-2">
+        <p className="text-sm text-foreground/60 mb-3 line-clamp-2">
           {item.description}
         </p>
 
         <div className="flex flex-wrap gap-1.5 mb-3">
-          <span className="inline-flex items-center gap-1 text-xs bg-gray-100 dark:bg-gray-700 px-2.5 py-1 rounded-full text-gray-600 dark:text-gray-300">
+          <span className="inline-flex items-center gap-1 text-xs bg-muted px-2.5 py-1 rounded-full text-foreground/70">
             ⏱️ {item.preparationTime || 20}min
           </span>
-          <span className="inline-flex items-center gap-1 text-xs bg-gray-100 dark:bg-gray-700 px-2.5 py-1 rounded-full text-gray-600 dark:text-gray-300">
+          <span className="inline-flex items-center gap-1 text-xs bg-muted px-2.5 py-1 rounded-full text-foreground/70">
             {item.category}
           </span>
         </div>
 
         <div className="mb-4">
-          <p className="text-xs font-medium text-gray-500 dark:text-gray-400 mb-1.5">
+          <p className="text-xs font-medium text-foreground/60 mb-1.5">
             Ingredients:
           </p>
           <div className="flex flex-wrap gap-1">
             {item.ingredients && item.ingredients.slice(0, 4).map((ingredient, index) => (
-              <span key={index} className="text-xs bg-orange-50 dark:bg-orange-900/30 text-orange-700 dark:text-orange-300 px-2 py-0.5 rounded-full">
+              <span key={index} className="text-xs bg-primary/10 text-primary px-2 py-0.5 rounded-full">
                 {ingredient}
               </span>
             ))}
             {item.ingredients && item.ingredients.length > 4 && (
-              <span className="text-xs text-gray-400 dark:text-gray-500">
+              <span className="text-xs text-foreground/40">
                 +{item.ingredients.length - 4}
               </span>
             )}
           </div>
         </div>
 
-        <div className="flex items-center gap-3 pt-4 border-t border-gray-100 dark:border-gray-700">
-          <div className="flex items-center bg-gray-50 dark:bg-gray-700 rounded-lg border border-gray-200 dark:border-gray-600">
+        <div className="flex items-center gap-3 pt-4 border-t border-border/30">
+          <div className="flex items-center bg-muted rounded-lg border border-border/30">
             <button
               onClick={() => setQuantity(Math.max(1, quantity - 1))}
-              className="px-3 py-1.5 hover:bg-gray-200 dark:hover:bg-gray-600 rounded-l-lg transition-colors text-gray-700 dark:text-gray-300"
+              className="px-3 py-1.5 hover:bg-muted/80 rounded-l-lg transition-colors text-foreground/80"
               type="button"
             >
               −
             </button>
-            <span className="px-3 py-1.5 min-w-[2.5rem] text-center font-medium text-gray-700 dark:text-gray-300">
+            <span className="px-3 py-1.5 min-w-[2.5rem] text-center font-medium text-foreground">
               {quantity}
             </span>
             <button
               onClick={() => setQuantity(quantity + 1)}
-              className="px-3 py-1.5 hover:bg-gray-200 dark:hover:bg-gray-600 rounded-r-lg transition-colors text-gray-700 dark:text-gray-300"
+              className="px-3 py-1.5 hover:bg-muted/80 rounded-r-lg transition-colors text-foreground/80"
               type="button"
             >
               +
@@ -113,7 +117,7 @@ const MenuCard = ({ item }: MenuCardProps) => {
           </div>
           <button
             onClick={handleAddToCart}
-            className="flex-1 bg-gradient-to-r from-orange-500 to-red-500 hover:from-orange-600 hover:to-red-600 text-white font-semibold py-2.5 px-4 rounded-lg transition-all duration-200 shadow-sm hover:shadow-md"
+            className="flex-1 bg-gradient-to-r from-primary to-orange-500 hover:opacity-90 text-white font-semibold py-2.5 px-4 rounded-lg transition-all duration-200 shadow-sm hover:shadow-md"
             type="button"
           >
             Add to Cart
@@ -122,6 +126,8 @@ const MenuCard = ({ item }: MenuCardProps) => {
       </div>
     </div>
   );
-};
+});
+
+MenuCard.displayName = 'MenuCard'; // Required for forwardRef in React
 
 export default MenuCard;

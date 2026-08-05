@@ -1,8 +1,8 @@
 'use client';
 import MenuCard from './MenuCard';
-import React, { useState, useMemo } from 'react';
-// Since there is no 'types' file in this repo, we define the types right here
-import { menuData } from '@/lib/mock-data'; // We will use the existing mock-data file!
+import React, { useState, useMemo, useEffect, useRef } from 'react';
+import { useSearchParams } from 'next/navigation'; // ✅ Added to catch search
+import { menuData } from '@/lib/mock-data';
 
 interface FilterOptions {
   category: string;
@@ -11,26 +11,30 @@ interface FilterOptions {
 }
 
 const MenuPage = () => {
+  const searchParams = useSearchParams();
+  const urlSearchQuery = searchParams.get('q') || ''; // ✅ Get search from URL
+
   const [filters, setFilters] = useState<FilterOptions>({
     category: 'all',
     priceRange: 'all',
     dietary: 'all'
   });
 
-  const [searchQuery, setSearchQuery] = useState('');
+  const [searchQuery, setSearchQuery] = useState(urlSearchQuery); // ✅ Sync with URL
+
+  // ✅ Refs to scroll to the exact card
+  const dishRefs = useRef<{ [key: string]: HTMLDivElement | null }>({});
   
   // Filter + Search Logic
   const filteredItems = useMemo(() => {
-    let filtered = menuData; // Using the mock data from the cloned repo
+    let filtered = menuData;
 
-    // Category filter
     if (filters.category !== 'all') {
       filtered = filtered.filter((item) => 
         item.category.toLowerCase() === filters.category
       );
     }
 
-    // Price filter
     if (filters.priceRange !== 'all') {
       filtered = filtered.filter((item) => {
         if (filters.priceRange === 'low') return item.price < 10;
@@ -40,7 +44,6 @@ const MenuPage = () => {
       });
     }
 
-    // Dietary filter
     if (filters.dietary !== 'all') {
       filtered = filtered.filter((item) => {
         if (filters.dietary === 'vegetarian') return item.dietaryInfo?.isVegetarian;
@@ -50,7 +53,6 @@ const MenuPage = () => {
       });
     }
 
-    // Search filter
     if (searchQuery) {
       filtered = filtered.filter((item) => 
         item.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
@@ -60,6 +62,24 @@ const MenuPage = () => {
 
     return filtered;
   }, [filters, searchQuery]);
+
+  // ✅ PROFESSIONAL SCROLL-TO-RESULT LOGIC
+  useEffect(() => {
+    if (urlSearchQuery && filteredItems.length > 0) {
+      const matchingKey = Object.keys(dishRefs.current).find(key => 
+        key.toLowerCase().includes(urlSearchQuery.toLowerCase())
+      );
+
+      if (matchingKey && dishRefs.current[matchingKey]) {
+        setTimeout(() => {
+          dishRefs.current[matchingKey]?.scrollIntoView({
+            behavior: "smooth",
+            block: "center",
+          });
+        }, 300); // Delay to ensure DOM is fully rendered
+      }
+    }
+  }, [filteredItems, urlSearchQuery]);
 
   return (
     <div className="min-h-screen bg-[var(--background)] text-[var(--foreground)] transition-colors duration-200">
@@ -117,16 +137,18 @@ const MenuPage = () => {
         </div>
 
         {/* Grid */}
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
           {filteredItems.map((item) => (
-            <MenuCard key={item.id} item={item} />
+            <MenuCard 
+              key={item.id} 
+              ref={(el) => { dishRefs.current[item.name] = el; }} // ✅ Important! Adds the ref to the card
+              item={item} 
+            />
           ))}
-              
         </div>
       </div>
     </div>
   );
 }
-
 
 export default MenuPage;
