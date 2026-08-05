@@ -27,7 +27,7 @@ export default function AboutPage() {
         {/* ================= HERO HEADER ================= */}
         <div data-aos="fade-down" className="text-center mb-16">
           <div className="inline-flex items-center gap-2 bg-primary/10 text-primary px-3 py-1 rounded-full text-xs font-semibold mb-4">
-            🇨🇲 About Restor
+            🇨🇲 About Restore
           </div>
           <h1 className="text-3xl md:text-5xl font-bold text-foreground mb-3 tracking-tight">
             Built for <span className="text-primary">Cameroon</span>
@@ -69,14 +69,14 @@ export default function AboutPage() {
               🍛
             </div>
             <p className="absolute bottom-4 left-0 right-0 text-center text-foreground/40 text-[10px] font-medium px-4">
-              Restor HQ — Bamenda, Cameroon
+              Restore HQ — Bamenda, Cameroon
             </p>
           </div>
         </div>
 
         {/* ================= CORE VALUES ================= */}
         <div data-aos="fade-up" className="mb-16">
-          <h2 className="text-2xl font-bold text-center mb-3 text-foreground">Why Restor</h2>
+          <h2 className="text-2xl font-bold text-center mb-3 text-foreground">Why Restore</h2>
           <p className="text-center text-foreground/60 text-sm mb-8 max-w-2xl mx-auto">
             Three pillars that define everything we do.
           </p>
@@ -110,7 +110,7 @@ export default function AboutPage() {
 
         {/* ================= MEET THE TEAM ================= */}
         <div data-aos="fade-up" className="mb-16">
-          <h2 className="text-2xl font-bold text-center mb-3 text-foreground">The Team Behind Restor</h2>
+          <h2 className="text-2xl font-bold text-center mb-3 text-foreground">The Team Behind Restore</h2>
           <p className="text-center text-foreground/60 text-sm mb-8 max-w-2xl mx-auto">
             Passionate developers and designers building the future of food delivery in Cameroon.
           </p>
@@ -183,7 +183,7 @@ export default function AboutPage() {
             Order from your favorite restaurants today and get delicious food delivered straight to your door.
           </p>
           <div className="flex flex-col sm:flex-row gap-3 justify-center">
-            <Link href="/restaurants" className="bg-white text-primary text-sm font-bold py-2.5 px-6 rounded-full hover:bg-gray-100 transition shadow-md">
+            <Link href="/menu" className="bg-white text-primary text-sm font-bold py-2.5 px-6 rounded-full hover:bg-gray-100 transition shadow-md">
               Browse Menu
             </Link>
             <Link href="/contact" className="border border-white text-white text-sm font-bold py-2.5 px-6 rounded-full hover:bg-white hover:text-primary transition">

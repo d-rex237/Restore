@@ -334,7 +334,7 @@ export default function FeaturedSection() {
         <div data-aos="fade-up" className="relative overflow-hidden rounded-2xl p-8 md:p-10 bg-gradient-to-r from-primary/20 to-orange-500/20 border border-border/30 shadow-sm text-center">
           <div className="relative z-10 max-w-2xl mx-auto">
             <div className="text-5xl mb-3">📱</div>
-            <h2 className="text-2xl md:text-3xl font-bold text-foreground mb-1">Download the Restor App</h2>
+            <h2 className="text-2xl md:text-3xl font-bold text-foreground mb-1">Download the Restore App</h2>
             <p className="text-sm text-foreground/60 max-w-lg mx-auto mb-4">
               Order food on the go, track deliveries in real-time, and get exclusive deals.
             </p>

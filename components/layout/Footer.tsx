@@ -146,7 +146,7 @@ export default function Footer() {
 
               <p>📞 +237 654905427/ 671 29 2841</p>
 
-              <p>✉Restorgmt237@gmail.com</p>
+              <p>✉Restoregmt237@gmail.com</p>
 
               <p>🕒 Mon - Sun: 8:00 AM - 10:00 PM</p>
 
@@ -161,7 +161,7 @@ export default function Footer() {
         <div className="mt-12 border-t border-gray-800 pt-6 flex flex-col items-center justify-between gap-4 text-sm text-gray-500 md:flex-row">
 
           <p>
-            © {new Date().getFullYear()} Restor237. All rights reserved.
+            © {new Date().getFullYear()} Restore237. All rights reserved.
           </p>
 
           <div className="flex gap-6">
