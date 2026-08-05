@@ -3,7 +3,7 @@
 import { usePathname } from "next/navigation"; // ✅ Import this
 import { Geist, Geist_Mono, Inter } from "next/font/google";
 import "./globals.css";
-import Navbar from "./components/layout/Navbar";
+import Navbar from "@/landing/home/components/layout/Navbar";
 import Footer from "./components/layout/Footer";
 import { Providers } from "./providers";
 import CartSidebar from "./components/layout/CartSidebar";
