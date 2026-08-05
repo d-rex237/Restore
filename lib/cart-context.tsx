@@ -16,6 +16,7 @@ type CartContextType = {
   getCartTotal: () => number;
   addToCart: (item: Omit<CartItem, "quantity">) => void;
   removeFromCart: (id: number) => void;
+  clearCart: () => void;   // ✅ Add this line
   isCartOpen: boolean;
   toggleCart: () => void;
 };
@@ -36,12 +37,17 @@ export function CartProvider({ children }: { children: ReactNode }) {
       }
       return [...prev, { ...item, quantity: 1 }];
     });
-    setIsCartOpen(true); // ✅ Automatically opens the cart when an item is added
+    setIsCartOpen(true);
   };
 
   const removeFromCart = (id: number) => {
     setCart((prev) => prev.filter((item) => item.id !== id));
   };
+
+  const clearCart = () => {
+  setCart([]);           // Empty the array
+  setIsCartOpen(false);  // Force close the sidebar
+};
 
   const getCartCount = () => {
     return cart.reduce((total, item) => total + item.quantity, 0);
@@ -61,6 +67,7 @@ export function CartProvider({ children }: { children: ReactNode }) {
         getCartTotal,
         addToCart,
         removeFromCart,
+        clearCart,   // ✅ Add this to the value object
         isCartOpen,
         toggleCart,
       }}

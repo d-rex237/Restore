@@ -1,13 +1,12 @@
-import type { Metadata } from "next";
+"use client";
+
+import { usePathname } from "next/navigation"; // ✅ Import this
 import { Geist, Geist_Mono, Inter } from "next/font/google";
 import "./globals.css";
 import Navbar from "@/components/layout/Navbar";
 import Footer from "@/components/layout/Footer";
 import { Providers } from "./providers";
-import { ClerkProvider } from "@clerk/nextjs";
-import { cn } from "@/lib/utils";
-import { CartProvider } from "@/lib/cart-context";
-import CartSidebar from "@/components/layout/CartSidebar"; // ✅ Added this import!
+import CartSidebar from "@/components/layout/CartSidebar";
 
 const inter = Inter({ subsets: ["latin"], variable: "--font-sans" });
 
@@ -21,34 +20,36 @@ const geistMono = Geist_Mono({
   subsets: ["latin"],
 });
 
-export const metadata: Metadata = {
-  title: "Restore",
-  description: "A Next.js app powered by Clerk",
-};
-
 export default function RootLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+  const pathname = usePathname(); // ✅ Get current page URL
+
+  // ✅ If the user is on the old_driver dashboard, hide the Navbar & Footer
+  const isDriverDashboard = pathname === "/old_driver" || pathname.startsWith("/old_driver/");
+
   return (
-    <ClerkProvider>
-      <html
-        lang="en"
-        className={`${geistSans.variable} ${geistMono.variable} ${inter.variable} h-full antialiased`}
-        suppressHydrationWarning
-      >
-        <body className="min-h-full flex flex-col bg-background text-foreground transition-colors duration-300">
-          <Providers>
-            <CartProvider>
-              <Navbar />
-              {children}
-              <Footer />
-              <CartSidebar /> {/* ✅ MUST BE HERE TO WORK! */}
-            </CartProvider>
-          </Providers>
-        </body>
-      </html>
-    </ClerkProvider>
+    <html
+      lang="en"
+      className={`${geistSans.variable} ${geistMono.variable} ${inter.variable} h-full antialiased`}
+      suppressHydrationWarning
+    >
+      <body className="min-h-full flex flex-col bg-background text-foreground transition-colors duration-300">
+        <Providers>
+          {/* ✅ Show Navbar only if NOT on the Driver Dashboard */}
+          {!isDriverDashboard && <Navbar />}
+          
+          {children}
+          
+          {/* ✅ Show Footer only if NOT on the Driver Dashboard */}
+          {!isDriverDashboard && <Footer />}
+          
+          {/* The CartSidebar stays global because drivers don't use it */}
+          <CartSidebar />
+        </Providers>
+      </body>
+    </html>
   );
 }

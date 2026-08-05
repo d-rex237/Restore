@@ -162,7 +162,7 @@ export default function AboutPage() {
         <div data-aos="fade-up" className="mb-16">
           <div className="grid grid-cols-3 gap-4 max-w-2xl mx-auto text-center">
             <div className="p-4 rounded-2xl border border-border/30 bg-card/50">
-              <div className="text-2xl font-bold text-primary">500+</div>
+              <div className="text-2xl font-bold text-primary">50+</div>
               <p className="text-[10px] text-foreground/60">Restaurants</p>
             </div>
             <div className="p-4 rounded-2xl border border-border/30 bg-card/50">

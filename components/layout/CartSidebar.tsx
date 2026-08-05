@@ -1,14 +1,39 @@
 "use client";
 
+import { useEffect } from "react"; // ✅ Fixed: Imported useEffect!
 import Link from "next/link";
 import Image from "next/image";
+import { useRouter, usePathname } from "next/navigation"; 
 import { useCart } from "@/lib/cart-context";
 import { FaTrash, FaArrowRight, FaTimes } from "react-icons/fa";
 
 export default function CartSidebar() {
-  const { cart, removeFromCart, getCartTotal, isCartOpen, toggleCart } = useCart();
+  const router = useRouter(); 
+  const pathname = usePathname(); 
+  const { 
+    cart, 
+    removeFromCart, 
+    getCartTotal, 
+    isCartOpen, 
+    toggleCart,
+    clearCart 
+  } = useCart();
+
+  // ✅ Reset sidebar if cart empties on a new page
+  useEffect(() => {
+    if (cart.length === 0 && isCartOpen) {
+      toggleCart();
+    }
+  }, [cart.length, pathname]);
 
   if (!isCartOpen) return null;
+
+  // ✅ Clean handleCheckout - No delay, instant navigation
+  const handleCheckout = () => {
+    clearCart();      
+    toggleCart();     
+    router.push("/order-confirmation");
+  };
 
   return (
     <div className="fixed inset-0 z-[100] flex justify-end">
@@ -54,9 +79,13 @@ export default function CartSidebar() {
               <span className="text-foreground/60">Total</span>
               <span className="font-bold text-foreground text-lg">{getCartTotal().toLocaleString()} FCFA</span>
             </div>
-            <Link href="/checkout" className="flex items-center justify-center gap-2 w-full bg-primary text-white py-3 rounded-xl font-semibold hover:bg-primary-hover transition">
+            
+            <button 
+              onClick={handleCheckout}
+              className="flex items-center justify-center gap-2 w-full bg-primary text-white py-3 rounded-xl font-semibold hover:bg-primary-hover transition"
+            >
               Checkout <FaArrowRight className="w-4 h-4" />
-            </Link>
+            </button>
           </div>
         )}
       </div>
