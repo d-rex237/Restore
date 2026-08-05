@@ -1,8 +1,9 @@
-'use client';
+"use client";
 
-import React, { useState } from 'react';
-import { MenuItem } from '@/lib/types';
-import { useCart } from '@/lib/cart-context';
+import React, { useState } from "react";
+import { MenuItem } from "@/lib/types";
+import { useCart } from "@/lib/cart-context";
+import { Clock } from "lucide-react";
 
 interface MenuCardProps {
   item: MenuItem;
@@ -19,11 +20,10 @@ const MenuCard = ({ item }: MenuCardProps) => {
 
   return (
     <div className="group bg-white dark:bg-gray-800 rounded-xl shadow-sm hover:shadow-xl border border-gray-200 dark:border-gray-700 overflow-hidden transition-all duration-300 hover:-translate-y-1">
-      
       {/* Image Section */}
       <div className="relative h-48 bg-gray-100 dark:bg-gray-700 overflow-hidden">
-        <img 
-          src={item.image || '/images/placeholder-food.jpg'} 
+        <img
+          src={item.image || "/images/placeholder-food.jpg"}
           alt={item.name}
           className="w-full h-full object-cover transition-transform duration-300 group-hover:scale-110"
         />
@@ -66,7 +66,7 @@ const MenuCard = ({ item }: MenuCardProps) => {
 
         <div className="flex flex-wrap gap-1.5 mb-3">
           <span className="inline-flex items-center gap-1 text-xs bg-gray-100 dark:bg-gray-700 px-2.5 py-1 rounded-full text-gray-600 dark:text-gray-300">
-            ⏱️ {item.preparationTime || 20}min
+            <Clock size={18} /> {item.preparationTime || 20}min
           </span>
           <span className="inline-flex items-center gap-1 text-xs bg-gray-100 dark:bg-gray-700 px-2.5 py-1 rounded-full text-gray-600 dark:text-gray-300">
             {item.category}
@@ -78,11 +78,15 @@ const MenuCard = ({ item }: MenuCardProps) => {
             Ingredients:
           </p>
           <div className="flex flex-wrap gap-1">
-            {item.ingredients && item.ingredients.slice(0, 4).map((ingredient, index) => (
-              <span key={index} className="text-xs bg-orange-50 dark:bg-orange-900/30 text-orange-700 dark:text-orange-300 px-2 py-0.5 rounded-full">
-                {ingredient}
-              </span>
-            ))}
+            {item.ingredients &&
+              item.ingredients.slice(0, 4).map((ingredient, index) => (
+                <span
+                  key={index}
+                  className="text-xs bg-orange-50 dark:bg-orange-900/30 text-orange-700 dark:text-orange-300 px-2 py-0.5 rounded-full"
+                >
+                  {ingredient}
+                </span>
+              ))}
             {item.ingredients && item.ingredients.length > 4 && (
               <span className="text-xs text-gray-400 dark:text-gray-500">
                 +{item.ingredients.length - 4}

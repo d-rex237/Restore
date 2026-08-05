@@ -7,8 +7,9 @@ import {
   ShoppingBag,
   UtensilsCrossed,
   Star,
+  Clock3,
 } from "lucide-react";
-import { mockUsers } from "@/lib/mock-data";
+import { mockOrders, mockUsers } from "@/lib/mock-data";
 import ProviderChart from "@/components/provider/providerChart";
 
 function ProviderDash() {
@@ -43,6 +44,52 @@ function ProviderDash() {
       iconColor: "text-orange-600",
     },
   ];
+
+  const recentTransactions = [
+    {
+      id: "#2045",
+      customer: "John Doe",
+      amount: 8500,
+      status: "Completed",
+      time: "2 min ago",
+    },
+    {
+      id: "#2044",
+      customer: "Jane Smith",
+      amount: 12000,
+      status: "Preparing",
+      time: "15 min ago",
+    },
+    {
+      id: "#2043",
+      customer: "Mike Johnson",
+      amount: -4000,
+      status: "Refunded",
+      time: "1 hour ago",
+    },
+    {
+      id: "#2042",
+      customer: "Sarah Wilson",
+      amount: 18200,
+      status: "Completed",
+      time: "Yesterday",
+    },
+  ];
+
+  const statusStyles = {
+    Completed: {
+      badge: "bg-green-100 text-green-700",
+      icon: "bg-green-100 text-green-600",
+    },
+    Preparing: {
+      badge: "bg-blue-100 text-blue-700",
+      icon: "bg-blue-100 text-blue-600",
+    },
+    Refunded: {
+      badge: "bg-red-100 text-red-700",
+      icon: "bg-red-100 text-red-600",
+    },
+  };
 
   return (
     <div>
@@ -123,11 +170,150 @@ function ProviderDash() {
           );
         })}
       </section>
-      <section className="grid grid-cols-2">
+      <section className="grid grid-cols-2 mt-6 gap-6 ">
         <div className="">
           <ProviderChart />{" "}
         </div>
-        <div className=" w-2xl bg-black h-4 w-5"> </div>
+        <div className="rounded-2xl border border-gray-100 bg-white p-6 shadow-sm">
+          <div className="mb-5 flex items-center justify-between">
+            <div>
+              <h2 className="text-lg font-semibold">Recent Transactions</h2>
+              <p className="text-sm text-gray-500">
+                Latest payments and orders
+              </p>
+            </div>
+          </div>
+
+          <div className="space-y-4">
+            {recentTransactions.map((item) => {
+              const style =
+                statusStyles[item.status as keyof typeof statusStyles];
+
+              return (
+                <div
+                  key={item.id}
+                  className="flex items-center justify-between rounded-xl border border-gray-100 p-4 transition hover:bg-gray-50"
+                >
+                  <div className="flex items-center gap-4">
+                    <div
+                      className={`flex h-11 w-11 items-center justify-center rounded-full ${style.icon}`}
+                    >
+                      <CreditCard size={20} />
+                    </div>
+
+                    <div>
+                      <h3 className="font-medium">{item.customer}</h3>
+
+                      <div className="mt-1 flex items-center gap-2 text-sm text-gray-500">
+                        <Clock3 size={13} />
+                        {item.time}
+                      </div>
+                    </div>
+                  </div>
+
+                  <div className="text-right">
+                    <p
+                      className={`font-semibold ${
+                        item.amount > 0 ? "text-green-600" : "text-red-500"
+                      }`}
+                    >
+                      {item.amount > 0 ? "+" : ""}
+                      FCFA {Math.abs(item.amount).toLocaleString()}
+                    </p>
+
+                    <span
+                      className={`mt-1 inline-flex rounded-full px-3 py-1 text-xs font-medium ${style.badge}`}
+                    >
+                      {item.status}
+                    </span>
+                  </div>
+                </div>
+              );
+            })}
+          </div>
+        </div>
+      </section>
+      <section className="mt-8 rounded-2xl border border-gray-100 bg-white p-6 shadow-sm">
+        <div className="mb-6 flex items-center justify-between">
+          <div>
+            <h2 className="text-xl font-semibold">All Orders</h2>
+            <p className="text-sm text-gray-500">
+              Manage and track every customer order
+            </p>
+          </div>
+        </div>
+
+        <div className="overflow-x-auto">
+          <table className="w-full">
+            <thead>
+              <tr className="border-b border-gray-100 text-left text-sm text-gray-500">
+                <th className="pb-4 font-medium">Order</th>
+                <th className="pb-4 font-medium">Customer</th>
+                <th className="pb-4 font-medium">Items</th>
+                <th className="pb-4 font-medium">Total</th>
+                <th className="pb-4 font-medium">Status</th>
+                <th className="pb-4 font-medium">Date</th>
+              </tr>
+            </thead>
+
+            <tbody>
+              {[...mockOrders]
+                .sort(
+                  (a, b) =>
+                    new Date(b.createdAt).getTime() -
+                    new Date(a.createdAt).getTime(),
+                )
+                .slice(0, 5)
+                .map((order) => (
+                  <tr
+                    key={order.id}
+                    className="border-b border-gray-50 transition hover:bg-gray-50"
+                  >
+                    <td className="py-4">
+                      <p className="font-medium text-gray-900">
+                        #{order.id.toUpperCase()}
+                      </p>
+                    </td>
+
+                    <td className="py-4">
+                      <p className="font-medium">{order.customerName}</p>
+                      <p className="text-sm text-gray-500">
+                        {order.restaurantName}
+                      </p>
+                    </td>
+
+                    <td className="py-4">
+                      <p className="text-sm">
+                        {order.items.reduce(
+                          (sum, item) => sum + item.quantity,
+                          0,
+                        )}{" "}
+                        items
+                      </p>
+                    </td>
+
+                    <td className="py-4 font-semibold text-green-600">
+                      FCFA {order.total.toLocaleString()}
+                    </td>
+
+                    <td className="py-4">
+                      <span className="rounded-full bg-green-100 px-3 py-1 text-xs font-medium capitalize text-green-700">
+                        {order.status}
+                      </span>
+                    </td>
+
+                    <td className="py-4 text-sm text-gray-500">
+                      {new Date(order.createdAt).toLocaleDateString("en-GB", {
+                        day: "2-digit",
+                        month: "short",
+                        year: "numeric",
+                      })}
+                    </td>
+                  </tr>
+                ))}
+            </tbody>
+          </table>
+        </div>
       </section>
     </div>
   );

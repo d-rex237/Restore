@@ -563,6 +563,7 @@ export const menuData = [
     isPopular: true,
     image: "/images/ndole.webp",
     dietaryInfo: { isVegetarian: false, isVegan: false, isGlutenFree: true },
+    available: true,
   },
   {
     id: "2",
@@ -576,6 +577,7 @@ export const menuData = [
     isPopular: true,
     image: "/images/fufu-and-eru.webp",
     dietaryInfo: { isVegetarian: false, isVegan: false, isGlutenFree: true },
+    available: true,
   },
   {
     id: "3",
@@ -589,6 +591,7 @@ export const menuData = [
     isPopular: false,
     image: "/images/miondo.webp",
     dietaryInfo: { isVegetarian: true, isVegan: true, isGlutenFree: true },
+    available: true,
   },
   {
     id: "4",
@@ -602,6 +605,7 @@ export const menuData = [
     isPopular: true,
     image: "/images/grilled-tilapia.webp",
     dietaryInfo: { isVegetarian: false, isVegan: false, isGlutenFree: true },
+    available: true,
   },
   {
     id: "5",
@@ -615,6 +619,7 @@ export const menuData = [
     isPopular: false,
     image: "/images/plantain-and-stew.webp",
     dietaryInfo: { isVegetarian: true, isVegan: true, isGlutenFree: true },
+    available: true,
   },
   {
     id: "6",
@@ -628,6 +633,7 @@ export const menuData = [
     isPopular: false,
     image: "/images/pepper-soup.webp",
     dietaryInfo: { isVegetarian: false, isVegan: false, isGlutenFree: true },
+    available: true,
   },
   {
     id: "7",
@@ -641,6 +647,7 @@ export const menuData = [
     isPopular: true,
     image: "/images/rice-and-stew.webp",
     dietaryInfo: { isVegetarian: false, isVegan: false, isGlutenFree: true },
+    available: true,
   },
   {
     id: "8",
@@ -653,6 +660,7 @@ export const menuData = [
     isPopular: true,
     image: "/images/puff-puff.webp",
     dietaryInfo: { isVegetarian: true, isVegan: true, isGlutenFree: false },
+    available: true,
   },
   {
     id: "9",
@@ -673,6 +681,7 @@ export const menuData = [
     isPopular: true,
     image: "/images/fried-rice.webp",
     dietaryInfo: { isVegetarian: false, isVegan: false, isGlutenFree: true },
+    available: false,
   },
 ];
 
