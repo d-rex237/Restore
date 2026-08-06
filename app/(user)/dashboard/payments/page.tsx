@@ -77,7 +77,7 @@ export default function PaymentsPage() {
             <p className="text-sm text-gray-500 mt-1">Pending payments</p>
           </div>
           <div className="bg-white rounded-2xl p-6 shadow-sm border border-gray-100">
-            <p className="text-sm text-gray-500">Saved Cards</p>
+            <p className="text-sm text-gray-500">Saved Accounts</p>
             <p className="text-3xl font-bold text-gray-800">2</p>
             <p className="text-sm text-gray-500 mt-1">Payment methods</p>
           </div>
