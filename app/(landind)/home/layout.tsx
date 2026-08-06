@@ -1,8 +1,8 @@
 "use client";
 
-import { usePathname } from "next/navigation"; // ✅ Import this
+import { usePathname } from "next/navigation"; 
 import { Geist, Geist_Mono, Inter } from "next/font/google";
-import "./globals.css";
+import "../../globals.css";
 import Navbar from "./components/layout/Navbar";
 import Footer from "./components/layout/Footer";
 import { Providers } from "./providers";
@@ -25,9 +25,8 @@ export default function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
-  const pathname = usePathname(); // ✅ Get current page URL
+  const pathname = usePathname(); 
 
-  // ✅ If the user is on the old_driver dashboard, hide the Navbar & Footer
   const isDriverDashboard =
     pathname === "/old_driver" || pathname.startsWith("/old_driver/");
 
@@ -39,8 +38,9 @@ export default function RootLayout({
     >
       <body className="min-h-full flex flex-col bg-background text-foreground transition-colors duration-300">
         <Providers>
+          {!isDriverDashboard && <Navbar />}
           {children}
-
+          {!isDriverDashboard && <Footer />}
           <CartSidebar />
         </Providers>
       </body>
