@@ -174,30 +174,30 @@ export default function Navbar() {
             Home
           </Link>
           <Link
-            href="/menu"
+            href="/home/menu"
             onClick={closeMenu}
-            className={`font-medium transition-colors ${isActive("/menu") ? "text-primary" : "text-foreground/80 hover:text-primary"}`}
+            className={`font-medium transition-colors ${isActive("/home/menu") ? "text-primary" : "text-foreground/80 hover:text-primary"}`}
           >
             Menu
           </Link>
           <Link
-            href="/about"
+            href="/home/about"
             onClick={closeMenu}
-            className={`font-medium transition-colors ${isActive("/about") ? "text-primary" : "text-foreground/80 hover:text-primary"}`}
+            className={`font-medium transition-colors ${isActive("/home/about") ? "text-primary" : "text-foreground/80 hover:text-primary"}`}
           >
             About
           </Link>
           <Link
-            href="/services"
+            href="/home/services"
             onClick={closeMenu}
-            className={`font-medium transition-colors ${isActive("/services") ? "text-primary" : "text-foreground/80 hover:text-primary"}`}
+            className={`font-medium transition-colors ${isActive("/home/services") ? "text-primary" : "text-foreground/80 hover:text-primary"}`}
           >
             Services
           </Link>
           <Link
-            href="/contact"
+            href="/home/contact"
             onClick={closeMenu}
-            className={`font-medium transition-colors ${isActive("/contact") ? "text-primary" : "text-foreground/80 hover:text-primary"}`}
+            className={`font-medium transition-colors ${isActive("/home/contact") ? "text-primary" : "text-foreground/80 hover:text-primary"}`}
           >
             Contact
           </Link>

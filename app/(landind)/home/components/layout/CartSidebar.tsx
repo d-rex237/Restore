@@ -32,7 +32,7 @@ export default function CartSidebar() {
   const handleCheckout = () => {
     clearCart();      
     toggleCart();     
-    router.push("/order-confirmation");
+    router.push("/home/order-confirmation");
   };
 
   return (
