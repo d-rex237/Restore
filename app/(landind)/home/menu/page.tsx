@@ -1,4 +1,4 @@
-import MenuPage from "@/components/MenuPage";
+import MenuPage from "../components/layout/MenuPage";
 
 export default function MenuRoute() {
   return <MenuPage />;

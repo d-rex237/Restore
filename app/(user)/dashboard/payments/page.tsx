@@ -2,8 +2,9 @@
 'use client';
 
 import React, { useState } from 'react';
+import { FaMobileAlt } from "react-icons/fa";
 import DashboardLayout from '../components/dashboard/DashboardLayout';
-import { CreditCard, Plus, Calendar, Lock, CheckCircle, Clock, DollarSign } from 'lucide-react';
+import { CreditCard, Plus, Calendar, Lock, CheckCircle, Clock, DollarSign, CreditCardIcon } from 'lucide-react';
 
 export default function PaymentsPage() {
   const [selectedPaymentMethod, setSelectedPaymentMethod] = useState('card');
@@ -29,6 +30,31 @@ export default function PaymentsPage() {
     }, 2000);
   };
 
+  const styles = {
+  card: {
+    background: "#fff",
+    padding: "24px",
+    borderRadius: "12px",
+    boxShadow: "0 2px 10px rgba(0,0,0,0.08)",
+    maxWidth: "450px",
+    margin: "20px auto",
+    fontFamily: "Arial, sans-serif"
+  },
+  title: {
+    fontSize: "20px",
+    fontWeight: "bold",
+    marginBottom: "20px"
+  },
+  field: {
+    marginBottom: "16px"
+  },
+  label: {
+    fontSize: "14px",
+    color: "#333",
+    marginBottom: "6px",
+    display: "block"
+  },};
+
   return (
     <DashboardLayout>
       <div className="max-w-5xl mx-auto space-y-6">
@@ -51,15 +77,13 @@ export default function PaymentsPage() {
             <p className="text-sm text-gray-500 mt-1">Pending payments</p>
           </div>
           <div className="bg-white rounded-2xl p-6 shadow-sm border border-gray-100">
-            <p className="text-sm text-gray-500">Saved Cards</p>
+            <p className="text-sm text-gray-500">Saved Accounts</p>
             <p className="text-3xl font-bold text-gray-800">2</p>
             <p className="text-sm text-gray-500 mt-1">Payment methods</p>
           </div>
         </div>
 
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-
-
           {/* Add Payment Method */}
           <div className="bg-white rounded-2xl shadow-sm border border-gray-100 p-6">
             <h2 className="text-lg font-bold text-gray-800 mb-4">
@@ -68,56 +92,68 @@ export default function PaymentsPage() {
             <form onSubmit={handlePayment} className="space-y-4">
               <div>
                 <label className="block text-sm font-medium text-gray-700 mb-1">
-                  Card Number
+                  Account Number
                 </label>
                 <div className="relative">
                   <input
                     type="text"
-                    placeholder="1234 5678 9012 3456"
+                    placeholder="682 305 453"
                     className="w-full px-4 py-2 pl-10 border border-gray-300 rounded-xl focus:ring-2 focus:ring-green-500 focus:border-transparent outline-none"
                   />
-                  <CreditCard className="absolute left-3 top-1/2 transform -translate-y-1/2 w-4 h-4 text-gray-400" />
-                </div>
-              </div>
-
-              <div className="grid grid-cols-2 gap-4">
-                <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-1">
-                    Expiry Date
-                  </label>
-                  <div className="relative">
-                    <input
-                      type="text"
-                      placeholder="MM/YY"
-                      className="w-full px-4 py-2 pl-10 border border-gray-300 rounded-xl focus:ring-2 focus:ring-green-500 focus:border-transparent outline-none"
-                    />
-                    <Calendar className="absolute left-3 top-1/2 transform -translate-y-1/2 w-4 h-4 text-gray-400" />
-                  </div>
-                </div>
-                <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-1">
-                    CVV
-                  </label>
-                  <div className="relative">
-                    <input
-                      type="text"
-                      placeholder="123"
-                      className="w-full px-4 py-2 pl-10 border border-gray-300 rounded-xl focus:ring-2 focus:ring-green-500 focus:border-transparent outline-none"
-                    />
-                    <Lock className="absolute left-3 top-1/2 transform -translate-y-1/2 w-4 h-4 text-gray-400" />
-                  </div>
+                  <CreditCardIcon className="absolute left-3 top-1/2 transform -translate-y-1/2 w-4 h-4 text-gray-400" />
                 </div>
               </div>
 
               <div>
                 <label className="block text-sm font-medium text-gray-700 mb-1">
-                  Cardholder Name
+                  Account Name
                 </label>
                 <input
                   type="text"
                   placeholder="John Doe"
                   className="w-full px-4 py-2 border border-gray-300 rounded-xl focus:ring-2 focus:ring-green-500 focus:border-transparent outline-none"
                 />
+              </div>
+
+              {/* NEW: MTN vs Orange Selector */}
+              <div style={styles.selectorBox}>
+                  <label className="block text-sm font-medium text-gray-700 mb-1">
+                     How do you want to pay?
+                  </label>
+                <div
+                  style={{ display: "flex", flexDirection: "row", gap: "50px" }}>
+
+                <div
+                  style={{ display: "flex", flexDirection: "row", gap: "5px" }}
+                >
+                  <label style={styles.radioOption}>
+                    <input
+                      type="radio"
+                      name="provider"
+                      value="mtn"
+                      defaultChecked={`paymentProvider === "mtn"}
+                    onChange={(e) => setPaymentProvider(e.target.value)`}
+                    />
+                  </label>
+                  <FaMobileAlt style={{ color: "#FFCC00" }} />
+                  <span>MTN Mobile Money</span>
+                </div>
+
+                <div
+                  style={{ display: "flex", flexDirection: "row", gap: "5px" }}>
+                  <label style={styles.radioOption}>
+                    <input
+                      type="radio"
+                      name="provider"
+                      value="orange"
+                      defaultChecked={`paymentProvider === "orange"}
+                    onChange={(e) => setPaymentProvider(e.target.value)`}
+                    />
+                  </label>
+                  <FaMobileAlt style={{ color: "#FF7900" }} />
+                  <span>Orange Money</span>
+                </div>
+              </div>
               </div>
 
               <button
