@@ -1,3 +1,5 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
 
 generator client {
   provider = "prisma-client"
@@ -7,7 +9,8 @@ datasource db {
   provider = "postgresql"
   url      = env("DATABASE_URL")
 }
-enum OrderStatus {PENDING ACCEPTED DELIVERED CANCELLED}
+
+// ---------------- Enums ----------------
 
 enum Role {
   CUSTOMER
@@ -16,28 +19,47 @@ enum Role {
   ADMIN
 }
 
+enum OrderStatus {
+  PENDING
+  ACCEPTED
+  PREPARING
+  READY_FOR_PICKUP
+  OUT_FOR_DELIVERY
+  DELIVERED
+  REJECTED
+  CANCELLED
+}
+
+enum RequestStatus {
+  PENDING
+  APPROVED
+  REJECTED
+}
+
+// ---------------- User & Role Profiles ----------------
+
 model User {
   id        String   @id @default(cuid())
   clerkId   String   @unique
   email     String   @unique
   name      String
   phone     String?
-  avatarUrl String?
+  avatarUrl String? // link to image, not a stored file
   role      Role     @default(CUSTOMER)
 
   customerProfile CustomerProfile?
   providerProfile ProviderProfile?
   driverProfile   DriverProfile?
 
-  restaurants   Restaurant[]
-  addresses     Address[]
-  cart          Cart?
-  customerOrders Order[] @relation("CustomerOrders")
-  driverOrders   Order[] @relation("DriverOrders")
-  favorites     Favorite[]
-  reviews       Review[]
-  notifications Notification[]
-  roleRequests  RoleRequest[]
+  restaurants    Restaurant[] // as owner
+  addresses      Address[]
+  cart           Cart?
+  customerOrders Order[]      @relation("CustomerOrders")
+  driverOrders   Order[]      @relation("DriverOrders")
+  favorites      Favorite[]
+  reviews        Review[]
+  notifications  Notification[]
+  roleRequests   RoleRequest[]
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
@@ -47,102 +69,189 @@ model User {
 }
 
 model CustomerProfile {
-  id String @id @default(cuid())
-  userId String @unique
-  user User @relation(fields:[userId], references:[id], onDelete:Cascade)
-  loyaltyPoints Int @default(0)
-  totalOrders Int @default(0)
-  totalSpent Float @default(0)
+  id            String @id @default(cuid())
+  userId        String @unique
+  user          User   @relation(fields: [userId], references: [id], onDelete: Cascade)
+  loyaltyPoints Int    @default(0)
+  totalOrders   Int    @default(0)
+  totalSpent    Float  @default(0)
 }
 
 model ProviderProfile {
-  id String @id @default(cuid())
-  userId String @unique
-  user User @relation(fields:[userId], references:[id], onDelete:Cascade)
-  businessName String
+  id            String  @id @default(cuid())
+  userId        String  @unique
+  user          User    @relation(fields: [userId], references: [id], onDelete: Cascade)
+  businessName  String
   businessPhone String?
-  verified Boolean @default(false)
+  verified      Boolean @default(false)
 }
 
 model DriverProfile {
-  id String @id @default(cuid())
-  userId String @unique
-  user User @relation(fields:[userId], references:[id], onDelete:Cascade)
-  vehicleType String
-  plateNumber String
-  licenseNumber String?
-  isOnline Boolean @default(false)
-  currentLatitude Float?
-  currentLongitude Float?
+  id                String  @id @default(cuid())
+  userId            String  @unique
+  user              User    @relation(fields: [userId], references: [id], onDelete: Cascade)
+  vehicleType       String
+  plateNumber       String
+  licenseNumber     String?
+  isOnline          Boolean @default(false)
+  currentLatitude   Float?
+  currentLongitude  Float?
 }
 
+// ---------------- Restaurant & Menu ----------------
+
 model Restaurant {
-  id String @id @default(cuid())
-  ownerId String
-  owner User @relation(fields:[ownerId], references:[id])
-  name String
-  description String?
-  imageUrl String?
-  coverImageUrl String?
-  address String
-  phone String?
-  email String?
+  id            String   @id @default(cuid())
+  ownerId       String
+  owner         User     @relation(fields: [ownerId], references: [id])
+  name          String
+  description   String?
+  imageUrl      String? // link to image, not a stored file
+  coverImageUrl String? // link to image, not a stored file
+  address       String
+  phone         String?
+  email         String?
+  isOpen        Boolean  @default(true)
+  rating        Float    @default(0)
+
   menuItems MenuItem[]
+  orders    Order[]
+  reviews   Review[]
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
 }
 
 model MenuItem {
- id String @id @default(cuid())
- restaurantId String
- restaurant Restaurant @relation(fields:[restaurantId], references:[id], onDelete:Cascade)
- name String
- description String
- imageUrl String?
- price Float
- available Boolean @default(true)
- cartItems CartItem[]
- favorites Favorite[]
+  id              String   @id @default(cuid())
+  restaurantId    String
+  restaurant      Restaurant @relation(fields: [restaurantId], references: [id], onDelete: Cascade)
+  name            String
+  description     String
+  image           String? // link to image, not a stored file
+  price           Float
+  category        String?
+  ingredients     String[] @default([])
+  isPopular       Boolean  @default(false)
+  preparationTime Int? // minutes
+  available       Boolean  @default(true)
+
+  cartItems  CartItem[]
+  orderItems OrderItem[]
+  favorites  Favorite[]
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
 }
 
+// ---------------- Cart ----------------
+
 model Cart {
- id String @id @default(cuid())
- userId String @unique
- user User @relation(fields:[userId], references:[id], onDelete:Cascade)
- items CartItem[]
+  id     String     @id @default(cuid())
+  userId String     @unique
+  user   User       @relation(fields: [userId], references: [id], onDelete: Cascade)
+  items  CartItem[]
 }
 
 model CartItem {
- id String @id @default(cuid())
- cartId String
- cart Cart @relation(fields:[cartId], references:[id], onDelete:Cascade)
- menuItemId String
- menuItem MenuItem @relation(fields:[menuItemId], references:[id])
- quantity Int @default(1)
- @@unique([cartId,menuItemId])
+  id         String   @id @default(cuid())
+  cartId     String
+  cart       Cart     @relation(fields: [cartId], references: [id], onDelete: Cascade)
+  menuItemId String
+  menuItem   MenuItem @relation(fields: [menuItemId], references: [id])
+  quantity   Int      @default(1)
+
+  @@unique([cartId, menuItemId])
 }
 
-model Address{
- id String @id @default(cuid())
- userId String
- user User @relation(fields:[userId], references:[id], onDelete:Cascade)
- label String
- address String
- city String
- orders Order[]
+// ---------------- Address ----------------
+
+model Address {
+  id      String  @id @default(cuid())
+  userId  String
+  user    User    @relation(fields: [userId], references: [id], onDelete: Cascade)
+  label   String
+  address String
+  city    String
+  orders  Order[]
 }
 
-model Order{
- id String @id @default(cuid())
- customerId String
- customer User @relation("CustomerOrders",fields:[customerId],references:[id])
- driverId String?
- driver User? @relation("DriverOrders",fields:[driverId],references:[id])
- addressId String
- address Address @relation(fields:[addressId],references:[id])
- total Float
- status OrderStatus @default(PENDING)
+// ---------------- Orders ----------------
+
+model Order {
+  id           String      @id @default(cuid())
+  customerId   String
+  customer     User        @relation("CustomerOrders", fields: [customerId], references: [id])
+  restaurantId String
+  restaurant   Restaurant  @relation(fields: [restaurantId], references: [id])
+  driverId     String?
+  driver       User?       @relation("DriverOrders", fields: [driverId], references: [id])
+  addressId    String
+  address      Address     @relation(fields: [addressId], references: [id])
+  items        OrderItem[]
+  total        Float
+  status       OrderStatus @default(PENDING)
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@index([status])
+  @@index([restaurantId])
+  @@index([customerId])
 }
-model Favorite{ id String @id @default(cuid()) userId String menuItemId String user User @relation(fields:[userId],references:[id]) menuItem MenuItem @relation(fields:[menuItemId],references:[id]) @@unique([userId,menuItemId])}
-model Review{ id String @id @default(cuid()) userId String restaurantId String rating Int comment String? user User @relation(fields:[userId],references:[id]) restaurant Restaurant @relation(fields:[restaurantId],references:[id])}
-model Notification{ id String @id @default(cuid()) userId String user User @relation(fields:[userId],references:[id]) title String message String isRead Boolean @default(false)}
-enum RequestStatus {PENDING APPROVED REJECTED}
-model RoleRequest{ id String @id @default(cuid()) userId String user User @relation(fields:[userId],references:[id]) requestedRole Role status RequestStatus @default(PENDING)}
+
+model OrderItem {
+  id           String   @id @default(cuid())
+  orderId      String
+  order        Order    @relation(fields: [orderId], references: [id], onDelete: Cascade)
+  menuItemId   String
+  menuItem     MenuItem @relation(fields: [menuItemId], references: [id])
+  quantity     Int
+  priceAtOrder Float // snapshot of price at time of order, in case menu price changes later
+}
+
+// ---------------- Favorites, Reviews, Notifications ----------------
+
+model Favorite {
+  id         String   @id @default(cuid())
+  userId     String
+  menuItemId String
+  user       User     @relation(fields: [userId], references: [id])
+  menuItem   MenuItem @relation(fields: [menuItemId], references: [id])
+  createdAt  DateTime @default(now())
+
+  @@unique([userId, menuItemId])
+}
+
+model Review {
+  id           String     @id @default(cuid())
+  userId       String
+  restaurantId String
+  rating       Int
+  comment      String?
+  user         User       @relation(fields: [userId], references: [id])
+  restaurant   Restaurant @relation(fields: [restaurantId], references: [id])
+  createdAt    DateTime   @default(now())
+}
+
+model Notification {
+  id        String   @id @default(cuid())
+  userId    String
+  user      User     @relation(fields: [userId], references: [id])
+  title     String
+  message   String
+  isRead    Boolean  @default(false)
+  createdAt DateTime @default(now())
+}
+
+// ---------------- Role Requests ----------------
+
+model RoleRequest {
+  id            String         @id @default(cuid())
+  userId        String
+  user          User           @relation(fields: [userId], references: [id])
+  requestedRole Role
+  status        RequestStatus  @default(PENDING)
+  extraData     Json // vehicle info for DRIVER, restaurant info for PROVIDER
+  createdAt     DateTime       @default(now())
+}
