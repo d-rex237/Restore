@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { forwardRef, useState } from "react";
 import { MenuItem } from "@/lib/types";
 import { useCart } from "@/lib/cart-context";
 import { Clock } from "lucide-react";

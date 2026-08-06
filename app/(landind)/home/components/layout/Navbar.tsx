@@ -44,57 +44,56 @@ export default function Navbar() {
   return (
     <header className="sticky top-0 z-50 w-full border-b border-border bg-background/90 backdrop-blur-md shadow-sm">
       <div className="mx-auto flex max-w-7xl items-center justify-between px-6 py-4">
-        
         {/* Logo */}
         <Logo />
 
         {/* Desktop Navigation */}
         <nav className="hidden lg:flex items-center gap-8">
-          <Link 
-            href="/" 
+          <Link
+            href="/"
             className={`font-medium transition-colors ${
-              isActive("/") 
-                ? "text-primary border-b-2 border-primary pb-1" 
+              isActive("/")
+                ? "text-primary border-b-2 border-primary pb-1"
                 : "text-foreground/80 hover:text-primary"
             }`}
           >
             Home
           </Link>
-          <Link 
-            href="/menu" 
+          <Link
+            href="/home/menu"
             className={`font-medium transition-colors ${
-              isActive("/menu") 
-                ? "text-primary border-b-2 border-primary pb-1" 
+              isActive("/landing/home/menu")
+                ? "text-primary border-b-2 border-primary pb-1"
                 : "text-foreground/80 hover:text-primary"
             }`}
           >
             Menu
           </Link>
-          <Link 
-            href="/about" 
+          <Link
+            href="/home/about"
             className={`font-medium transition-colors ${
-              isActive("/about") 
-                ? "text-primary border-b-2 border-primary pb-1" 
+              isActive("/landing/home/about")
+                ? "text-primary border-b-2 border-primary pb-1"
                 : "text-foreground/80 hover:text-primary"
             }`}
           >
             About
           </Link>
-          <Link 
-            href="/services" 
+          <Link
+            href="/home/services"
             className={`font-medium transition-colors ${
-              isActive("/services") 
-                ? "text-primary border-b-2 border-primary pb-1" 
+              isActive("/home/services")
+                ? "text-primary border-b-2 border-primary pb-1"
                 : "text-foreground/80 hover:text-primary"
             }`}
           >
             Services
           </Link>
-          <Link 
-            href="/contact" 
+          <Link
+            href="/home/contact"
             className={`font-medium transition-colors ${
-              isActive("/contact") 
-                ? "text-primary border-b-2 border-primary pb-1" 
+              isActive("/home/contact")
+                ? "text-primary border-b-2 border-primary pb-1"
                 : "text-foreground/80 hover:text-primary"
             }`}
           >
@@ -104,9 +103,8 @@ export default function Navbar() {
 
         {/* Right Section */}
         <div className="flex items-center gap-4">
-          
           {/* ✅ CART ICON - Toggles the Cart Sidebar */}
-          <button 
+          <button
             onClick={toggleCart}
             className="hidden sm:block relative rounded-full border border-border p-3 hover:border-primary hover:text-primary transition text-foreground/80"
           >
@@ -115,9 +113,9 @@ export default function Navbar() {
               {getCartCount()}
             </span>
           </button>
-          
+
           {/* Search Button */}
-          <button 
+          <button
             onClick={scrollToHeroSearch}
             className="hidden sm:block rounded-full border border-border p-3 hover:border-primary hover:text-primary transition text-foreground/80"
           >
@@ -130,7 +128,11 @@ export default function Navbar() {
               onClick={() => setTheme(theme === "dark" ? "light" : "dark")}
               className="rounded-full p-2 border border-border hover:border-primary hover:text-primary transition flex items-center justify-center text-foreground/80"
             >
-              {theme === "dark" ? <FaSun className="w-4 h-4" /> : <FaMoon className="w-4 h-4" />}
+              {theme === "dark" ? (
+                <FaSun className="w-4 h-4" />
+              ) : (
+                <FaMoon className="w-4 h-4" />
+              )}
             </button>
           )}
 
@@ -146,21 +148,59 @@ export default function Navbar() {
             onClick={() => setIsMenuOpen(!isMenuOpen)}
             className="lg:hidden flex flex-col gap-1.5 p-2 cursor-pointer hover:bg-muted/50 rounded-lg transition-colors"
           >
-            <span className={`block h-0.5 w-6 bg-foreground transition-all duration-300 ${isMenuOpen ? "rotate-45 translate-y-2" : ""}`} />
-            <span className={`block h-0.5 w-6 bg-foreground transition-all duration-300 ${isMenuOpen ? "opacity-0" : ""}`} />
-            <span className={`block h-0.5 w-6 bg-foreground transition-all duration-300 ${isMenuOpen ? "-rotate-45 -translate-y-2" : ""}`} />
+            <span
+              className={`block h-0.5 w-6 bg-foreground transition-all duration-300 ${isMenuOpen ? "rotate-45 translate-y-2" : ""}`}
+            />
+            <span
+              className={`block h-0.5 w-6 bg-foreground transition-all duration-300 ${isMenuOpen ? "opacity-0" : ""}`}
+            />
+            <span
+              className={`block h-0.5 w-6 bg-foreground transition-all duration-300 ${isMenuOpen ? "-rotate-45 -translate-y-2" : ""}`}
+            />
           </button>
         </div>
       </div>
 
       {/* Mobile Menu */}
-      <div className={`lg:hidden overflow-hidden transition-all duration-300 ${isMenuOpen ? "max-h-screen opacity-100" : "max-h-0 opacity-0"}`}>
+      <div
+        className={`lg:hidden overflow-hidden transition-all duration-300 ${isMenuOpen ? "max-h-screen opacity-100" : "max-h-0 opacity-0"}`}
+      >
         <nav className="flex flex-col gap-5 px-6 py-6 bg-background border-t border-border">
-          <Link href="/" onClick={closeMenu} className={`font-medium transition-colors ${isActive("/") ? "text-primary" : "text-foreground/80 hover:text-primary"}`}>Home</Link>
-          <Link href="/menu" onClick={closeMenu} className={`font-medium transition-colors ${isActive("/menu") ? "text-primary" : "text-foreground/80 hover:text-primary"}`}>Menu</Link>
-          <Link href="/about" onClick={closeMenu} className={`font-medium transition-colors ${isActive("/about") ? "text-primary" : "text-foreground/80 hover:text-primary"}`}>About</Link>
-          <Link href="/services" onClick={closeMenu} className={`font-medium transition-colors ${isActive("/services") ? "text-primary" : "text-foreground/80 hover:text-primary"}`}>Services</Link>
-          <Link href="/contact" onClick={closeMenu} className={`font-medium transition-colors ${isActive("/contact") ? "text-primary" : "text-foreground/80 hover:text-primary"}`}>Contact</Link>
+          <Link
+            href="/"
+            onClick={closeMenu}
+            className={`font-medium transition-colors ${isActive("/") ? "text-primary" : "text-foreground/80 hover:text-primary"}`}
+          >
+            Home
+          </Link>
+          <Link
+            href="/menu"
+            onClick={closeMenu}
+            className={`font-medium transition-colors ${isActive("/menu") ? "text-primary" : "text-foreground/80 hover:text-primary"}`}
+          >
+            Menu
+          </Link>
+          <Link
+            href="/about"
+            onClick={closeMenu}
+            className={`font-medium transition-colors ${isActive("/about") ? "text-primary" : "text-foreground/80 hover:text-primary"}`}
+          >
+            About
+          </Link>
+          <Link
+            href="/services"
+            onClick={closeMenu}
+            className={`font-medium transition-colors ${isActive("/services") ? "text-primary" : "text-foreground/80 hover:text-primary"}`}
+          >
+            Services
+          </Link>
+          <Link
+            href="/contact"
+            onClick={closeMenu}
+            className={`font-medium transition-colors ${isActive("/contact") ? "text-primary" : "text-foreground/80 hover:text-primary"}`}
+          >
+            Contact
+          </Link>
         </nav>
       </div>
     </header>
