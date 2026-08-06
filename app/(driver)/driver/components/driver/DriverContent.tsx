@@ -257,7 +257,7 @@ const DriverContent: React.FC = () => {
           <div className="flex items-center justify-between">
             <div>
               <p className="text-sm text-gray-500">Today's Earnings</p>
-              <p className="text-2xl font-bold text-gray-800">$41,350 FCFA</p>
+              <p className="text-2xl font-bold text-gray-800">41,350 FCFA</p>
             </div>
             <div className="w-12 h-12 bg-green-100 rounded-xl flex items-center justify-center">
               <GrCurrency className="w-6 h-6 text-green-600" />

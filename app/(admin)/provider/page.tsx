@@ -10,7 +10,7 @@ import {
   Clock3,
 } from "lucide-react";
 import { mockOrders, mockUsers } from "@/lib/mock-data";
-import ProviderChart from "@/components/provider/providerChart";
+import ProviderChart from "@/app/(landind)/home/provider/providerChart";
 
 function ProviderDash() {
   const currentUser = mockUsers.find((u) => u.role === "provider");

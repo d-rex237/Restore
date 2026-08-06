@@ -8,13 +8,13 @@ import {
   CardFooter,
   CardHeader,
   CardTitle,
-} from "@/components/ui/card";
+} from "@/app/(landind)/home/ui/card";
 import {
   ChartContainer,
   ChartTooltip,
   ChartTooltipContent,
   type ChartConfig,
-} from "@/components/ui/chart";
+} from "@/app/(landind)/home/ui/chart";
 import { mockOrders } from "@/lib/mock-data"; // adjust the path
 
 export const description = "A linear line chart";

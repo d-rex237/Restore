@@ -156,18 +156,6 @@ export default function BecomeVendorPage() {
               />
             </div>
 
-            <div className="border-2 border-dashed border-gray-300 rounded-xl p-6 text-center hover:border-green-400 transition-colors">
-              <Upload className="w-8 h-8 text-gray-400 mx-auto mb-2" />
-              <p className="text-sm text-gray-600">Upload restaurant image (optional)</p>
-              <input type="file" accept="image/*" className="hidden" id="restaurant-image" />
-              <label 
-                htmlFor="restaurant-image"
-                className="mt-2 inline-block px-4 py-2 text-sm bg-gray-100 hover:bg-gray-200 rounded-lg cursor-pointer transition-colors"
-              >
-                Choose Image
-              </label>
-            </div>
-
             <button
               type="submit"
               disabled={isSubmitting}

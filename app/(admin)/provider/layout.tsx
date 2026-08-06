@@ -1,4 +1,4 @@
-import NavLinks from "@/components/navLink";
+import NavLinks from "@/app/(landind)/home/components/layout/navLink";
 
 export default function AdminLayout({
   children,

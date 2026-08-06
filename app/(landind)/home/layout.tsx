@@ -3,7 +3,7 @@
 import { usePathname } from "next/navigation"; // ✅ Import this
 import { Geist, Geist_Mono, Inter } from "next/font/google";
 import "./globals.css";
-import Navbar from "@/landing/home/components/layout/Navbar";
+import Navbar from "./components/layout/Navbar";
 import Footer from "./components/layout/Footer";
 import { Providers } from "./providers";
 import CartSidebar from "./components/layout/CartSidebar";
@@ -28,7 +28,8 @@ export default function RootLayout({
   const pathname = usePathname(); // ✅ Get current page URL
 
   // ✅ If the user is on the old_driver dashboard, hide the Navbar & Footer
-  const isDriverDashboard = pathname === "/old_driver" || pathname.startsWith("/old_driver/");
+  const isDriverDashboard =
+    pathname === "/old_driver" || pathname.startsWith("/old_driver/");
 
   return (
     <html
@@ -38,15 +39,8 @@ export default function RootLayout({
     >
       <body className="min-h-full flex flex-col bg-background text-foreground transition-colors duration-300">
         <Providers>
-          {/* ✅ Show Navbar only if NOT on the Driver Dashboard */}
-          {!isDriverDashboard && <Navbar />}
-          
           {children}
-          
-          {/* ✅ Show Footer only if NOT on the Driver Dashboard */}
-          {!isDriverDashboard && <Footer />}
-          
-          {/* The CartSidebar stays global because drivers don't use it */}
+
           <CartSidebar />
         </Providers>
       </body>
