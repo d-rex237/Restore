@@ -2,196 +2,294 @@
 
 import Link from "next/link";
 import Image from "next/image";
-import { FaTruck, FaClock, FaHeart, FaUsers, FaStore, FaShieldAlt, FaStar } from "react-icons/fa";
-import { useEffect, useState } from "react";
+import {
+  FaTruck,
+  FaStore,
+  FaLocationDot,
+  FaUtensils,
+  FaPlay,
+  FaShareNodes,
+  FaChevronLeft,
+  FaChevronRight,
+} from "react-icons/fa6";
+import { useEffect, useRef, useState } from "react";
 import AOS from "aos";
 import "aos/dist/aos.css";
 
+const FEATURES = [
+  {
+    icon: FaTruck,
+    title: "Fast Delivery",
+    description: "Hot meals reach your door in 30 minutes or less, every time.",
+  },
+  {
+    icon: FaStore,
+    title: "Verified Vendors",
+    description: "Every restaurant on Restor is vetted for quality and hygiene.",
+  },
+  {
+    icon: FaLocationDot,
+    title: "Live Tracking",
+    description: "Watch your rider move from kitchen to doorstep in real time.",
+  },
+  {
+    icon: FaUtensils,
+    title: "Wide Selection",
+    description: "From street food to fine dining, all in one app.",
+  },
+];
+
+const TEAM = [
+  {
+    name: "Brandon Mane",
+    role: "Frontend & UI",
+    image: "/images/brandon.jpeg",
+  },
+  {
+    name: "D-ReX",
+    role: "Backend & Admin",
+    image: "/images/drex.jpg",
+  },
+  {
+    name: "Neba Telrah",
+    role: "Vendor & Driver Backend",
+    image: "/images/neba.jpg",
+  },
+  {
+    name: "Nde Ndoh",
+    role: "QA & Support",
+    image: "/images/ndo.jpg",
+  },
+];
+
+// Repeating dot texture used as a quiet signature motif across the dark
+// hero and the team panel, echoing Restor's "pin drop" delivery marker.
+const dotPattern = {
+  backgroundImage:
+    "radial-gradient(currentColor 1px, transparent 1px)",
+  backgroundSize: "18px 18px",
+};
+
 export default function AboutPage() {
   const [mounted, setMounted] = useState(false);
+  const teamTrackRef = useRef<HTMLDivElement | null>(null);
 
   useEffect(() => {
     setMounted(true);
-    AOS.init({
-      duration: 800,
-      once: true,
-    });
+    AOS.init({ duration: 800, once: true });
   }, []);
 
   if (!mounted) return null;
 
+  const scrollTeam = (direction: "left" | "right") => {
+    const track = teamTrackRef.current;
+    if (!track) return;
+    const amount = track.clientWidth * 0.8;
+    track.scrollBy({
+      left: direction === "left" ? -amount : amount,
+      behavior: "smooth",
+    });
+  };
+
   return (
-    <div className="min-h-screen bg-background pt-10 pb-20">
-      <div className="max-w-6xl mx-auto px-6 lg:px-10">
-        
-        {/* ================= HERO HEADER ================= */}
-        <div data-aos="fade-down" className="text-center mb-16">
-          <div className="inline-flex items-center gap-2 bg-primary/10 text-primary px-3 py-1 rounded-full text-xs font-semibold mb-4">
-            🇨🇲 About Restore
-          </div>
-          <h1 className="text-3xl md:text-5xl font-bold text-foreground mb-3 tracking-tight">
-            Built for <span className="text-primary">Cameroon</span>
+    <div className="min-h-screen bg-background">
+      {/* ================= HERO / BREADCRUMB ================= */}
+      <div className="relative overflow-hidden bg-gray-950 py-20 text-white">
+        <div
+          className="absolute inset-0 text-white/[0.06]"
+          style={dotPattern}
+          aria-hidden="true"
+        />
+        <div className="absolute inset-0 bg-gradient-to-t from-gray-950 via-gray-950/40 to-gray-950/70" />
+
+        <div className="relative mx-auto max-w-6xl px-6 text-center lg:px-10">
+          <h1 className="font-serif text-4xl italic tracking-tight md:text-6xl">
+            About Us
           </h1>
-          <p className="text-base text-foreground/70 max-w-2xl mx-auto">
-            We're on a mission to connect hungry customers with the best local restaurants 
-            through technology, speed, and a lot of heart.
-          </p>
-        </div>
-
-        {/* ================= MISSION & IMAGE ================= */}
-        <div className="grid md:grid-cols-2 gap-8 mb-16 items-center">
-          <div data-aos="fade-right" className="order-2 md:order-1">
-            <h2 className="text-2xl font-bold text-foreground mb-3">Our Mission</h2>
-            <p className="text-foreground/70 text-sm leading-relaxed mb-3">
-              Restor was born to bridge the gap between local restaurants and hungry customers. 
-              We believe that <strong>great food should be just a tap away</strong>.
-            </p>
-            <p className="text-foreground/70 text-sm leading-relaxed mb-4">
-              From Bamenda to Douala, we partner with the best local vendors to bring authentic 
-              Cameroonian flavors directly to your doorstep.
-            </p>
-            <div className="flex flex-wrap gap-2">
-              <div className="flex items-center gap-1.5 bg-muted/50 px-3 py-1.5 rounded-full">
-                <FaHeart className="text-primary text-xs" /> <span className="text-[10px]">Local First</span>
-              </div>
-              <div className="flex items-center gap-1.5 bg-muted/50 px-3 py-1.5 rounded-full">
-                <FaTruck className="text-primary text-xs" /> <span className="text-[10px]">On-Time Delivery</span>
-              </div>
-              <div className="flex items-center gap-1.5 bg-muted/50 px-3 py-1.5 rounded-full">
-                <FaShieldAlt className="text-primary text-xs" /> <span className="text-[10px]">Trusted by 20k+</span>
-              </div>
-            </div>
-          </div>
-
-          <div data-aos="fade-left" className="order-1 md:order-2 relative h-56 md:h-72 rounded-2xl overflow-hidden shadow-md border border-border/30 bg-gradient-to-br from-primary/10 to-orange-500/10">
-            {/* Placeholder for a Chef/Kitchen image */}
-            <div className="absolute inset-0 flex items-center justify-center text-7xl text-foreground/20">
-              🍛
-            </div>
-            <p className="absolute bottom-4 left-0 right-0 text-center text-foreground/40 text-[10px] font-medium px-4">
-              Restore HQ — Bamenda, Cameroon
-            </p>
-          </div>
-        </div>
-
-        {/* ================= CORE VALUES ================= */}
-        <div data-aos="fade-up" className="mb-16">
-          <h2 className="text-2xl font-bold text-center mb-3 text-foreground">Why Restore</h2>
-          <p className="text-center text-foreground/60 text-sm mb-8 max-w-2xl mx-auto">
-            Three pillars that define everything we do.
-          </p>
-
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-            <div className="p-6 rounded-2xl border border-border/30 bg-card/50 shadow-sm hover:shadow-md transition-all duration-300">
-              <div className="w-10 h-10 bg-gradient-to-r from-primary/20 to-orange-500/20 rounded-full flex items-center justify-center text-primary text-xl mb-3">
-                <FaTruck />
-              </div>
-              <h3 className="text-base font-semibold mb-1">Speed</h3>
-              <p className="text-sm text-foreground/60">We get your food to you while it's still hot, fresh, and full of flavor.</p>
-            </div>
-
-            <div className="p-6 rounded-2xl border border-border/30 bg-card/50 shadow-sm hover:shadow-md transition-all duration-300">
-              <div className="w-10 h-10 bg-gradient-to-r from-primary/20 to-orange-500/20 rounded-full flex items-center justify-center text-primary text-xl mb-3">
-                <FaStore />
-              </div>
-              <h3 className="text-base font-semibold mb-1">Partnership</h3>
-              <p className="text-sm text-foreground/60">We work closely with local vendors to ensure every dish is authentic and delicious.</p>
-            </div>
-
-            <div className="p-6 rounded-2xl border border-border/30 bg-card/50 shadow-sm hover:shadow-md transition-all duration-300">
-              <div className="w-10 h-10 bg-gradient-to-r from-primary/20 to-orange-500/20 rounded-full flex items-center justify-center text-primary text-xl mb-3">
-                <FaHeart />
-              </div>
-              <h3 className="text-base font-semibold mb-1">Community</h3>
-              <p className="text-sm text-foreground/60">We're built in Cameroon, for Cameroon. Every order supports a local business.</p>
-            </div>
-          </div>
-        </div>
-
-        {/* ================= MEET THE TEAM ================= */}
-        <div data-aos="fade-up" className="mb-16">
-          <h2 className="text-2xl font-bold text-center mb-3 text-foreground">The Team Behind Restore</h2>
-          <p className="text-center text-foreground/60 text-sm mb-8 max-w-2xl mx-auto">
-            Passionate developers and designers building the future of food delivery in Cameroon.
-          </p>
-
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
-            {/* Team Member 1 - Brandon */}
-            <div className="p-4 rounded-2xl border border-border/30 bg-card/50 shadow-sm hover:shadow-md transition-all duration-300 text-center">
-              <div className="relative w-16 h-16 rounded-full mx-auto mb-2 overflow-hidden">
-                <Image src="/images/brandon.jpeg" alt="Brandon" fill className="object-cover" />
-              </div>
-              <h4 className="text-sm font-bold text-foreground">Brandon Mane</h4>
-              <p className="text-xs text-foreground/60">Frontend & UI</p>
-              <p className="text-[10px] text-foreground/50 mt-1">Next.js, Tailwind CSS, AOS</p>
-            </div>
-
-            {/* Team Member 2 - D-ReX */}
-            <div className="p-4 rounded-2xl border border-border/30 bg-card/50 shadow-sm hover:shadow-md transition-all duration-300 text-center">
-              <div className="relative w-16 h-16 rounded-full mx-auto mb-2 overflow-hidden">
-                <Image src="/images/drex.jpg" alt="D-ReX" fill className="object-cover" />
-              </div>
-              <h4 className="text-sm font-bold text-foreground">D-ReX</h4>
-              <p className="text-xs text-foreground/60">Backend & Admin</p>
-              <p className="text-[10px] text-foreground/50 mt-1">PostgreSQL, Prisma, Clerk</p>
-            </div>
-
-            {/* Team Member 3 - Neba */}
-            <div className="p-4 rounded-2xl border border-border/30 bg-card/50 shadow-sm hover:shadow-md transition-all duration-300 text-center">
-              <div className="relative w-16 h-16 rounded-full mx-auto mb-2 overflow-hidden">
-                <Image src="/images/neba.jpg" alt="Neba" fill className="object-cover" />
-              </div>
-              <h4 className="text-sm font-bold text-foreground">Neba Telrah</h4>
-              <p className="text-xs text-foreground/60">Vendor & Driver Backend</p>
-              <p className="text-[10px] text-foreground/50 mt-1">APIs, Onboarding, State Machines</p>
-            </div>
-
-            {/* Team Member 4 - Nde */}
-            <div className="p-4 rounded-2xl border border-border/30 bg-card/50 shadow-sm hover:shadow-md transition-all duration-300 text-center">
-              <div className="relative w-16 h-16 rounded-full mx-auto mb-2 overflow-hidden">
-                <Image src="/images/ndo.jpg" alt="Nde" fill className="object-cover" />
-              </div>
-              <h4 className="text-sm font-bold text-foreground">Nde Ndoh</h4>
-              <p className="text-xs text-foreground/60">QA & Support</p>
-              <p className="text-[10px] text-foreground/50 mt-1">Testing, Bug Tracking, UX Polish</p>
-            </div>
-          </div>
-        </div>
-
-        {/* ================= STATS / TRUST SECTION ================= */}
-        <div data-aos="fade-up" className="mb-16">
-          <div className="grid grid-cols-3 gap-4 max-w-2xl mx-auto text-center">
-            <div className="p-4 rounded-2xl border border-border/30 bg-card/50">
-              <div className="text-2xl font-bold text-primary">50+</div>
-              <p className="text-[10px] text-foreground/60">Restaurants</p>
-            </div>
-            <div className="p-4 rounded-2xl border border-border/30 bg-card/50">
-              <div className="text-2xl font-bold text-primary">20k+</div>
-              <p className="text-[10px] text-foreground/60">Orders Delivered</p>
-            </div>
-            <div className="p-4 rounded-2xl border border-border/30 bg-card/50">
-              <div className="text-2xl font-bold text-primary">4.9</div>
-              <p className="text-[10px] text-foreground/60">Avg. Rating</p>
-            </div>
-          </div>
-        </div>
-
-        {/* ================= CALL TO ACTION ================= */}
-        <div data-aos="fade-up" className="relative rounded-2xl overflow-hidden bg-gradient-to-r from-primary to-orange-500 p-8 md:p-10 text-center text-white shadow-lg">
-          <h2 className="text-2xl md:text-3xl font-bold mb-2">Ready to taste Cameroon?</h2>
-          <p className="text-white/80 text-sm mb-5 max-w-xl mx-auto">
-            Order from your favorite restaurants today and get delicious food delivered straight to your door.
-          </p>
-          <div className="flex flex-col sm:flex-row gap-3 justify-center">
-            <Link href="/menu" className="bg-white text-primary text-sm font-bold py-2.5 px-6 rounded-full hover:bg-gray-100 transition shadow-md">
-              Browse Menu
+          <div className="mt-5 flex items-center justify-center gap-2 text-sm text-white/60">
+            <Link href="/" className="hover:text-primary transition">
+              Home
             </Link>
-            <Link href="/contact" className="border border-white text-white text-sm font-bold py-2.5 px-6 rounded-full hover:bg-white hover:text-primary transition">
-              Talk to Us
-            </Link>
+            <span>/</span>
+            <span className="text-primary">About Us</span>
+          </div>
+        </div>
+      </div>
+
+      <div className="mx-auto max-w-6xl px-6 pb-20 lg:px-10">
+        {/* ================= INVITE + BANNER ================= */}
+        <div data-aos="fade-up" className="pt-16 text-center">
+          <h2 className="font-serif text-2xl italic text-foreground md:text-4xl">
+            We Invite You to Taste Cameroon
+          </h2>
+          <p className="mx-auto mt-4 max-w-2xl text-sm leading-7 text-foreground/60">
+            Restor was born to bridge the gap between local restaurants and
+            hungry customers. From Bamenda to Douala, we partner with the
+            best local vendors to bring authentic Cameroonian flavors
+            straight to your doorstep — quickly, and with a lot of heart.
+          </p>
+        </div>
+
+        <div
+          data-aos="fade-up"
+          className="relative mt-10 h-56 overflow-hidden rounded-2xl border border-border/30 shadow-lg md:h-[420px]"
+        >
+          <Image
+            src="/images/hero-food.png"
+            alt="Inside a Restor partner kitchen"
+            fill
+            className="object-cover"
+          />
+          <div className="absolute inset-0 bg-black/30" />
+          <button
+            type="button"
+            aria-label="Play Restor story video"
+            className="absolute left-1/2 top-1/2 flex h-16 w-16 -translate-x-1/2 -translate-y-1/2 items-center justify-center rounded-full bg-primary text-primary-foreground shadow-xl transition hover:scale-105 hover:bg-primary-hover"
+          >
+            <FaPlay className="ml-1 h-5 w-5" />
+          </button>
+        </div>
+
+        {/* ================= WHAT WE DO ================= */}
+        <div data-aos="fade-up" className="mt-20 text-center">
+          <h2 className="font-serif text-2xl italic text-foreground md:text-4xl">
+            What We Do
+          </h2>
+
+          <div className="mt-10 grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-4">
+            {FEATURES.map(({ icon: Icon, title, description }) => (
+              <div
+                key={title}
+                className="rounded-2xl border border-border/30 bg-card/50 p-6 text-center shadow-sm transition hover:-translate-y-1 hover:shadow-md"
+              >
+                <div className="mx-auto mb-4 flex h-14 w-14 items-center justify-center rounded-full bg-primary text-xl text-primary-foreground">
+                  <Icon />
+                </div>
+                <h3 className="text-base font-semibold text-foreground">
+                  {title}
+                </h3>
+                <p className="mt-2 text-xs leading-6 text-foreground/60">
+                  {description}
+                </p>
+              </div>
+            ))}
           </div>
         </div>
 
+        {/* ================= TEAM PANEL ================= */}
+        <div data-aos="fade-up" className="relative mt-20">
+          <div
+            className="absolute inset-0 rounded-3xl bg-primary/5 text-primary/[0.07]"
+            style={dotPattern}
+            aria-hidden="true"
+          />
+
+          <div className="relative rounded-3xl px-6 py-14 md:px-12">
+            <h2 className="text-center font-serif text-2xl italic text-foreground md:text-4xl">
+              The Team Behind Restor
+            </h2>
+            <p className="mx-auto mt-3 max-w-xl text-center text-sm text-foreground/60">
+              Four developers building the future of food delivery in
+              Cameroon.
+            </p>
+
+            <div className="relative mt-10">
+              <button
+                type="button"
+                onClick={() => scrollTeam("left")}
+                aria-label="Scroll team left"
+                className="absolute left-0 top-1/2 z-10 flex h-10 w-10 -translate-x-4 -translate-y-1/2 items-center justify-center rounded-full bg-primary text-primary-foreground shadow-md transition hover:bg-primary-hover md:-translate-x-5"
+              >
+                <FaChevronLeft className="h-3.5 w-3.5" />
+              </button>
+
+              <div
+                ref={teamTrackRef}
+                className="flex snap-x snap-mandatory gap-5 overflow-x-auto scroll-smooth pb-2 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden"
+              >
+                {TEAM.map((member) => (
+                  <div
+                    key={member.name}
+                    className="w-[calc(50%-10px)] flex-shrink-0 snap-start overflow-hidden rounded-2xl border border-border/30 bg-card shadow-sm sm:w-[calc(33.333%-14px)] lg:w-[calc(25%-15px)]"
+                  >
+                    <div className="relative h-48 w-full">
+                      <Image
+                        src={member.image}
+                        alt={member.name}
+                        fill
+                        className="object-cover"
+                      />
+                    </div>
+                    <div className="relative p-4">
+                      <h4 className="text-sm font-bold text-foreground">
+                        {member.name}
+                      </h4>
+                      <p className="text-xs text-primary">{member.role}</p>
+                      <button
+                        type="button"
+                        aria-label={`View ${member.name}'s profile`}
+                        className="absolute bottom-4 right-4 flex h-8 w-8 items-center justify-center rounded-full border border-border/50 text-foreground/60 transition hover:border-primary hover:text-primary"
+                      >
+                        <FaShareNodes className="h-3 w-3" />
+                      </button>
+                    </div>
+                  </div>
+                ))}
+              </div>
+
+              <button
+                type="button"
+                onClick={() => scrollTeam("right")}
+                aria-label="Scroll team right"
+                className="absolute right-0 top-1/2 z-10 flex h-10 w-10 -translate-y-1/2 translate-x-4 items-center justify-center rounded-full bg-primary text-primary-foreground shadow-md transition hover:bg-primary-hover md:translate-x-5"
+              >
+                <FaChevronRight className="h-3.5 w-3.5" />
+              </button>
+            </div>
+          </div>
+        </div>
+
+        {/* ================= NEWSLETTER ================= */}
+        <div
+          data-aos="fade-up"
+          className="mt-20 grid grid-cols-1 items-center gap-8 rounded-2xl border border-border/30 bg-card/50 p-8 md:grid-cols-[auto,1fr] md:p-12"
+        >
+          <div className="mx-auto flex h-24 w-24 items-center justify-center rounded-full bg-primary/10 text-5xl md:h-32 md:w-32">
+            📬
+          </div>
+
+          <div className="text-center md:text-left">
+            <h2 className="text-2xl font-bold text-foreground">
+              Stay in the Loop
+            </h2>
+            <p className="mt-2 text-sm text-foreground/60">
+              Get notified when new restaurants join Restor and be first to
+              hear about seasonal offers.
+            </p>
+
+            <form
+              onSubmit={(e) => e.preventDefault()}
+              className="mt-5 flex flex-col gap-3 sm:flex-row"
+            >
+              <label htmlFor="newsletter-email" className="sr-only">
+                Email address
+              </label>
+              <input
+                id="newsletter-email"
+                type="email"
+                required
+                placeholder="Enter your email"
+                className="flex-1 rounded-full border border-border bg-background px-5 py-3 text-sm text-foreground outline-none transition focus:border-primary"
+              />
+              <button
+                type="submit"
+                className="rounded-full bg-primary px-8 py-3 text-sm font-semibold text-primary-foreground transition hover:bg-primary-hover"
+              >
+                Subscribe
+              </button>
+            </form>
+          </div>
+        </div>
       </div>
     </div>
   );
