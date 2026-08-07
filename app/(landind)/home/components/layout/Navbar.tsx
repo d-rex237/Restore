@@ -72,7 +72,7 @@ export default function Navbar() {
           <Link
             href="/home/about"
             className={`font-medium transition-colors ${
-              isActive("/landing/home/about")
+              isActive("/home/about")
                 ? "text-primary border-b-2 border-primary pb-1"
                 : "text-foreground/80 hover:text-primary"
             }`}
