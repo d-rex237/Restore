@@ -107,9 +107,6 @@ export default function AboutPage() {
             About Us
           </h1>
           <div className="mt-5 flex items-center justify-center gap-2 text-sm text-white/60">
-            <Link href="/" className="hover:text-primary transition">
-              Home
-            </Link>
             <span>/</span>
             <span className="text-primary">About Us</span>
           </div>
