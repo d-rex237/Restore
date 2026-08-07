@@ -26,7 +26,7 @@ export default function CartPage() {
     <div className="min-h-screen bg-background py-10">
       <div className="max-w-4xl mx-auto px-6 lg:px-10">
         <div className="flex items-center gap-4 mb-8">
-          <Link href="/menu" className="text-foreground/60 hover:text-primary transition">
+          <Link href="/home/menu" className="text-foreground/60 hover:text-primary transition">
             <FaArrowLeft />
           </Link>
           <h1 className="text-3xl font-bold text-foreground">Your Cart</h1>
