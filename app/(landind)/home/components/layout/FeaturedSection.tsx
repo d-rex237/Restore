@@ -142,7 +142,7 @@ export default function FeaturedSection() {
               <h2 className="text-2xl md:text-3xl font-bold text-foreground mb-1 tracking-tight">Popular Dishes</h2>
               <p className="text-sm text-foreground/60">What our customers love most</p>
             </div>
-            <Link href="/menu" className="text-xs font-medium text-primary hover:underline flex items-center gap-1 transition">
+            <Link href="/MenuPage" className="text-xs font-medium text-primary hover:underline flex items-center gap-1 transition">
               View All <FaArrowRight className="w-3 h-3" />
             </Link>
           </div>
@@ -212,7 +212,7 @@ export default function FeaturedSection() {
               </div>
               <div className="mt-3 md:mt-0 flex items-center gap-3">
                 <div className="text-5xl drop-shadow-xl">🍛</div>
-                <Link href="/menu" className="bg-white text-primary font-bold py-2 px-5 rounded-full hover:bg-gray-100 transition text-xs shadow-md">
+                <Link href="/MenuPage" className="bg-white text-primary font-bold py-2 px-5 rounded-full hover:bg-gray-100 transition text-xs shadow-md">
                   Order Now
                 </Link>
               </div>
@@ -261,7 +261,7 @@ export default function FeaturedSection() {
                   <p className="text-xs text-foreground/60 mb-3 line-clamp-2">{dish.desc}</p>
 
                   <Link
-                    href="/menu"
+                    href="/MenuPage"
                     className="bg-gradient-to-r from-primary to-orange-500 text-white text-xs font-semibold py-1.5 px-4 rounded-full hover:opacity-90 transition w-fit shadow-md"
                   >
                     View Menu

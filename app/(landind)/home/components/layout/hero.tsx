@@ -121,7 +121,7 @@ export default function Hero() {
           {/* CTA Buttons */}
           <div data-aos="fade-up" data-aos-delay="300" className="mt-10 flex flex-wrap gap-4 justify-center">
             <Link
-              href="/menu"
+              href="/MenuPage"
               className="bg-gradient-to-r from-primary to-orange-500 text-white px-6 py-3 rounded-full text-sm font-semibold hover:opacity-90 transition flex items-center gap-2 shadow-lg shadow-primary/40 hover:shadow-primary/60"
             >
               Order Now
