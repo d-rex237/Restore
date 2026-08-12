@@ -5,8 +5,15 @@ import { useState, useRef, useEffect } from "react";
 import { usePathname } from "next/navigation";
 import Logo from "./logo";
 import { useTheme } from "next-themes";
-import { FaSun, FaMoon, FaSearch, FaShoppingCart, FaChevronDown } from "react-icons/fa";
+import {
+  FaSun,
+  FaMoon,
+  FaSearch,
+  FaShoppingCart,
+  FaChevronDown,
+} from "react-icons/fa";
 import { useCart } from "@/lib/cart-context";
+import { Show, SignInButton, SignUpButton, UserButton } from "@clerk/nextjs";
 
 export default function Navbar() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -30,9 +37,9 @@ export default function Navbar() {
   };
 
   const scrollToHeroSearch = () => {
-    window.scrollTo({ top: 0, behavior: 'smooth' });
+    window.scrollTo({ top: 0, behavior: "smooth" });
     setTimeout(() => {
-      const heroInput = document.getElementById('hero-search-input');
+      const heroInput = document.getElementById("hero-search-input");
       if (heroInput) {
         heroInput.focus();
       }
@@ -135,14 +142,28 @@ export default function Navbar() {
               )}
             </button>
           )}
+          <Show when="signed-out">
+            <SignInButton mode="modal">
+              <button className="hidden sm:block rounded-lg border border-border px-5 py-2.5 font-semibold text-foreground/80 hover:border-primary hover:text-primary transition">
+                Sign In
+              </button>
+            </SignInButton>
+            <SignUpButton mode="modal">
+              <button className="hidden sm:block rounded-lg bg-primary px-6 py-2.5 font-semibold text-primary-foreground hover:bg-primary-hover transition">
+                Sign Up
+              </button>
+            </SignUpButton>
+          </Show>
 
-          <Link
-            href="/sign-in"
-            className="hidden sm:block rounded-lg bg-primary px-6 py-2.5 font-semibold text-primary-foreground hover:bg-primary-hover transition"
-          >
-            Sign In
-          </Link>
-
+          <Show when="signed-in">
+            <UserButton
+              appearance={{
+                elements: {
+                  avatarBox: "w-9 h-9",
+                },
+              }}
+            />
+          </Show>
           {/* Hamburger Button */}
           <button
             onClick={() => setIsMenuOpen(!isMenuOpen)}
