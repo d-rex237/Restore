@@ -17,7 +17,7 @@ export default function OrderConfirmation() {
 
       <div className="flex flex-col sm:flex-row gap-4">
         <Link 
-          href="/menu"
+          href="/home/menu"
           className="bg-primary text-white px-6 py-3 rounded-full font-medium hover:opacity-90 transition"
         >
           Continue Shopping

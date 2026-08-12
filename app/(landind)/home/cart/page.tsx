@@ -15,7 +15,7 @@ export default function CartPage() {
         <FaShoppingCart className="text-6xl text-foreground/20 mb-4" />
         <h2 className="text-2xl font-bold text-foreground mb-2">Your cart is empty</h2>
         <p className="text-foreground/60 mb-6">Looks like you haven't added any items yet.</p>
-        <Link href="/menu" className="bg-primary text-white px-6 py-3 rounded-full font-semibold hover:bg-primary-hover transition">
+        <Link href="/home/menu" className="bg-primary text-white px-6 py-3 rounded-full font-semibold hover:bg-primary-hover transition">
           Browse Menu
         </Link>
       </div>
@@ -26,7 +26,7 @@ export default function CartPage() {
     <div className="min-h-screen bg-background py-10">
       <div className="max-w-4xl mx-auto px-6 lg:px-10">
         <div className="flex items-center gap-4 mb-8">
-          <Link href="/menu" className="text-foreground/60 hover:text-primary transition">
+          <Link href="/home/menu" className="text-foreground/60 hover:text-primary transition">
             <FaArrowLeft />
           </Link>
           <h1 className="text-3xl font-bold text-foreground">Your Cart</h1>
