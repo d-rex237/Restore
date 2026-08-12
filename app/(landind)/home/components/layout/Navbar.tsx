@@ -14,6 +14,7 @@ import {
 } from "react-icons/fa";
 import { useCart } from "@/lib/cart-context";
 import { Show, SignInButton, SignUpButton, UserButton } from "@clerk/nextjs";
+import ProfileAvatar from "@/components/ProfileAvatar";
 
 export default function Navbar() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -156,13 +157,7 @@ export default function Navbar() {
           </Show>
 
           <Show when="signed-in">
-            <UserButton
-              appearance={{
-                elements: {
-                  avatarBox: "w-9 h-9",
-                },
-              }}
-            />
+            <ProfileAvatar />
           </Show>
           {/* Hamburger Button */}
           <button
