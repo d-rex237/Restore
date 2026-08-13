@@ -7,40 +7,36 @@ import {
 } from "next/font/google";
 
 import "./globals.css";
-
-import { Providers } from "./(landind)/home/providers";
+import { ClerkProvider } from "@clerk/nextjs";
+import { ThemeProvider } from "next-themes";
+import { cn } from "@/lib/utils";
 import { CartProvider } from "@/lib/cart-context";
-
+import UserSync from "@/components/userSync";
 
 const inter = Inter({
   subsets: ["latin"],
   variable: "--font-sans",
 });
 
-
 const geistSans = Geist({
   variable: "--font-geist-sans",
   subsets: ["latin"],
 });
-
 
 const geistMono = Geist_Mono({
   variable: "--font-geist-mono",
   subsets: ["latin"],
 });
 
-
 const spaceGrotesk = Space_Grotesk({
   variable: "--font-space-grotesk",
   subsets: ["latin"],
 });
 
-
 export const metadata: Metadata = {
-  title: "Restore",
-  description: "Restore — Fresh food, delivered with care.",
+  title: "Restor",
+  description: "Multi-role food delivery platform",
 };
-
 
 export default function RootLayout({
   children,
@@ -48,18 +44,19 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html
-      lang="en"
-      suppressHydrationWarning
-      className={`${geistSans.variable} ${geistMono.variable} ${inter.variable} ${spaceGrotesk.variable} h-full antialiased`}
-    >
-      <body className="min-h-full flex flex-col">
-        <Providers>
-          <CartProvider>
-            {children}
-          </CartProvider>
-        </Providers>
-      </body>
-    </html>
+    <ClerkProvider>
+      <html
+        lang="en"
+        className={`${geistSans.variable} ${geistMono.variable} h-full antialiased`}
+        suppressHydrationWarning
+      >
+        <body className="min-h-full flex flex-col">
+          <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
+            <UserSync />
+            <CartProvider>{children}</CartProvider>
+          </ThemeProvider>
+        </body>
+      </html>
+    </ClerkProvider>
   );
 }
