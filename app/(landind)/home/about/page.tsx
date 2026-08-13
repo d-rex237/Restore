@@ -216,7 +216,7 @@ export default function AboutPage() {
             {/* Description */}
 
             <p className="mx-auto mt-6 max-w-2xl text-sm leading-7 text-primary-foreground/80 md:text-base">
-              Discover the story behind Restor and our mission to connect
+              Discover the story behind Restor and our mission to connect hungry
               people with amazing food and local restaurants across Cameroon.
             </p>
 

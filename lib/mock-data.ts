@@ -708,3 +708,75 @@ export function getOrderStatusCounts() {
     {} as Record<OrderStatus, number>,
   );
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+// ---------------- Driver Profiles (mock, for live tracking demo) ----------------
+
+export type MockDriverProfile = {
+  userId: string;
+  vehicleType: string;
+  plateNumber: string;
+  isOnline: boolean;
+  currentLatitude: number;
+  currentLongitude: number;
+};
+
+export const mockDriverProfiles: MockDriverProfile[] = [
+  {
+    userId: "u3",
+    vehicleType: "Motorbike",
+    plateNumber: "LT 1234 CM",
+    isOnline: true,
+    currentLatitude: 5.9631,
+    currentLongitude: 10.1591,
+  },
+  {
+    userId: "u4",
+    vehicleType: "Bicycle",
+    plateNumber: "N/A",
+    isOnline: true,
+    currentLatitude: 5.958,
+    currentLongitude: 10.152,
+  },
+];
+
+export function getDriverForOrder(orderId: string) {
+  const order = mockOrders.find((o) => o.id === orderId);
+  if (!order || !order.driverId) return null;
+
+  const user = mockUsers.find((u) => u.id === order.driverId);
+  const profile = mockDriverProfiles.find((p) => p.userId === order.driverId);
+
+  if (!user || !profile) return null;
+
+  return {
+    name: user.name,
+    vehicleType: profile.vehicleType,
+    plateNumber: profile.plateNumber,
+    isOnline: profile.isOnline,
+    currentLatitude: profile.currentLatitude,
+    currentLongitude: profile.currentLongitude,
+  };
+}
