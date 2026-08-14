@@ -51,7 +51,7 @@ const DashboardContent: React.FC = () => {
             </p>
           </div>
           <Link
-            href="/restaurants"
+            href="/home/menu"
             className="bg-white text-blue-700 px-6 py-3 rounded-xl font-semibold hover:bg-green-50 transition-colors shadow-lg"
           >
             Browse Restaurants

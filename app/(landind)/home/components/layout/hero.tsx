@@ -8,6 +8,7 @@ import { useEffect, useState } from "react";
 import AOS from "aos";
 import "aos/dist/aos.css";
 
+
 export default function Hero() {
   const { theme } = useTheme();
   const router = useRouter(); 
@@ -31,7 +32,7 @@ export default function Hero() {
 
   const handleSearch = () => {
     if (searchQuery.trim()) {
-      router.push(`/menu?q=${encodeURIComponent(searchQuery)}`);
+      router.push(`/home/menu?q=${encodeURIComponent(searchQuery)}`);
     }
   };
 
@@ -120,22 +121,19 @@ export default function Hero() {
 
           {/* CTA Buttons */}
           <div data-aos="fade-up" data-aos-delay="300" className="mt-10 flex flex-wrap gap-4 justify-center">
-            <Link
-              href="/menu"
-              className="bg-gradient-to-r from-primary to-orange-500 text-white px-6 py-3 rounded-full text-sm font-semibold hover:opacity-90 transition flex items-center gap-2 shadow-lg shadow-primary/40 hover:shadow-primary/60"
-            >
-              Order Now
-              <FaArrowRight className="w-3.5 h-3.5" />
-            </Link>
+            <Link href="/home/menu" className="bg-gradient-to-r from-primary to-orange-500 text-white px-6 py-3 rounded-full text-sm font-semibold hover:opacity-90 transition flex items-center gap-2 shadow-lg shadow-primary/40 hover:shadow-primary/60"
+>
+       Order Now  <FaArrowRight className="w-3.5 h-3.5" />
+</Link>
 
-            <Link
-              href="/about"
-              className={`px-6 py-3 rounded-full text-sm font-semibold transition border-2 ${
-                isDark ? "border-white/40 text-white hover:bg-white hover:text-gray-900" : "border-primary text-primary hover:bg-primary hover:text-white"
-              }`}
-            >
-              Learn More
-            </Link>
+<Link
+  href="/home/about"
+  className={`px-6 py-3 rounded-full text-sm font-semibold transition border-2 ${
+    isDark ? "border-white/40 text-white hover:bg-white hover:text-gray-900" : "border-primary text-primary hover:bg-primary hover:text-white"
+  }`}
+>
+  Learn More
+</Link>
           </div>
 
           {/* Animated Stats */}
