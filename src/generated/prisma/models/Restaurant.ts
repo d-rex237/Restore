@@ -307,10 +307,10 @@ export type RestaurantOrderByWithRelationInput = {
 
 export type RestaurantWhereUniqueInput = Prisma.AtLeast<{
   id?: string
+  ownerId?: string
   AND?: Prisma.RestaurantWhereInput | Prisma.RestaurantWhereInput[]
   OR?: Prisma.RestaurantWhereInput[]
   NOT?: Prisma.RestaurantWhereInput | Prisma.RestaurantWhereInput[]
-  ownerId?: Prisma.StringFilter<"Restaurant"> | string
   name?: Prisma.StringFilter<"Restaurant"> | string
   description?: Prisma.StringNullableFilter<"Restaurant"> | string | null
   imageUrl?: Prisma.StringNullableFilter<"Restaurant"> | string | null
@@ -326,7 +326,7 @@ export type RestaurantWhereUniqueInput = Prisma.AtLeast<{
   menuItems?: Prisma.MenuItemListRelationFilter
   orders?: Prisma.OrderListRelationFilter
   reviews?: Prisma.ReviewListRelationFilter
-}, "id">
+}, "id" | "ownerId">
 
 export type RestaurantOrderByWithAggregationInput = {
   id?: Prisma.SortOrder

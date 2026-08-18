@@ -4,7 +4,7 @@ export default function DashLayout({
   children: React.ReactNode;
 }) {
   return (
-    <div className="min-h-screen bg-background">
+    <div className="min-h-screen bg-gray-100">
       <div className="mx-auto ">{children}</div>
     </div>
   );

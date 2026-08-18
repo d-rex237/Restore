@@ -1,10 +1,5 @@
 import type { Metadata } from "next";
-import {
-  Geist,
-  Geist_Mono,
-  Inter,
-  Space_Grotesk,
-} from "next/font/google";
+import { Geist, Geist_Mono, Inter, Space_Grotesk } from "next/font/google";
 
 import "./globals.css";
 import { ClerkProvider } from "@clerk/nextjs";
@@ -12,6 +7,7 @@ import { ThemeProvider } from "next-themes";
 import { cn } from "@/lib/utils";
 import { CartProvider } from "@/lib/cart-context";
 import UserSync from "@/components/userSync";
+import QueryProvider from "@/components/query-provider";
 
 const inter = Inter({
   subsets: ["latin"],
@@ -53,7 +49,9 @@ export default function RootLayout({
         <body className="min-h-full flex flex-col">
           <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
             <UserSync />
-            <CartProvider>{children}</CartProvider>
+            <QueryProvider>
+              <CartProvider>{children}</CartProvider>
+            </QueryProvider>
           </ThemeProvider>
         </body>
       </html>

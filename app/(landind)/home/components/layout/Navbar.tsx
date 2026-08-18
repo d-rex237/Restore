@@ -4,16 +4,11 @@ import Link from "next/link";
 import { useEffect, useState } from "react";
 import { usePathname } from "next/navigation";
 import { useTheme } from "next-themes";
-import {
-  FaSun,
-  FaMoon,
-  FaSearch,
-  FaShoppingCart,
-} from "react-icons/fa";
+import { FaSun, FaMoon, FaSearch, FaShoppingCart } from "react-icons/fa";
 
 import Logo from "./logo";
 import { useCart } from "@/lib/cart-context";
-import { Show, SignInButton, SignUpButton } from "@clerk/nextjs";
+import { Show, SignInButton, SignOutButton, SignUpButton } from "@clerk/nextjs";
 import ProfileAvatar from "@/components/ProfileAvatar";
 
 export default function Navbar() {
@@ -60,8 +55,7 @@ export default function Navbar() {
     );
   }
 
-  const cartCount =
-    typeof getCartCount === "function" ? getCartCount() : 0;
+  const cartCount = typeof getCartCount === "function" ? getCartCount() : 0;
 
   const toggleTheme = () => {
     setTheme(theme === "dark" ? "light" : "dark");
@@ -104,10 +98,26 @@ export default function Navbar() {
         ====================================================== */}
         <nav className="hidden items-center gap-1 lg:flex">
           <NavLink href="/" label="Home" active={isActive("/")} />
-          <NavLink href="/home/menu" label="Menu" active={isActive("/home/menu")} />
-          <NavLink href="/home/about" label="About" active={isActive("/home/about")} />
-          <NavLink href="/home/services" label="Services" active={isActive("/home/services")} />
-          <NavLink href="/home/contact" label="Contact" active={isActive("/home/contact")} />
+          <NavLink
+            href="/home/menu"
+            label="Menu"
+            active={isActive("/home/menu")}
+          />
+          <NavLink
+            href="/home/about"
+            label="About"
+            active={isActive("/home/about")}
+          />
+          <NavLink
+            href="/home/services"
+            label="Services"
+            active={isActive("/home/services")}
+          />
+          <NavLink
+            href="/home/contact"
+            label="Contact"
+            active={isActive("/home/contact")}
+          />
         </nav>
 
         {/* =====================================================
@@ -182,7 +192,9 @@ export default function Navbar() {
           <button
             type="button"
             onClick={toggleTheme}
-            aria-label={theme === "dark" ? "Switch to light mode" : "Switch to dark mode"}
+            aria-label={
+              theme === "dark" ? "Switch to light mode" : "Switch to dark mode"
+            }
             className="
               group flex h-10 w-10
               items-center justify-center
@@ -220,6 +232,7 @@ export default function Navbar() {
 
           <Show when="signed-in">
             <ProfileAvatar />
+            <SignOutButton />
           </Show>
 
           {/* MOBILE MENU TOGGLE */}
@@ -242,7 +255,9 @@ export default function Navbar() {
           >
             <span
               className={`h-0.5 w-5 rounded-full bg-foreground transition-all duration-300 ${
-                isMenuOpen ? "translate-y-2 rotate-45 bg-primary" : "group-hover:bg-primary"
+                isMenuOpen
+                  ? "translate-y-2 rotate-45 bg-primary"
+                  : "group-hover:bg-primary"
               }`}
             />
             <span
@@ -252,7 +267,9 @@ export default function Navbar() {
             />
             <span
               className={`h-0.5 w-5 rounded-full bg-foreground transition-all duration-300 ${
-                isMenuOpen ? "-translate-y-2 -rotate-45 bg-primary" : "group-hover:bg-primary"
+                isMenuOpen
+                  ? "-translate-y-2 -rotate-45 bg-primary"
+                  : "group-hover:bg-primary"
               }`}
             />
           </button>
@@ -272,11 +289,36 @@ export default function Navbar() {
         `}
       >
         <nav className="bg-background/95 px-4 py-4 backdrop-blur-xl">
-          <MobileNavLink href="/" label="Home" active={isActive("/")} onClick={closeMenu} />
-          <MobileNavLink href="/home/menu" label="Menu" active={isActive("/home/menu")} onClick={closeMenu} />
-          <MobileNavLink href="/home/about" label="About" active={isActive("/home/about")} onClick={closeMenu} />
-          <MobileNavLink href="/home/services" label="Services" active={isActive("/home/services")} onClick={closeMenu} />
-          <MobileNavLink href="/home/contact" label="Contact" active={isActive("/home/contact")} onClick={closeMenu} />
+          <MobileNavLink
+            href="/"
+            label="Home"
+            active={isActive("/")}
+            onClick={closeMenu}
+          />
+          <MobileNavLink
+            href="/home/menu"
+            label="Menu"
+            active={isActive("/home/menu")}
+            onClick={closeMenu}
+          />
+          <MobileNavLink
+            href="/home/about"
+            label="About"
+            active={isActive("/home/about")}
+            onClick={closeMenu}
+          />
+          <MobileNavLink
+            href="/home/services"
+            label="Services"
+            active={isActive("/home/services")}
+            onClick={closeMenu}
+          />
+          <MobileNavLink
+            href="/home/contact"
+            label="Contact"
+            active={isActive("/home/contact")}
+            onClick={closeMenu}
+          />
 
           {/* MOBILE ACTIONS */}
           <div className="mt-3 grid grid-cols-2 gap-2 border-t border-border/60 pt-4">
