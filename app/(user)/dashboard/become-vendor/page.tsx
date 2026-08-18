@@ -40,8 +40,12 @@ export default function BecomeVendorPage() {
               <Store className="w-8 h-8 text-blue-600" />
             </div>
             <div>
-              <h1 className="text-2xl font-bold text-gray-800">Become a Vendor</h1>
-              <p className="text-gray-500">List your restaurant on our platform</p>
+              <h1 className="text-2xl font-bold text-gray-800">
+                Become a Vendor
+              </h1>
+              <p className="text-gray-500">
+                List your restaurant on our platform
+              </p>
             </div>
           </div>
 
@@ -49,10 +53,13 @@ export default function BecomeVendorPage() {
             <div className="flex items-start space-x-3">
               <AlertCircle className="w-5 h-5 text-blue-600 mt-0.5" />
               <div>
-                <p className="text-sm text-blue-800 font-medium">Application Process</p>
+                <p className="text-sm text-blue-800 font-medium">
+                  Application Process
+                </p>
                 <p className="text-sm text-blue-700">
-                  Submit your restaurant details for admin review. Once approved, 
-                  you can start managing your menu and accepting orders.
+                  Submit your restaurant details for admin review. Once
+                  approved, you can start managing your menu and accepting
+                  orders.
                 </p>
               </div>
             </div>
@@ -70,7 +77,7 @@ export default function BecomeVendorPage() {
                 onChange={handleChange}
                 required
                 placeholder="e.g., Pizza Palace"
-                className="w-full px-4 py-2 border border-gray-300 rounded-xl focus:ring-2 focus:ring-green-500 focus:border-transparent outline-none"
+                className="text-gray-400 w-full px-4 py-2 border border-gray-300 rounded-xl focus:ring-2 focus:ring-green-500 focus:border-transparent outline-none"
               />
             </div>
 
@@ -84,7 +91,7 @@ export default function BecomeVendorPage() {
                 onChange={handleChange}
                 rows={3}
                 placeholder="Describe your restaurant, specialties, and atmosphere..."
-                className="w-full px-4 py-2 border border-gray-300 rounded-xl focus:ring-2 focus:ring-green-500 focus:border-transparent outline-none resize-none"
+                className="text-gray-400 w-full px-4 py-2 border border-gray-300 rounded-xl focus:ring-2 focus:ring-green-500 focus:border-transparent outline-none resize-none"
               />
             </div>
 
@@ -99,7 +106,7 @@ export default function BecomeVendorPage() {
                 onChange={handleChange}
                 required
                 placeholder="Full restaurant address"
-                className="w-full px-4 py-2 border border-gray-300 rounded-xl focus:ring-2 focus:ring-green-500 focus:border-transparent outline-none"
+                className="text-gray-400 w-full px-4 py-2 border border-gray-300 rounded-xl focus:ring-2 focus:ring-green-500 focus:border-transparent outline-none"
               />
             </div>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
@@ -112,7 +119,7 @@ export default function BecomeVendorPage() {
                   value={formData.cuisine}
                   onChange={handleChange}
                   required
-                  className="w-full px-4 py-2 border border-gray-300 rounded-xl focus:ring-2 focus:ring-green-500 focus:border-transparent outline-none"
+                  className="text-gray-400 w-full px-4 py-2 border border-gray-300 rounded-xl focus:ring-2 focus:ring-green-500 focus:border-transparent outline-none"
                 >
                   <option value="">Select cuisine</option>
                   <option value="italian">Italian</option>
@@ -135,8 +142,8 @@ export default function BecomeVendorPage() {
                   value={formData.phone}
                   onChange={handleChange}
                   required
-                  placeholder="e.g., +1 234 567 890"
-                  className="w-full px-4 py-2 border border-gray-300 rounded-xl focus:ring-2 focus:ring-green-500 focus:border-transparent outline-none"
+                  placeholder="e.g., +237 682 305 453"
+                  className="text-gray-400 w-full px-4 py-2 border border-gray-300 rounded-xl focus:ring-2 focus:ring-green-500 focus:border-transparent outline-none"
                 />
               </div>
             </div>
@@ -152,7 +159,7 @@ export default function BecomeVendorPage() {
                 onChange={handleChange}
                 required
                 placeholder="e.g., Mon-Fri 9:00 AM - 10:00 PM"
-                className="w-full px-4 py-2 border border-gray-300 rounded-xl focus:ring-2 focus:ring-green-500 focus:border-transparent outline-none"
+                className="text-gray-400 w-full px-4 py-2 border border-gray-300 rounded-xl focus:ring-2 focus:ring-green-500 focus:border-transparent outline-none"
               />
             </div>
 
@@ -162,14 +169,16 @@ export default function BecomeVendorPage() {
               className={`
                 w-full flex items-center justify-center space-x-2 py-3 rounded-xl font-semibold text-white
                 transition-all duration-200
-                ${isSubmitting 
-                  ? 'bg-gray-400 cursor-not-allowed' 
-                  : 'bg-blue-500 hover:bg-blue-700 shadow-lg hover:shadow-xl'
-                }`
-              }
+                ${
+                  isSubmitting
+                    ? "bg-gray-400 cursor-not-allowed"
+                    : "bg-blue-500 hover:bg-blue-700 shadow-lg hover:shadow-xl"
+                }`}
             >
-              <span>{isSubmitting ? 'Submitting...' : 'Submit Application'}</span>
-              <Send className={`w-4 h-4 ${isSubmitting ? 'opacity-0' : ''}`} />
+              <span>
+                {isSubmitting ? "Submitting..." : "Submit Application"}
+              </span>
+              <Send className={`w-4 h-4 ${isSubmitting ? "opacity-0" : ""}`} />
             </button>
           </form>
         </div>

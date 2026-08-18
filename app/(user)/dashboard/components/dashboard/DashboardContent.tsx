@@ -33,7 +33,7 @@ const DashboardContent: React.FC = () => {
   ];
 
   const quickActions = [
-    { label: "Browse Restaurants", href: "/restaurants", icon: <MdRestaurantMenu color='blue'/> },
+    { label: "Browse Restaurants", href: "/home/menu", icon: <MdRestaurantMenu color='blue'/> },
     { label: "View All Orders", href: "/dashboard/orders", icon: <FaShoppingCart color='orange'/> },
     { label: "Make a Payment", href: "/dashboard/payments", icon: <FaCreditCard color='green'/> },
     { label: "Become a Driver", href: "/dashboard/become-driver", icon: <FaCar color='red'/> },

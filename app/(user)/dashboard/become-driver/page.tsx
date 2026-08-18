@@ -37,7 +37,7 @@ import { Truck, Send, AlertCircle } from 'lucide-react';
       <div className="max-w-3xl mx-auto">
         <div className="bg-white rounded-2xl shadow-sm border border-gray-100 p-8">
           <div className="flex items-center space-x-4 mb-6">
-            <div className="p-3 bg-blue-100 rounded-xl">
+            <div className="p-3 bg-blue-200 rounded-xl">
               <Truck className="w-8 h-8 text-blue-600" />
             </div>
             <div>
@@ -69,7 +69,7 @@ import { Truck, Send, AlertCircle } from 'lucide-react';
                 value={formData.vehicleType}
                 onChange={handleChange}
                 required
-                className="w-full px-4 py-2 border border-gray-300 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-transparent outline-none"
+                className="text-gray-400 w-full px-4 py-2 border border-gray-300 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-transparent outline-none"
               >
                 <option value="">Select vehicle type</option>
                 <option value="car">Car</option>
@@ -91,7 +91,7 @@ import { Truck, Send, AlertCircle } from 'lucide-react';
                   onChange={handleChange}
                   required
                   placeholder="e.g., DL-12345"
-                  className="w-full px-4 py-2 border border-gray-300 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-transparent outline-none"
+                  className="text-gray-400 w-full px-4 py-2 border border-gray-300 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-transparent outline-none"
                 />
               </div>
               <div>
@@ -105,7 +105,7 @@ import { Truck, Send, AlertCircle } from 'lucide-react';
                   onChange={handleChange}
                   required
                   placeholder="e.g., ABC-1234"
-                  className="w-full px-4 py-2 border border-gray-300 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-transparent outline-none"
+                  className="text-gray-400 w-full px-4 py-2 border border-gray-300 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-transparent outline-none"
                 />
               </div>
             </div>
@@ -121,7 +121,7 @@ import { Truck, Send, AlertCircle } from 'lucide-react';
                 onChange={handleChange}
                 required
                 placeholder="e.g., Toyota Camry 2020"
-                className="w-full px-4 py-2 border border-gray-300 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-transparent outline-none"
+                className="text-gray-400 w-full px-4 py-2 border border-gray-300 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-transparent outline-none"
               />
             </div>
 
@@ -135,7 +135,7 @@ import { Truck, Send, AlertCircle } from 'lucide-react';
                 onChange={handleChange}
                 rows={3}
                 placeholder="Tell us about your driving experience..."
-                className="w-full px-4 py-2 border border-gray-300 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-transparent outline-none resize-none"
+                className="text-gray-400 w-full px-4 py-2 border border-gray-300 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-transparent outline-none resize-none"
               />
             </div>
 
