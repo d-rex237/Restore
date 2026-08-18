@@ -149,7 +149,9 @@ export default function DriverSettingsPage() {
         <div className="flex flex-col md:flex-row md:items-center justify-between gap-4">
           <div>
             <h1 className="text-2xl font-bold text-gray-800">Settings</h1>
-            <p className="text-gray-500">Manage your driver preferences and account settings</p>
+            <p className="text-gray-500">
+              Manage your driver preferences and account settings
+            </p>
           </div>
           <div className="flex items-center space-x-3">
             {saveSuccess && (
@@ -164,11 +166,11 @@ export default function DriverSettingsPage() {
               className={`
                 flex items-center space-x-2 px-6 py-2.5 rounded-xl font-medium text-white
                 transition-all duration-200 shadow-sm
-                ${isSaving 
-                  ? 'bg-gray-400 cursor-not-allowed' 
-                  : 'bg-blue-600 hover:bg-blue-700'
-                }`
-              }
+                ${
+                  isSaving
+                    ? "bg-gray-400 cursor-not-allowed"
+                    : "bg-blue-600 hover:bg-blue-700"
+                }`}
             >
               {isSaving ? (
                 <>
@@ -192,37 +194,37 @@ export default function DriverSettingsPage() {
               label="Email Notifications"
               description="Receive updates via email"
               value={settings.emailNotifications}
-              onChange={() => handleToggle('emailNotifications')}
+              onChange={() => handleToggle("emailNotifications")}
             />
             <ToggleItem
               label="Push Notifications"
               description="Receive push notifications on your device"
               value={settings.pushNotifications}
-              onChange={() => handleToggle('pushNotifications')}
+              onChange={() => handleToggle("pushNotifications")}
             />
             <ToggleItem
               label="SMS Notifications"
               description="Receive text message alerts"
               value={settings.smsNotifications}
-              onChange={() => handleToggle('smsNotifications')}
+              onChange={() => handleToggle("smsNotifications")}
             />
             <ToggleItem
               label="Order Updates"
               description="Get notified about new delivery requests"
               value={settings.orderUpdates}
-              onChange={() => handleToggle('orderUpdates')}
+              onChange={() => handleToggle("orderUpdates")}
             />
             <ToggleItem
               label="Payment Alerts"
               description="Receive payment confirmation notifications"
               value={settings.paymentAlerts}
-              onChange={() => handleToggle('paymentAlerts')}
+              onChange={() => handleToggle("paymentAlerts")}
             />
             <ToggleItem
               label="Marketing Emails"
               description="Receive promotional offers and updates"
               value={settings.marketingEmails}
-              onChange={() => handleToggle('marketingEmails')}
+              onChange={() => handleToggle("marketingEmails")}
             />
           </SettingSection>
 
@@ -234,8 +236,8 @@ export default function DriverSettingsPage() {
               </label>
               <select
                 value={settings.maxDistance}
-                onChange={(e) => handleChange('maxDistance', e.target.value)}
-                className="w-full px-4 py-2 border border-gray-300 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-transparent outline-none"
+                onChange={(e) => handleChange("maxDistance", e.target.value)}
+                className="text-gray-400 w-full px-4 py-2 border border-gray-300 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-transparent outline-none"
               >
                 <option value="5">5 km</option>
                 <option value="10">10 km</option>
@@ -252,8 +254,8 @@ export default function DriverSettingsPage() {
               </label>
               <select
                 value={settings.preferredArea}
-                onChange={(e) => handleChange('preferredArea', e.target.value)}
-                className="w-full px-4 py-2 border border-gray-300 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-transparent outline-none"
+                onChange={(e) => handleChange("preferredArea", e.target.value)}
+                className="text-gray-400 w-full px-4 py-2 border border-gray-300 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-transparent outline-none"
               >
                 <option value="All">All Areas</option>
                 <option value="Downtown">Downtown</option>
@@ -270,8 +272,8 @@ export default function DriverSettingsPage() {
               </label>
               <select
                 value={settings.vehicleType}
-                onChange={(e) => handleChange('vehicleType', e.target.value)}
-                className="w-full px-4 py-2 border border-gray-300 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-transparent outline-none"
+                onChange={(e) => handleChange("vehicleType", e.target.value)}
+                className="text-gray-400 w-full px-4 py-2 border border-gray-300 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-transparent outline-none"
               >
                 <option value="Car">Car</option>
                 <option value="Motorcycle">Motorcycle</option>
@@ -284,7 +286,7 @@ export default function DriverSettingsPage() {
               label="Auto-Accept Deliveries"
               description="Automatically accept delivery requests within your preferences"
               value={settings.acceptAuto}
-              onChange={() => handleToggle('acceptAuto')}
+              onChange={() => handleToggle("acceptAuto")}
             />
           </SettingSection>
 
@@ -294,25 +296,25 @@ export default function DriverSettingsPage() {
               label="Show Online Status"
               description="Let others see when you're online"
               value={settings.showOnlineStatus}
-              onChange={() => handleToggle('showOnlineStatus')}
+              onChange={() => handleToggle("showOnlineStatus")}
             />
             <ToggleItem
               label="Show Earnings"
               description="Display your earnings publicly"
               value={settings.showEarnings}
-              onChange={() => handleToggle('showEarnings')}
+              onChange={() => handleToggle("showEarnings")}
             />
             <ToggleItem
               label="Share Location"
               description="Allow real-time location sharing for deliveries"
               value={settings.shareLocation}
-              onChange={() => handleToggle('shareLocation')}
+              onChange={() => handleToggle("shareLocation")}
             />
             <ToggleItem
               label="Two-Factor Authentication"
               description="Add an extra layer of security to your account"
               value={settings.twoFactorAuth}
-              onChange={() => handleToggle('twoFactorAuth')}
+              onChange={() => handleToggle("twoFactorAuth")}
             />
 
             <div className="py-2">
@@ -321,8 +323,8 @@ export default function DriverSettingsPage() {
               </label>
               <select
                 value={settings.sessionTimeout}
-                onChange={(e) => handleChange('sessionTimeout', e.target.value)}
-                className="w-full px-4 py-2 border border-gray-300 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-transparent outline-none"
+                onChange={(e) => handleChange("sessionTimeout", e.target.value)}
+                className="text-gray-400 w-full px-4 py-2 border border-gray-300 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-transparent outline-none"
               >
                 <option value="15">15 minutes</option>
                 <option value="30">30 minutes</option>
@@ -341,8 +343,8 @@ export default function DriverSettingsPage() {
               </label>
               <select
                 value={settings.defaultTip}
-                onChange={(e) => handleChange('defaultTip', e.target.value)}
-                className="w-full px-4 py-2 border border-gray-300 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-transparent outline-none"
+                onChange={(e) => handleChange("defaultTip", e.target.value)}
+                className="text-gray-400 w-full px-4 py-2 border border-gray-300 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-transparent outline-none"
               >
                 <option value="0">0%</option>
                 <option value="5">5%</option>
@@ -359,12 +361,11 @@ export default function DriverSettingsPage() {
               </label>
               <select
                 value={settings.paymentMethod}
-                onChange={(e) => handleChange('paymentMethod', e.target.value)}
-                className="w-full px-4 py-2 border border-gray-300 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-transparent outline-none"
+                onChange={(e) => handleChange("paymentMethod", e.target.value)}
+                className="text-gray-400 w-full px-4 py-2 border border-gray-300 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-transparent outline-none"
               >
-                <option value="Card">Credit Card</option>
-                <option value="PayPal">PayPal</option>
-                <option value="Bank">Bank Transfer</option>
+                <option value="Card">MTN Mobile Money</option>
+                <option value="PayPal">Orange Money</option>
                 <option value="Cash">Cash</option>
               </select>
             </div>
@@ -373,8 +374,12 @@ export default function DriverSettingsPage() {
               <div className="flex items-center space-x-3">
                 <CreditCard className="w-5 h-5 text-gray-600" />
                 <div className="text-left">
-                  <p className="text-sm font-medium text-gray-700">Payment Methods</p>
-                  <p className="text-xs text-gray-500">Manage your payment options</p>
+                  <p className="text-sm font-medium text-gray-700">
+                    Payment Methods
+                  </p>
+                  <p className="text-xs text-gray-500">
+                    Manage your payment options
+                  </p>
                 </div>
               </div>
               <ChevronRight className="w-4 h-4 text-gray-400" />
@@ -384,8 +389,12 @@ export default function DriverSettingsPage() {
               <div className="flex items-center space-x-3">
                 <Clock className="w-5 h-5 text-gray-600" />
                 <div className="text-left">
-                  <p className="text-sm font-medium text-gray-700">Payout History</p>
-                  <p className="text-xs text-gray-500">View your payout records</p>
+                  <p className="text-sm font-medium text-gray-700">
+                    Payout History
+                  </p>
+                  <p className="text-xs text-gray-500">
+                    View your payout records
+                  </p>
                 </div>
               </div>
               <ChevronRight className="w-4 h-4 text-gray-400" />
@@ -398,13 +407,13 @@ export default function DriverSettingsPage() {
               label="Dark Mode"
               description="Switch to dark theme"
               value={settings.darkMode}
-              onChange={() => handleToggle('darkMode')}
+              onChange={() => handleToggle("darkMode")}
             />
             <ToggleItem
               label="Compact View"
               description="Display more items with compact layout"
               value={settings.compactView}
-              onChange={() => handleToggle('compactView')}
+              onChange={() => handleToggle("compactView")}
             />
 
             <div className="py-2">
@@ -413,9 +422,9 @@ export default function DriverSettingsPage() {
               </label>
               <select
                 value={settings.language}
-                onChange={(e) => handleChange('language', e.target.value)}
-                className="w-full px-4 py-2 border border-gray-300 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-transparent outline-none"
-                >
+                onChange={(e) => handleChange("language", e.target.value)}
+                className="text-gray-400 w-full px-4 py-2 border border-gray-300 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-transparent outline-none"
+              >
                 <option value="English">English</option>
                 <option value="Spanish">Spanish</option>
                 <option value="French">French</option>
@@ -432,8 +441,12 @@ export default function DriverSettingsPage() {
               <div className="flex items-center space-x-3">
                 <User className="w-5 h-5 text-gray-600" />
                 <div className="text-left">
-                  <p className="text-sm font-medium text-gray-700">Profile Information</p>
-                  <p className="text-xs text-gray-500">Update your personal details</p>
+                  <p className="text-sm font-medium text-gray-700">
+                    Profile Information
+                  </p>
+                  <p className="text-xs text-gray-500">
+                    Update your personal details
+                  </p>
                 </div>
               </div>
               <ChevronRight className="w-4 h-4 text-gray-400" />
@@ -443,8 +456,12 @@ export default function DriverSettingsPage() {
               <div className="flex items-center space-x-3">
                 <Lock className="w-5 h-5 text-gray-600" />
                 <div className="text-left">
-                  <p className="text-sm font-medium text-gray-700">Change Password</p>
-                  <p className="text-xs text-gray-500">Update your security credentials</p>
+                  <p className="text-sm font-medium text-gray-700">
+                    Change Password
+                  </p>
+                  <p className="text-xs text-gray-500">
+                    Update your security credentials
+                  </p>
                 </div>
               </div>
               <ChevronRight className="w-4 h-4 text-gray-400" />
@@ -454,8 +471,12 @@ export default function DriverSettingsPage() {
               <div className="flex items-center space-x-3">
                 <Smartphone className="w-5 h-5 text-gray-600" />
                 <div className="text-left">
-                  <p className="text-sm font-medium text-gray-700">Device Management</p>
-                  <p className="text-xs text-gray-500">Manage connected devices</p>
+                  <p className="text-sm font-medium text-gray-700">
+                    Device Management
+                  </p>
+                  <p className="text-xs text-gray-500">
+                    Manage connected devices
+                  </p>
                 </div>
               </div>
               <ChevronRight className="w-4 h-4 text-gray-400" />
@@ -465,8 +486,12 @@ export default function DriverSettingsPage() {
               <div className="flex items-center space-x-3">
                 <AlertCircle className="w-5 h-5 text-red-600" />
                 <div className="text-left">
-                  <p className="text-sm font-medium text-red-700">Deactivate Account</p>
-                  <p className="text-xs text-red-600">Temporarily disable your driver account</p>
+                  <p className="text-sm font-medium text-red-700">
+                    Deactivate Account
+                  </p>
+                  <p className="text-xs text-red-600">
+                    Temporarily disable your driver account
+                  </p>
                 </div>
               </div>
               <ChevronRight className="w-4 h-4 text-red-400" />
@@ -489,9 +514,10 @@ export default function DriverSettingsPage() {
               className={`
                 flex-1 flex items-center justify-center space-x-2 px-6 py-3 rounded-xl font-medium text-white
                 transition-all duration-200 shadow-sm
-                ${isSaving 
-                  ? 'bg-gray-400 cursor-not-allowed' 
-                  : 'bg-blue-600 hover:bg-blue-700'
+                ${
+                  isSaving
+                    ? "bg-gray-400 cursor-not-allowed"
+                    : "bg-blue-600 hover:bg-blue-700"
                 }
               `}
             >

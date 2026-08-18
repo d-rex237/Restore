@@ -71,7 +71,7 @@ export default function ProfilePage() {
                     onChange={(e) =>
                       setProfile({ ...profile, name: e.target.value })
                     }
-                    className="mt-1 w-full px-4 py-2 border border-gray-300 rounded-xl focus:ring-2 focus:ring-green-500 focus:border-transparent outline-none"
+                    className="text-gray-400 mt-1 w-full px-4 py-2 border border-gray-300 rounded-xl focus:ring-2 focus:ring-green-500 focus:border-transparent outline-none"
                   />
                 ) : (
                   <p className="font-medium text-gray-800">{profile.name}</p>
@@ -101,7 +101,7 @@ export default function ProfilePage() {
                     onChange={(e) =>
                       setProfile({ ...profile, phone: e.target.value })
                     }
-                    className="mt-1 w-full px-4 py-2 border border-gray-300 rounded-xl focus:ring-2 focus:ring-green-500 focus:border-transparent outline-none"
+                    className="text-gray-400 mt-1 w-full px-4 py-2 border border-gray-300 rounded-xl focus:ring-2 focus:ring-green-500 focus:border-transparent outline-none"
                   />
                 ) : (
                   <p className="font-medium text-gray-800">{profile.phone}</p>
@@ -122,7 +122,7 @@ export default function ProfilePage() {
                       setProfile({ ...profile, address: e.target.value })
                     }
                     rows={2}
-                    className="mt-1 w-full px-4 py-2 border border-gray-300 rounded-xl focus:ring-2 focus:ring-green-500 focus:border-transparent outline-none resize-none"
+                    className="text-gray-400 mt-1 w-full px-4 py-2 border border-gray-300 rounded-xl focus:ring-2 focus:ring-green-500 focus:border-transparent outline-none resize-none"
                   />
                 ) : (
                   <p className="font-medium text-gray-800">{profile.address}</p>

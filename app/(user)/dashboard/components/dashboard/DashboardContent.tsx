@@ -33,7 +33,7 @@ const DashboardContent: React.FC = () => {
   ];
 
   const quickActions = [
-    { label: "Browse Restaurants", href: "/restaurants", icon: <MdRestaurantMenu color='blue'/> },
+    { label: "Browse Restaurants", href: "/home/menu", icon: <MdRestaurantMenu color='blue'/> },
     { label: "View All Orders", href: "/dashboard/orders", icon: <FaShoppingCart color='orange'/> },
     { label: "Make a Payment", href: "/dashboard/payments", icon: <FaCreditCard color='green'/> },
     { label: "Become a Driver", href: "/dashboard/become-driver", icon: <FaCar color='red'/> },
@@ -51,7 +51,7 @@ const DashboardContent: React.FC = () => {
             </p>
           </div>
           <Link
-            href="/restaurants"
+            href="/home/menu"
             className="bg-white text-blue-700 px-6 py-3 rounded-xl font-semibold hover:bg-green-50 transition-colors shadow-lg"
           >
             Browse Restaurants
