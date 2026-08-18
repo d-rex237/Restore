@@ -32,15 +32,28 @@ export default function EarningsPage() {
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
           {stats.map((stat) => {
             const Icon = stat.icon;
-            const isPositive = stat.change.startsWith('+');
+            const isPositive = stat.change.startsWith("+");
             return (
-              <div key={stat.label} className="bg-white rounded-2xl p-6 shadow-sm border border-gray-100">
+              <div
+                key={stat.label}
+                className="bg-white rounded-2xl p-6 shadow-sm border border-gray-100"
+              >
                 <div className="flex items-center justify-between">
                   <div>
-                    <p className="text-sm text-gray-500 font-medium">{stat.label}</p>
-                    <p className="text-2xl font-bold text-gray-800 mt-1">{stat.value}</p>
-                    <div className={`flex items-center space-x-1 mt-1 text-xs font-medium ${isPositive ? 'text-green-600' : 'text-red-600'}`}>
-                      {isPositive ? <ArrowUp className="w-3 h-3" /> : <ArrowDown className="w-3 h-3" />}
+                    <p className="text-sm text-gray-500 font-medium">
+                      {stat.label}
+                    </p>
+                    <p className="text-2xl font-bold text-gray-800 mt-1">
+                      {stat.value}
+                    </p>
+                    <div
+                      className={`flex items-center space-x-1 mt-1 text-xs font-medium ${isPositive ? "text-green-600" : "text-red-600"}`}
+                    >
+                      {isPositive ? (
+                        <ArrowUp className="w-3 h-3" />
+                      ) : (
+                        <ArrowDown className="w-3 h-3" />
+                      )}
                       <span>{stat.change}</span>
                     </div>
                   </div>
@@ -65,26 +78,47 @@ export default function EarningsPage() {
             <table className="w-full">
               <thead className="bg-gray-50">
                 <tr>
-                  <th className="text-left py-3 px-4 text-xs font-medium text-gray-500 uppercase tracking-wider">Delivery ID</th>
-                  <th className="text-left py-3 px-4 text-xs font-medium text-gray-500 uppercase tracking-wider">Restaurant</th>
-                  <th className="text-left py-3 px-4 text-xs font-medium text-gray-500 uppercase tracking-wider">Date</th>
-                  <th className="text-left py-3 px-4 text-xs font-medium text-gray-500 uppercase tracking-wider">Distance</th>
-                  <th className="text-right py-3 px-4 text-xs font-medium text-gray-500 uppercase tracking-wider">Amount</th>
+                  <th className="text-left py-3 px-4 text-xs font-medium text-gray-500 uppercase tracking-wider">
+                    Delivery ID
+                  </th>
+                  <th className="text-left py-3 px-4 text-xs font-medium text-gray-500 uppercase tracking-wider">
+                    Restaurant
+                  </th>
+                  <th className="text-left py-3 px-4 text-xs font-medium text-gray-500 uppercase tracking-wider">
+                    Date
+                  </th>
+                  <th className="text-left py-3 px-4 text-xs font-medium text-gray-500 uppercase tracking-wider">
+                    Distance
+                  </th>
+                  <th className="text-right py-3 px-4 text-xs font-medium text-gray-500 uppercase tracking-wider">
+                    Amount
+                  </th>
                 </tr>
               </thead>
               <tbody className="divide-y divide-gray-100">
                 {recentEarnings.map((earning) => (
-                  <tr key={earning.id} className="hover:bg-gray-50 transition-colors">
-                    <td className="py-3 px-4 font-medium text-gray-800">{earning.id}</td>
-                    <td className="py-3 px-4 text-gray-600">{earning.restaurant}</td>
+                  <tr
+                    key={earning.id}
+                    className="hover:bg-gray-50 transition-colors"
+                  >
+                    <td className="py-3 px-4 font-medium text-gray-800">
+                      {earning.id}
+                    </td>
+                    <td className="py-3 px-4 text-gray-600">
+                      {earning.restaurant}
+                    </td>
                     <td className="py-3 px-4">
                       <div className="text-sm">
                         <p className="text-gray-800">{earning.date}</p>
                         <p className="text-xs text-gray-500">{earning.time}</p>
                       </div>
                     </td>
-                    <td className="py-3 px-4 text-sm text-gray-600">{earning.distance}</td>
-                    <td className="py-3 px-4 text-right font-semibold text-green-600">{earning.amount}</td>
+                    <td className="py-3 px-4 text-sm text-gray-600">
+                      {earning.distance}
+                    </td>
+                    <td className="py-3 px-4 text-right font-semibold text-green-600">
+                      {earning.amount}
+                    </td>
                   </tr>
                 ))}
               </tbody>
@@ -94,11 +128,21 @@ export default function EarningsPage() {
           <div className="mt-4 pt-4 border-t border-gray-200 flex items-center justify-between">
             <p className="text-sm text-gray-500">Showing 5 of 42 deliveries</p>
             <div className="flex items-center space-x-2">
-              <button className="px-3 py-1 border border-gray-200 rounded-lg text-sm hover:bg-gray-50 transition-colors">Previous</button>
-              <button className="px-3 py-1 bg-blue-600 text-white rounded-lg text-sm">1</button>
-              <button className="px-3 py-1 border border-gray-200 rounded-lg text-sm hover:bg-gray-50 transition-colors">2</button>
-              <button className="px-3 py-1 border border-gray-200 rounded-lg text-sm hover:bg-gray-50 transition-colors">3</button>
-              <button className="px-3 py-1 border border-gray-200 rounded-lg text-sm hover:bg-gray-50 transition-colors">Next</button>
+              <button className="text-gray-400 px-3 py-1 border border-gray-200 rounded-lg text-sm hover:bg-gray-50 transition-colors">
+                Previous
+              </button>
+              <button className="text-gray-400 px-3 py-1 bg-blue-600 text-white rounded-lg text-sm">
+                1
+              </button>
+              <button className="text-gray-400 px-3 py-1 border border-gray-200 rounded-lg text-sm hover:bg-gray-50 transition-colors">
+                2
+              </button>
+              <button className="text-gray-400 px-3 py-1 border border-gray-200 rounded-lg text-sm hover:bg-gray-50 transition-colors">
+                3
+              </button>
+              <button className="text-gray-400 px-3 py-1 border border-gray-200 rounded-lg text-sm hover:bg-gray-50 transition-colors">
+                Next
+              </button>
             </div>
           </div>
         </div>

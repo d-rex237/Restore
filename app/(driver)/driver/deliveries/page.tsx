@@ -71,7 +71,9 @@ export default function DeliveriesPage() {
       <div className="space-y-6">
         <div className="flex flex-col md:flex-row md:items-center justify-between gap-4">
           <div>
-            <h1 className="text-2xl font-bold text-gray-800">Available Deliveries</h1>
+            <h1 className="text-2xl font-bold text-gray-800">
+              Available Deliveries
+            </h1>
             <p className="text-gray-500">View and accept delivery requests</p>
           </div>
         </div>
@@ -87,14 +89,14 @@ export default function DeliveriesPage() {
               />
             </div>
             <div className="flex items-center space-x-2">
-              {['all', 'ready', 'pending'].map((option) => (
+              {["all", "ready", "pending"].map((option) => (
                 <button
                   key={option}
                   onClick={() => setFilter(option)}
                   className={`px-4 py-2 rounded-xl text-sm font-medium transition-colors ${
                     filter === option
-                      ? 'bg-blue-600 text-white'
-                      : 'bg-gray-100 text-gray-600 hover:bg-gray-200'
+                      ? "bg-blue-600 text-white"
+                      : "bg-gray-100 text-gray-600 hover:bg-gray-200"
                   }`}
                 >
                   {option.charAt(0).toUpperCase() + option.slice(1)}
@@ -105,16 +107,23 @@ export default function DeliveriesPage() {
 
           <div className="space-y-4">
             {filteredDeliveries.map((delivery) => (
-              <div key={delivery.id} className="p-4 rounded-xl border border-gray-200 hover:shadow-md transition-all">
+              <div
+                key={delivery.id}
+                className="p-4 rounded-xl border border-gray-200 hover:shadow-md transition-all"
+              >
                 <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
                   <div>
                     <div className="flex items-center space-x-2">
-                      <h3 className="font-semibold text-gray-800">{delivery.restaurant}</h3>
-                      <span className={`text-xs px-2 py-0.5 rounded-full font-medium ${
-                        delivery.status === 'Ready' 
-                          ? 'bg-green-100 text-green-700' 
-                          : 'bg-yellow-100 text-yellow-700'
-                      }`}>
+                      <h3 className="font-semibold text-gray-800">
+                        {delivery.restaurant}
+                      </h3>
+                      <span
+                        className={`text-xs px-2 py-0.5 rounded-full font-medium ${
+                          delivery.status === "Ready"
+                            ? "bg-green-100 text-green-700"
+                            : "bg-yellow-100 text-yellow-700"
+                        }`}
+                      >
                         {delivery.status}
                       </span>
                     </div>
@@ -135,21 +144,29 @@ export default function DeliveriesPage() {
                   <div>
                     <div className="flex items-center space-x-2">
                       <User className="w-3 h-3 text-gray-400" />
-                      <span className="text-sm text-gray-600">{delivery.customer}</span>
+                      <span className="text-sm text-gray-600">
+                        {delivery.customer}
+                      </span>
                     </div>
                     <div className="flex items-center space-x-2 mt-1">
                       <Phone className="w-3 h-3 text-gray-400" />
-                      <span className="text-sm text-gray-600">{delivery.phone}</span>
+                      <span className="text-sm text-gray-600">
+                        {delivery.phone}
+                      </span>
                     </div>
                     <div className="flex items-center space-x-2 mt-2">
                       <Package className="w-3 h-3 text-gray-400" />
-                      <span className="text-sm text-gray-600">Distance: {delivery.distance}</span>
+                      <span className="text-sm text-gray-600">
+                        Distance: {delivery.distance}
+                      </span>
                     </div>
                   </div>
                   <div className="flex flex-col items-end justify-between">
                     <div className="text-right">
                       <p className="text-sm text-gray-500">Total</p>
-                      <p className="text-xl font-bold text-gray-800">{delivery.total}</p>
+                      <p className="text-xl font-bold text-gray-800">
+                        {delivery.total}
+                      </p>
                     </div>
                     <button className="w-full mt-2 px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white rounded-lg font-medium text-sm transition-colors shadow-sm">
                       Accept Delivery
@@ -161,12 +178,22 @@ export default function DeliveriesPage() {
           </div>
 
           <div className="flex items-center justify-between mt-4 pt-4 border-t border-gray-200">
-            <p className="text-sm text-gray-500">Showing {filteredDeliveries.length} deliveries</p>
+            <p className="text-sm text-gray-500">
+              Showing {filteredDeliveries.length} deliveries
+            </p>
             <div className="flex items-center space-x-2">
-              <button className="px-3 py-1 border border-gray-200 rounded-lg text-sm hover:bg-gray-50 transition-colors">Previous</button>
-              <button className="px-3 py-1 bg-blue-600 text-white rounded-lg text-sm">1</button>
-              <button className="px-3 py-1 border border-gray-200 rounded-lg text-sm hover:bg-gray-50 transition-colors">2</button>
-              <button className="px-3 py-1 border border-gray-200 rounded-lg text-sm hover:bg-gray-50 transition-colors">Next</button>
+              <button className="text-gray-400 px-3 py-1 border border-gray-200 rounded-lg text-sm hover:bg-gray-50 transition-colors">
+                Previous
+              </button>
+              <button className="text-gray-400 px-3 py-1 bg-blue-600 text-white rounded-lg text-sm">
+                1
+              </button>
+              <button className="text-gray-400 px-3 py-1 border border-gray-200 rounded-lg text-sm hover:bg-gray-50 transition-colors">
+                2
+              </button>
+              <button className="text-gray-400 px-3 py-1 border border-gray-200 rounded-lg text-sm hover:bg-gray-50 transition-colors">
+                Next
+              </button>
             </div>
           </div>
         </div>

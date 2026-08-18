@@ -154,16 +154,16 @@ export default function DriverHistoryPage() {
               Showing {history.length} deliveries
             </p>
             <div className="flex items-center space-x-2">
-              <button className="px-3 py-1 border border-gray-200 rounded-lg text-sm hover:bg-gray-50 transition-colors">
+              <button className="text-gray-400 px-3 py-1 border border-gray-200 rounded-lg text-sm hover:bg-gray-50 transition-colors">
                 Previous
               </button>
-              <button className="px-3 py-1 bg-blue-600 text-white rounded-lg text-sm">
+              <button className="text-gray-400 px-3 py-1 bg-blue-600 text-white rounded-lg text-sm">
                 1
               </button>
-              <button className="px-3 py-1 border border-gray-200 rounded-lg text-sm hover:bg-gray-50 transition-colors">
+              <button className="text-gray-400 px-3 py-1 border border-gray-200 rounded-lg text-sm hover:bg-gray-50 transition-colors">
                 2
               </button>
-              <button className="px-3 py-1 border border-gray-200 rounded-lg text-sm hover:bg-gray-50 transition-colors">
+              <button className="text-gray-400 px-3 py-1 border border-gray-200 rounded-lg text-sm hover:bg-gray-50 transition-colors">
                 Next
               </button>
             </div>
