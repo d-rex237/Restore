@@ -40,7 +40,6 @@ const Sidebar: React.FC<SidebarProps> = ({ isOpen, setIsOpen }) => {
   const menuItems = [
     { icon: Home, label: "Dashboard", href: "/dashboard" },
     { icon: ShoppingBag, label: "My Orders", href: "/dashboard/orders" },
-    { icon: History, label: "Order History", href: "/dashboard/history" },
     { icon: CreditCard, label: "Payments", href: "/dashboard/payments" },
     { icon: User, label: "Profile", href: "/dashboard/profile" },
     { icon: Settings, label: "Settings", href: "/dashboard/settings" },
