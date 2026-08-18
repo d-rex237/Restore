@@ -549,7 +549,6 @@ export const mockRoleRequests: MockRoleRequest[] = [
     createdAt: "2026-07-18T17:20:00Z",
   },
 ];
-
 export const menuData = [
   {
     id: "1",
@@ -564,6 +563,16 @@ export const menuData = [
     image: "/images/ndole.webp",
     dietaryInfo: { isVegetarian: false, isVegan: false, isGlutenFree: true },
     available: true,
+    restaurant: "Restor Kitchen",
+    restaurantLocation: "Bamenda, Cameroon",
+    preparationSteps: [
+      "Prep bitter leaves and beef",
+      "Grind peanuts into paste",
+      "Cook beef with spices",
+      "Combine leaves, paste, and beef",
+      "Simmer until tender"
+    ],
+    orderCount: 410,
   },
   {
     id: "2",
@@ -578,6 +587,16 @@ export const menuData = [
     image: "/images/fufu-and-eru.webp",
     dietaryInfo: { isVegetarian: false, isVegan: false, isGlutenFree: true },
     available: true,
+    restaurant: "Restor Kitchen",
+    restaurantLocation: "Bamenda, Cameroon",
+    preparationSteps: [
+      "Chop water leaves and okra",
+      "Soak smoked fish",
+      "Cook with palm oil and spices",
+      "Add water leaves and okra",
+      "Simmer until thick"
+    ],
+    orderCount: 385,
   },
   {
     id: "3",
@@ -592,6 +611,16 @@ export const menuData = [
     image: "/images/miondo.webp",
     dietaryInfo: { isVegetarian: true, isVegan: true, isGlutenFree: true },
     available: true,
+    restaurant: "Street Bites",
+    restaurantLocation: "Bamenda, Cameroon",
+    preparationSteps: [
+      "Peel and boil cassava",
+      "Pound into smooth dough",
+      "Shape into sticks",
+      "Steam until cooked",
+      "Serve with spicy peanut sauce"
+    ],
+    orderCount: 120,
   },
   {
     id: "4",
@@ -606,6 +635,16 @@ export const menuData = [
     image: "/images/grilled-tilapia.webp",
     dietaryInfo: { isVegetarian: false, isVegan: false, isGlutenFree: true },
     available: true,
+    restaurant: "Sea Catch",
+    restaurantLocation: "Bamenda, Cameroon",
+    preparationSteps: [
+      "Clean and score fish",
+      "Marinate with lemon, garlic, and spices",
+      "Grill over charcoal",
+      "Baste with oil and turn",
+      "Serve with fresh vegetables"
+    ],
+    orderCount: 520,
   },
   {
     id: "5",
@@ -620,6 +659,15 @@ export const menuData = [
     image: "/images/plantain-and-stew.webp",
     dietaryInfo: { isVegetarian: true, isVegan: true, isGlutenFree: true },
     available: true,
+    restaurant: "Street Bites",
+    restaurantLocation: "Bamenda, Cameroon",
+    preparationSteps: [
+      "Peel and slice plantains",
+      "Fry until golden brown",
+      "Prepare tomato stew with onions and peppers",
+      "Serve plantains with stew"
+    ],
+    orderCount: 95,
   },
   {
     id: "6",
@@ -634,6 +682,16 @@ export const menuData = [
     image: "/images/pepper-soup.webp",
     dietaryInfo: { isVegetarian: false, isVegan: false, isGlutenFree: true },
     available: true,
+    restaurant: "Restor Kitchen",
+    restaurantLocation: "Bamenda, Cameroon",
+    preparationSteps: [
+      "Boil beef with spices and aromatics",
+      "Add ground peppers and ginger",
+      "Simmer until meat is tender",
+      "Adjust seasoning",
+      "Garnish with fresh herbs"
+    ],
+    orderCount: 200,
   },
   {
     id: "7",
@@ -648,6 +706,16 @@ export const menuData = [
     image: "/images/rice-and-stew.webp",
     dietaryInfo: { isVegetarian: false, isVegan: false, isGlutenFree: true },
     available: true,
+    restaurant: "Restor Kitchen",
+    restaurantLocation: "Bamenda, Cameroon",
+    preparationSteps: [
+      "Brown beef with onions",
+      "Add tomatoes and thyme",
+      "Simmer until beef is tender",
+      "Cook rice separately",
+      "Serve stew over rice"
+    ],
+    orderCount: 630,
   },
   {
     id: "8",
@@ -661,6 +729,16 @@ export const menuData = [
     image: "/images/puff-puff.webp",
     dietaryInfo: { isVegetarian: true, isVegan: true, isGlutenFree: false },
     available: true,
+    restaurant: "Sweet Treats",
+    restaurantLocation: "Bamenda, Cameroon",
+    preparationSteps: [
+      "Mix flour, sugar, yeast, and nutmeg",
+      "Add water to form dough",
+      "Let rise for 15 minutes",
+      "Fry in hot oil until golden",
+      "Drain and serve warm"
+    ],
+    orderCount: 700,
   },
   {
     id: "9",
@@ -682,6 +760,16 @@ export const menuData = [
     image: "/images/fried-rice.webp",
     dietaryInfo: { isVegetarian: false, isVegan: false, isGlutenFree: true },
     available: false,
+    restaurant: "Sea Catch",
+    restaurantLocation: "Bamenda, Cameroon",
+    preparationSteps: [
+      "Cook rice and let cool",
+      "Sauté onions and shrimp",
+      "Add vegetables and spices",
+      "Add rice and stir-fry",
+      "Garnish with green onions"
+    ],
+    orderCount: 450,
   },
 ];
 
@@ -708,6 +796,7 @@ export function getOrderStatusCounts() {
     {} as Record<OrderStatus, number>,
   );
 }
+
 
 
 
