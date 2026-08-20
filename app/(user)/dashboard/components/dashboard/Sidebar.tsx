@@ -1,21 +1,22 @@
-'use client';
+"use client";
 
-import React from 'react';
-import Link from 'next/link';
-import { usePathname } from 'next/navigation';
-import { 
-  Home, 
-  ShoppingBag, 
-  History, 
-  CreditCard, 
-  User, 
+import React from "react";
+import Link from "next/link";
+import { usePathname } from "next/navigation";
+import { useClerk, useUser } from "@clerk/nextjs";
+import {
+  Home,
+  ShoppingBag,
+  History,
+  CreditCard,
+  User,
   Settings,
   Truck,
   Store,
   LogOut,
   Menu,
-  X
-} from 'lucide-react';
+  X,
+} from "lucide-react";
 
 interface SidebarProps {
   isOpen: boolean;
@@ -28,27 +29,26 @@ const Sidebar: React.FC<SidebarProps> = ({ isOpen, setIsOpen }) => {
   const { user } = useUser();
 
   const menuItems = [
-    { icon: Home, label: 'Dashboard', href: '/dashboard' },
-    { icon: ShoppingBag, label: 'My Orders', href: '/dashboard/orders' },
-    { icon: CreditCard, label: 'Payments', href: '/dashboard/payments' },
-    { icon: Settings, label: 'Settings', href: '/dashboard/settings' },
+    { icon: Home, label: "Dashboard", href: "/dashboard" },
+    { icon: ShoppingBag, label: "My Orders", href: "/dashboard/orders" },
+    { icon: CreditCard, label: "Payments", href: "/dashboard/payments" },
+    { icon: Settings, label: "Settings", href: "/dashboard/settings" },
   ];
 
   const actionItems = [
-    { icon: Truck, label: 'Become a Driver', href: '/dashboard/become-driver' },
-    { icon: Store, label: 'Become a Vendor', href: '/dashboard/become-vendor' },
+    { icon: Truck, label: "Become a Driver", href: "/dashboard/become-driver" },
+    { icon: Store, label: "Become a Vendor", href: "/dashboard/become-vendor" },
   ];
 
   return (
     <>
       {/* Sidebar */}
-      <aside 
+      <aside
         className={`
           fixed lg:static inset-y-0 left-0 z-40
           w-72 bg-white shadow-lg transform transition-transform duration-300 ease-in-out
-          ${isOpen ? 'translate-x-0' : '-translate-x-full lg:translate-x-0'}
-          flex flex-col`
-        }
+          ${isOpen ? "translate-x-0" : "-translate-x-full lg:translate-x-0"}
+          flex flex-col`}
       >
         {/* Header */}
         <div className="flex items-center justify-between p-6 border-b border-gray-200">
@@ -58,7 +58,7 @@ const Sidebar: React.FC<SidebarProps> = ({ isOpen, setIsOpen }) => {
             </div>
             <h1 className="text-2xl font-bold text-gray-800">Restor</h1>
           </div>
-          <button 
+          <button
             onClick={() => setIsOpen(false)}
             className="lg:hidden p-2 rounded-lg hover:bg-gray-100"
           >

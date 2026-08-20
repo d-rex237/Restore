@@ -1,5 +1,10 @@
+import { Suspense } from "react";
 import MenuPage from "../components/layout/MenuPage";
 
 export default function MenuRoute() {
-  return <MenuPage />;
+  return (
+    <Suspense fallback={<div>Loading...</div>}>
+      <MenuPage />
+    </Suspense>
+  );
 }

@@ -23,8 +23,8 @@ import {
 interface MenuCardProps {
   item: MenuItem;
   // Optional additional props (if your data includes them)
-  rating?: number;        // e.g., 4.5
-  isSpecial?: boolean;    // "Chef's Special"
+  rating?: number; // e.g., 4.5
+  isSpecial?: boolean; // "Chef's Special"
 }
 
 /* =========================================================
@@ -36,18 +36,15 @@ const MEAL_IMAGES: Record<string, string> = {
     "https://images.unsplash.com/photo-1547592180-85f173990554?auto=format&fit=crop&w=1000&q=85",
   "poulet dg":
     "https://images.unsplash.com/photo-1532550907401-a500c9a57435?auto=format&fit=crop&w=1000&q=85",
-  eru:
-    "https://images.unsplash.com/photo-1601050690597-df0568f70950?auto=format&fit=crop&w=1000&q=85",
-  achu:
-    "https://images.unsplash.com/photo-1604329760661-e71dc83f8f26?auto=format&fit=crop&w=1000&q=85",
+  eru: "https://images.unsplash.com/photo-1601050690597-df0568f70950?auto=format&fit=crop&w=1000&q=85",
+  achu: "https://images.unsplash.com/photo-1604329760661-e71dc83f8f26?auto=format&fit=crop&w=1000&q=85",
   "jollof rice":
     "https://images.unsplash.com/photo-1512058564366-18510be2db19?auto=format&fit=crop&w=1000&q=85",
   "fried rice":
     "https://images.unsplash.com/photo-1603133872878-684f208fb84b?auto=format&fit=crop&w=1000&q=85",
   "grilled fish":
     "https://images.unsplash.com/photo-1519708227418-c8fd9a32b7a2?auto=format&fit=crop&w=1000&q=85",
-  fish:
-    "https://images.unsplash.com/photo-1519708227418-c8fd9a32b7a2?auto=format&fit=crop&w=1000&q=85",
+  fish: "https://images.unsplash.com/photo-1519708227418-c8fd9a32b7a2?auto=format&fit=crop&w=1000&q=85",
   chicken:
     "https://images.unsplash.com/photo-1598103442097-8b74394b95c6?auto=format&fit=crop&w=1000&q=85",
   "fried chicken":
@@ -84,8 +81,12 @@ const FALLBACK_IMAGES = [
 ========================================================= */
 
 function getFoodImage(item: MenuItem): string {
-  const name = String(item.name || "").trim().toLowerCase();
-  const description = String(item.description || "").trim().toLowerCase();
+  const name = String(item.name || "")
+    .trim()
+    .toLowerCase();
+  const description = String(item.description || "")
+    .trim()
+    .toLowerCase();
   const searchText = name + " " + description;
 
   // Sort keys by length descending to match most specific first
@@ -156,10 +157,11 @@ const MenuCard = forwardRef<HTMLDivElement, MenuCardProps>(
 
     const foodImage = getFoodImage(item);
     const category = (item.category || "meal").toLowerCase();
-    const categoryIcon = categoryIconMap[category] || <Utensils className="h-4 w-4" />;
+    const categoryIcon = categoryIconMap[category] || (
+      <Utensils className="h-4 w-4" />
+    );
 
     const handleAddToCart = () => {
-      addToCart(item, quantity);
       setJustAdded(true);
       setTimeout(() => setJustAdded(false), 1500);
     };
@@ -171,10 +173,20 @@ const MenuCard = forwardRef<HTMLDivElement, MenuCardProps>(
       const halfStar = rating % 1 >= 0.5;
       const stars = [];
       for (let i = 0; i < fullStars; i++) {
-        stars.push(<Star key={i} className="h-3.5 w-3.5 fill-yellow-400 text-yellow-400" />);
+        stars.push(
+          <Star
+            key={i}
+            className="h-3.5 w-3.5 fill-yellow-400 text-yellow-400"
+          />,
+        );
       }
       if (halfStar) {
-        stars.push(<Star key="half" className="h-3.5 w-3.5 fill-yellow-400 text-yellow-400" />);
+        stars.push(
+          <Star
+            key="half"
+            className="h-3.5 w-3.5 fill-yellow-400 text-yellow-400"
+          />,
+        );
       }
       return stars;
     };
@@ -223,7 +235,10 @@ const MenuCard = forwardRef<HTMLDivElement, MenuCardProps>(
             )}
             {item.isPopular && (
               <div className="flex items-center gap-1.5 rounded-full bg-black/60 px-3 py-1.5 text-xs font-semibold text-white shadow-lg backdrop-blur-md">
-                <Flame className="h-3.5 w-3.5 text-orange-400" strokeWidth={2.5} />
+                <Flame
+                  className="h-3.5 w-3.5 text-orange-400"
+                  strokeWidth={2.5}
+                />
                 Popular
               </div>
             )}
@@ -267,7 +282,9 @@ const MenuCard = forwardRef<HTMLDivElement, MenuCardProps>(
             </h3>
             <span className="whitespace-nowrap text-lg font-extrabold tabular-nums text-primary">
               {item.price.toLocaleString()}
-              <span className="ml-1 text-xs font-semibold text-primary/70">FCFA</span>
+              <span className="ml-1 text-xs font-semibold text-primary/70">
+                FCFA
+              </span>
             </span>
           </div>
 
@@ -281,7 +298,8 @@ const MenuCard = forwardRef<HTMLDivElement, MenuCardProps>(
 
           {/* Description */}
           <p className="mb-3 line-clamp-2 text-sm leading-relaxed text-foreground/60">
-            {item.description || "A delicious meal prepared with fresh ingredients."}
+            {item.description ||
+              "A delicious meal prepared with fresh ingredients."}
           </p>
 
           {/* Info: time + category */}
@@ -367,7 +385,7 @@ const MenuCard = forwardRef<HTMLDivElement, MenuCardProps>(
         </div>
       </div>
     );
-  }
+  },
 );
 
 MenuCard.displayName = "MenuCard";

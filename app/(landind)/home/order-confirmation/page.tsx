@@ -4,11 +4,11 @@ import Link from "next/link";
 import { useRouter, useSearchParams } from "next/navigation";
 import { FaCheckCircle, FaShoppingCart, FaSpinner } from "react-icons/fa";
 import { Loader2 } from "lucide-react";
-import { useState } from "react";
+import { Suspense, useState } from "react";
 import { useCart } from "@/lib/cart-context";
 import { useCreateOrder, useGetOrder } from "@/hooks/use-orders";
 
-export default function OrderConfirmation() {
+function OrderConfirmationContent() {
   const router = useRouter();
   const searchParams = useSearchParams();
   const orderId = searchParams.get("orderId");
@@ -36,7 +36,7 @@ export default function OrderConfirmation() {
     try {
       const newOrder = await createOrderMutation.mutateAsync({
         items: cart.map((item) => ({
-          menuItemId: item.id, // assumes cart item.id === menuItemId
+          menuItemId: String(item.id), // cart ids may be numeric; checkout needs string ids
           quantity: item.quantity,
         })),
         deliveryAddress: address.trim(),
@@ -249,5 +249,19 @@ export default function OrderConfirmation() {
         </form>
       </div>
     </div>
+  );
+}
+
+export default function OrderConfirmation() {
+  return (
+    <Suspense
+      fallback={
+        <div className="min-h-screen bg-background flex items-center justify-center">
+          <Loader2 size={24} className="animate-spin text-foreground/40" />
+        </div>
+      }
+    >
+      <OrderConfirmationContent />
+    </Suspense>
   );
 }

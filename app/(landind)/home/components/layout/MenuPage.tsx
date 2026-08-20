@@ -2,7 +2,6 @@
 
 import MenuCard from "./MenuCard";
 import React, { useMemo, useState, useEffect, useRef } from "react";
-import { useSearchParams } from "next/navigation";
 import { menuData } from "@/lib/mock-data";
 import {
   History,
@@ -14,6 +13,7 @@ import {
   Coffee,
   X,
 } from "lucide-react";
+import { useSearchParams } from "next/navigation";
 
 const recentOrderIds = ["1", "3", "5"];
 
@@ -103,8 +103,7 @@ const MenuPage = () => {
     // Category
     if (category !== "all") {
       filtered = filtered.filter(
-        (item) =>
-          item.category?.toLowerCase() === category.toLowerCase(),
+        (item) => item.category?.toLowerCase() === category.toLowerCase(),
       );
     }
 
@@ -158,12 +157,7 @@ const MenuPage = () => {
     }
 
     return filtered;
-  }, [
-    restaurantItems,
-    category,
-    filters,
-    searchQuery,
-  ]);
+  }, [restaurantItems, category, filters, searchQuery]);
 
   /*
    * =========================================================
@@ -172,9 +166,7 @@ const MenuPage = () => {
    */
 
   const recentItems = useMemo(() => {
-    return restaurantItems.filter((item) =>
-      recentOrderIds.includes(item.id),
-    );
+    return restaurantItems.filter((item) => recentOrderIds.includes(item.id));
   }, [restaurantItems]);
 
   /*
@@ -185,11 +177,8 @@ const MenuPage = () => {
 
   useEffect(() => {
     if (urlSearchQuery && filteredItems.length > 0) {
-      const matchingKey = Object.keys(dishRefs.current).find(
-        (key) =>
-          key.toLowerCase().includes(
-            urlSearchQuery.toLowerCase(),
-          ),
+      const matchingKey = Object.keys(dishRefs.current).find((key) =>
+        key.toLowerCase().includes(urlSearchQuery.toLowerCase()),
       );
 
       if (matchingKey && dishRefs.current[matchingKey]) {
@@ -248,8 +237,8 @@ const MenuPage = () => {
             </h1>
 
             <p className="mt-4 max-w-2xl text-white/85">
-              Discover delicious meals, starters, seafood and desserts
-              prepared by local restaurants.
+              Discover delicious meals, starters, seafood and desserts prepared
+              by local restaurants.
             </p>
 
             {/* Search */}
@@ -260,9 +249,7 @@ const MenuPage = () => {
                 type="text"
                 placeholder="Search meals..."
                 value={searchQuery}
-                onChange={(e) =>
-                  setSearchQuery(e.target.value)
-                }
+                onChange={(e) => setSearchQuery(e.target.value)}
                 className="h-14 w-full rounded-2xl border border-white/20 bg-white pl-14 pr-12 text-gray-900 shadow-xl outline-none placeholder:text-gray-400 focus:ring-4 focus:ring-white/20"
               />
 
@@ -284,7 +271,6 @@ const MenuPage = () => {
       ====================================================== */}
 
       <div className="mx-auto max-w-7xl px-4 py-10 sm:px-6 lg:px-8">
-
         {/* CATEGORY NAVIGATION */}
 
         <div className="mb-8 overflow-x-auto pb-2">
@@ -324,12 +310,7 @@ const MenuPage = () => {
             onChange={(e) =>
               setFilters({
                 ...filters,
-                priceRange:
-                  e.target.value as
-                    | "all"
-                    | "low"
-                    | "medium"
-                    | "high",
+                priceRange: e.target.value as "all" | "low" | "medium" | "high",
               })
             }
             className="rounded-xl border border-gray-200 bg-white px-4 py-3 text-sm dark:border-gray-800 dark:bg-gray-900"
@@ -367,9 +348,7 @@ const MenuPage = () => {
               <History className="h-5 w-5 text-orange-500" />
 
               <div>
-                <h2 className="text-xl font-extrabold">
-                  Your Recent Meals
-                </h2>
+                <h2 className="text-xl font-extrabold">Your Recent Meals</h2>
 
                 <p className="text-sm text-gray-500">
                   Quickly order something you've enjoyed before.
@@ -399,9 +378,7 @@ const MenuPage = () => {
           <div className="rounded-3xl border border-dashed border-gray-300 bg-white py-24 text-center dark:border-gray-800 dark:bg-gray-900">
             <Utensils className="mx-auto h-12 w-12 text-orange-400" />
 
-            <h3 className="mt-5 text-xl font-bold">
-              No meals found
-            </h3>
+            <h3 className="mt-5 text-xl font-bold">No meals found</h3>
 
             <p className="mt-2 text-sm text-gray-500">
               Try another search or category.
@@ -409,44 +386,41 @@ const MenuPage = () => {
           </div>
         ) : (
           <div className="space-y-14">
-            {Object.entries(groupedMeals).map(
-              ([categoryName, items]) => (
-                <section key={categoryName}>
-                  {/* CATEGORY HEADER */}
+            {Object.entries(groupedMeals).map(([categoryName, items]) => (
+              <section key={categoryName}>
+                {/* CATEGORY HEADER */}
 
-                  <div className="mb-6 flex items-end justify-between">
-                    <div>
-                      <p className="text-xs font-bold uppercase tracking-[0.2em] text-orange-500">
-                        Our selection
-                      </p>
+                <div className="mb-6 flex items-end justify-between">
+                  <div>
+                    <p className="text-xs font-bold uppercase tracking-[0.2em] text-orange-500">
+                      Our selection
+                    </p>
 
-                      <h2 className="mt-1 text-2xl font-extrabold capitalize sm:text-3xl">
-                        {categoryName}
-                      </h2>
-                    </div>
-
-                    <span className="rounded-full bg-orange-500/10 px-3 py-1 text-xs font-bold text-orange-500">
-                      {items.length}{" "}
-                      {items.length === 1 ? "meal" : "meals"}
-                    </span>
+                    <h2 className="mt-1 text-2xl font-extrabold capitalize sm:text-3xl">
+                      {categoryName}
+                    </h2>
                   </div>
 
-                  {/* MEAL CARDS */}
+                  <span className="rounded-full bg-orange-500/10 px-3 py-1 text-xs font-bold text-orange-500">
+                    {items.length} {items.length === 1 ? "meal" : "meals"}
+                  </span>
+                </div>
 
-                  <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
-                    {items.map((item) => (
-                      <MenuCard
-                        key={item.id}
-                        ref={(el) => {
-                          dishRefs.current[item.name] = el;
-                        }}
-                        item={item}
-                      />
-                    ))}
-                  </div>
-                </section>
-              ),
-            )}
+                {/* MEAL CARDS */}
+
+                <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
+                  {items.map((item) => (
+                    <MenuCard
+                      key={item.id}
+                      ref={(el) => {
+                        dishRefs.current[item.name] = el;
+                      }}
+                      item={item}
+                    />
+                  ))}
+                </div>
+              </section>
+            ))}
           </div>
         )}
       </div>

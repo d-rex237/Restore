@@ -1,4 +1,5 @@
 "use client";
+
 import { useGetProviders } from "@/hooks/use-providers";
 import {
   mockOrders,
@@ -19,8 +20,6 @@ import {
   Users,
 } from "lucide-react";
 import { useState } from "react";
-
-const { data: provider = [] } = useGetProviders();
 
 function AdminRequest() {
   const ITEMS_PER_PAGE = 5;

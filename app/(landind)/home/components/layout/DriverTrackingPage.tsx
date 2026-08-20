@@ -4,15 +4,20 @@ import { useState, useEffect } from "react";
 import Link from "next/link";
 import Image from "next/image";
 import {
-  FaStar, FaPhone, FaMotorcycle,
-  FaMapMarkerAlt, FaClock, FaShieldAlt,
-  FaWhatsapp, FaArrowLeft, FaShareAlt,
+  FaStar,
+  FaPhone,
+  FaMotorcycle,
+  FaMapMarkerAlt,
+  FaClock,
+  FaShieldAlt,
+  FaWhatsapp,
+  FaArrowLeft,
+  FaShareAlt,
   FaCheckCircle,
   FaChevronDown,
   FaChevronUp,
 } from "react-icons/fa";
 import { MdMyLocation, MdDeliveryDining, MdLocationOn } from "react-icons/md";
-
 
 // ===== DRIVER DATA =====
 const drivers = [
@@ -80,7 +85,13 @@ const drivers = [
 ];
 
 // ===== PROGRESS STEPS =====
-const PROGRESS_STEPS = ["Confirmed", "Preparing", "Picked Up", "On the Way", "Delivered"];
+const PROGRESS_STEPS = [
+  "Confirmed",
+  "Preparing",
+  "Picked Up",
+  "On the Way",
+  "Delivered",
+];
 
 // ===== HEADQUARTERS =====
 const MAP_BBOX = "10.130,5.940,10.170,5.980";
@@ -125,7 +136,6 @@ export default function DriverTrackingPage() {
 
   return (
     <div className="min-h-screen bg-[#F7F8FA] font-sans">
-
       {/* ── TOP BAR ── */}
       <header className="sticky top-0 z-50 bg-white border-b border-gray-100 shadow-sm">
         <div className="max-w-6xl mx-auto px-4 h-14 flex items-center justify-between">
@@ -136,7 +146,9 @@ export default function DriverTrackingPage() {
             <FaArrowLeft className="text-xs" /> Back
           </Link>
           <div className="text-center">
-            <h1 className="text-sm font-extrabold text-gray-900 leading-none">Available Drivers</h1>
+            <h1 className="text-sm font-extrabold text-gray-900 leading-none">
+              Available Drivers
+            </h1>
             <p className="text-[10px] text-gray-400 uppercase tracking-widest font-semibold">
               Live tracking
             </p>
@@ -150,7 +162,6 @@ export default function DriverTrackingPage() {
       </header>
 
       <div className="max-w-6xl mx-auto px-4 py-5 space-y-6">
-
         {/* ── LIVE MAP ── */}
         <div className="relative rounded-2xl overflow-hidden shadow-lg border border-gray-200 bg-white">
           <div className="relative w-full h-72 md:h-96">
@@ -164,7 +175,10 @@ export default function DriverTrackingPage() {
             <div className="absolute inset-x-0 bottom-0 h-16 bg-gradient-to-t from-white/70 to-transparent pointer-events-none" />
 
             {/* HQ pin */}
-            <div className="absolute pointer-events-none" style={{ left: "48%", top: "52%" }}>
+            <div
+              className="absolute pointer-events-none"
+              style={{ left: "48%", top: "52%" }}
+            >
               <div className="flex flex-col items-center -translate-x-1/2 -translate-y-1/2">
                 <div className="w-8 h-8 bg-blue-600 rounded-full border-2 border-white shadow-lg flex items-center justify-center">
                   <MdLocationOn className="text-white text-sm" />
@@ -237,7 +251,7 @@ export default function DriverTrackingPage() {
                     <div className="relative flex-shrink-0">
                       <Image
                         src={`https://ui-avatars.com/api/?name=${encodeURIComponent(
-                          driver.name
+                          driver.name,
                         )}&background=FF7A00&color=fff&size=64&rounded=true&bold=true`}
                         alt={driver.name}
                         width={56}
@@ -254,10 +268,13 @@ export default function DriverTrackingPage() {
                       <h3 className="text-base font-extrabold text-gray-900 leading-tight">
                         {driver.name}
                       </h3>
-                      <p className="text-gray-400 text-[10px] mt-0.5">ID: {driver.id}</p>
+                      <p className="text-gray-400 text-[10px] mt-0.5">
+                        ID: {driver.id}
+                      </p>
                       <div className="flex items-center gap-1 mt-1 flex-wrap">
                         <span className="flex items-center gap-0.5 bg-yellow-50 border border-yellow-200 px-1.5 py-0.5 rounded-full text-[9px] font-bold text-yellow-600">
-                          <FaStar className="text-yellow-400 text-[9px]" /> {driver.rating}
+                          <FaStar className="text-yellow-400 text-[9px]" />{" "}
+                          {driver.rating}
                         </span>
                         <span className="text-[9px] text-gray-400">
                           {driver.totalDeliveries.toLocaleString()} deliveries
@@ -362,14 +379,18 @@ export default function DriverTrackingPage() {
                     <div className="mt-1 bg-orange-50 border border-orange-100 rounded-lg p-3 space-y-1.5">
                       {[
                         ["Phone", driver.phone],
-                        ["Email", driver.email],
                         ["Deliveries Today", driver.completedToday],
                         ["Member Since", driver.memberSince],
                         ["Status", driver.status],
                         ["Distance", driver.distance],
                       ].map(([label, value]) => (
-                        <div key={label} className="flex justify-between items-center">
-                          <span className="text-gray-400 text-[9px]">{label}</span>
+                        <div
+                          key={label}
+                          className="flex justify-between items-center"
+                        >
+                          <span className="text-gray-400 text-[9px]">
+                            {label}
+                          </span>
                           <span className="text-gray-900 text-[9px] font-bold">
                             {value}
                           </span>
@@ -394,7 +415,10 @@ export default function DriverTrackingPage() {
         {/* ── FOOTER ── */}
         <p className="text-center text-[11px] text-gray-400 pb-4">
           Need help?{" "}
-          <Link href="/contact" className="text-orange-500 font-semibold hover:underline">
+          <Link
+            href="/contact"
+            className="text-orange-500 font-semibold hover:underline"
+          >
             Contact Support
           </Link>{" "}
           · Restor Food Delivery · Bamenda, Cameroon
