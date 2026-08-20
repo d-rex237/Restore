@@ -3,7 +3,7 @@
 import { createContext, useContext, useState, ReactNode } from "react";
 
 type CartItem = {
-  id: number;
+  id: string;
   name: string;
   price: number;
   image: string;
@@ -14,9 +14,9 @@ type CartContextType = {
   cart: CartItem[];
   getCartCount: () => number;
   getCartTotal: () => number;
-  addToCart: (item: Omit<CartItem, "quantity">) => void;
-  removeFromCart: (id: number) => void;
-  updateQuantity: (id: number, newQuantity: number) => void; // 👈 NEW
+  addToCart: (item: Omit<CartItem, "quantity">, quantity?: number) => void;
+  removeFromCart: (id: string) => void;
+  updateQuantity: (id: string, newQuantity: number) => void;
   clearCart: () => void;
   isCartOpen: boolean;
   toggleCart: () => void;
@@ -28,30 +28,32 @@ export function CartProvider({ children }: { children: ReactNode }) {
   const [cart, setCart] = useState<CartItem[]>([]);
   const [isCartOpen, setIsCartOpen] = useState(false);
 
-  const addToCart = (item: Omit<CartItem, "quantity">) => {
+  const addToCart = (
+    item: Omit<CartItem, "quantity">,
+    quantity: number = 1,
+  ) => {
     setCart((prev) => {
       const existingItem = prev.find((i) => i.id === item.id);
       if (existingItem) {
         return prev.map((i) =>
-          i.id === item.id ? { ...i, quantity: i.quantity + 1 } : i
+          i.id === item.id ? { ...i, quantity: i.quantity + quantity } : i,
         );
       }
-      return [...prev, { ...item, quantity: 1 }];
+      return [...prev, { ...item, quantity }];
     });
     setIsCartOpen(true);
   };
 
-  const removeFromCart = (id: number) => {
+  const removeFromCart = (id: string) => {
     setCart((prev) => prev.filter((item) => item.id !== id));
   };
 
-  // 👇 NEW: update quantity for a specific item
-  const updateQuantity = (id: number, newQuantity: number) => {
-    if (newQuantity < 1) return; // prevent zero or negative
+  const updateQuantity = (id: string, newQuantity: number) => {
+    if (newQuantity < 1) return;
     setCart((prev) =>
       prev.map((item) =>
-        item.id === id ? { ...item, quantity: newQuantity } : item
-      )
+        item.id === id ? { ...item, quantity: newQuantity } : item,
+      ),
     );
   };
 
@@ -78,7 +80,7 @@ export function CartProvider({ children }: { children: ReactNode }) {
         getCartTotal,
         addToCart,
         removeFromCart,
-        updateQuantity, // 👈 EXPOSE IT
+        updateQuantity,
         clearCart,
         isCartOpen,
         toggleCart,

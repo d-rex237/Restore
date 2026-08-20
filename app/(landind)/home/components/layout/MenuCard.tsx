@@ -162,6 +162,15 @@ const MenuCard = forwardRef<HTMLDivElement, MenuCardProps>(
     );
 
     const handleAddToCart = () => {
+      addToCart(
+        {
+          id: item.id,
+          name: item.name,
+          price: item.price,
+          image: (item as any).image || foodImage,
+        },
+        quantity,
+      );
       setJustAdded(true);
       setTimeout(() => setJustAdded(false), 1500);
     };
