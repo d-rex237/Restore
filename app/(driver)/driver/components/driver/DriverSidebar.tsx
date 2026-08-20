@@ -3,6 +3,7 @@
 import React from 'react';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
+import { useRouter } from "next/navigation";
 import { 
   LayoutDashboard,
   Truck,
@@ -17,6 +18,7 @@ import {
   Clock
 } from 'lucide-react';
 import { GrCurrency } from 'react-icons/gr';
+import { SignOutButton } from '@clerk/nextjs';
 
 interface DriverSidebarProps {
   isOpen: boolean;
@@ -25,6 +27,15 @@ interface DriverSidebarProps {
 
 const DriverSidebar: React.FC<DriverSidebarProps> = ({ isOpen, setIsOpen }) => {
   const pathname = usePathname();
+  const router = useRouter();
+
+  const handleLogout = () =>{
+    localStorage.removeItem('token');
+        localStorage.removeItem('driver');
+        router.push('/');
+        setIsOpen(false);
+
+  }
 
   const menuItems = [
     { icon: LayoutDashboard, label: 'Dashboard', href: '/driver' },
@@ -109,10 +120,13 @@ const DriverSidebar: React.FC<DriverSidebarProps> = ({ isOpen, setIsOpen }) => {
             </div>
           </div>
           
-          <button className="flex items-center space-x-3 px-4 py-3 w-full rounded-xl text-gray-600 hover:bg-red-50 hover:text-red-700 transition-all duration-200">
+          <button
+            onClick={handleLogout}
+            className="flex items-center space-x-3 px-4 py-3 w-full rounded-xl text-gray-600 hover:bg-red-50 hover:text-red-700 transition-all duration-200">
             <LogOut className="w-5 h-5" />
             <span className="font-medium">Logout</span>
           </button>
+          <SignOutButton/>
           
           <div className="mt-3 px-4 py-2 bg-gray-50 rounded-xl">
             <p className="text-xs text-gray-500">Logged in as Driver</p>

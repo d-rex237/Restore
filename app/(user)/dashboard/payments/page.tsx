@@ -98,7 +98,7 @@ export default function PaymentsPage() {
                   <input
                     type="text"
                     placeholder="682 305 453"
-                    className="w-full px-4 py-2 pl-10 border border-gray-300 rounded-xl focus:ring-2 focus:ring-green-500 focus:border-transparent outline-none"
+                    className="text-gray-400 w-full px-4 py-2 pl-10 border border-gray-300 rounded-xl focus:ring-2 focus:ring-green-500 focus:border-transparent outline-none"
                   />
                   <CreditCardIcon className="absolute left-3 top-1/2 transform -translate-y-1/2 w-4 h-4 text-gray-400" />
                 </div>
@@ -111,49 +111,58 @@ export default function PaymentsPage() {
                 <input
                   type="text"
                   placeholder="John Doe"
-                  className="w-full px-4 py-2 border border-gray-300 rounded-xl focus:ring-2 focus:ring-green-500 focus:border-transparent outline-none"
+                  className="text-gray-400 w-full px-4 py-2 border border-gray-300 rounded-xl focus:ring-2 focus:ring-green-500 focus:border-transparent outline-none"
                 />
               </div>
 
               {/* NEW: MTN vs Orange Selector */}
               <div style={styles.selectorBox}>
-                  <label className="block text-sm font-medium text-gray-700 mb-1">
-                     How do you want to pay?
-                  </label>
+                <label className="block text-sm font-medium text-gray-700 mb-1">
+                  How do you want to pay?
+                </label>
                 <div
-                  style={{ display: "flex", flexDirection: "row", gap: "50px" }}>
-
-                <div
-                  style={{ display: "flex", flexDirection: "row", gap: "5px" }}
+                  style={{ display: "flex", flexDirection: "row", gap: "50px" }}
                 >
-                  <label style={styles.radioOption}>
-                    <input
-                      type="radio"
-                      name="provider"
-                      value="mtn"
-                      defaultChecked={`paymentProvider === "mtn"}
+                  <div
+                    style={{
+                      display: "flex",
+                      flexDirection: "row",
+                      gap: "5px",
+                    }}
+                  >
+                    <label style={styles.radioOption}>
+                      <input
+                        type="radio"
+                        name="provider"
+                        value="mtn"
+                        defaultChecked={`paymentProvider === "mtn"}
                     onChange={(e) => setPaymentProvider(e.target.value)`}
-                    />
-                  </label>
-                  <FaMobileAlt style={{ color: "#FFCC00" }} />
-                  <span>MTN Mobile Money</span>
-                </div>
+                      />
+                    </label>
+                    <FaMobileAlt style={{ color: "#FFCC00" }} />
+                    <span>MTN Mobile Money</span>
+                  </div>
 
-                <div
-                  style={{ display: "flex", flexDirection: "row", gap: "5px" }}>
-                  <label style={styles.radioOption}>
-                    <input
-                      type="radio"
-                      name="provider"
-                      value="orange"
-                      defaultChecked={`paymentProvider === "orange"}
+                  <div
+                    style={{
+                      display: "flex",
+                      flexDirection: "row",
+                      gap: "5px",
+                    }}
+                  >
+                    <label style={styles.radioOption}>
+                      <input
+                        type="radio"
+                        name="provider"
+                        value="orange"
+                        defaultChecked={`paymentProvider === "orange"}
                     onChange={(e) => setPaymentProvider(e.target.value)`}
-                    />
-                  </label>
-                  <FaMobileAlt style={{ color: "#FF7900" }} />
-                  <span>Orange Money</span>
+                      />
+                    </label>
+                    <FaMobileAlt style={{ color: "#FF7900" }} />
+                    <span>Orange Money</span>
+                  </div>
                 </div>
-              </div>
               </div>
 
               <button

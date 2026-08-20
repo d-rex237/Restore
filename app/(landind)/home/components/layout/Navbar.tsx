@@ -1,25 +1,18 @@
 "use client";
 
 import Link from "next/link";
-import { useUser } from "@clerk/nextjs";
 import { useEffect, useState } from "react";
 import { usePathname } from "next/navigation";
 import { useTheme } from "next-themes";
-import {
-  FaSun,
-  FaMoon,
-  FaSearch,
-  FaShoppingCart,
-} from "react-icons/fa";
+import { FaSun, FaMoon, FaSearch, FaShoppingCart } from "react-icons/fa";
 
 import Logo from "./logo";
 import { useCart } from "@/lib/cart-context";
-import { Show, SignInButton, SignUpButton } from "@clerk/nextjs";
+import { Show, SignInButton, SignOutButton, SignUpButton } from "@clerk/nextjs";
 import ProfileAvatar from "@/components/ProfileAvatar";
 
 export default function Navbar() {
   const pathname = usePathname();
-  const { isSignedIn } = useUser();
 
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [mounted, setMounted] = useState(false);
@@ -62,8 +55,7 @@ export default function Navbar() {
     );
   }
 
-  const cartCount =
-    typeof getCartCount === "function" ? getCartCount() : 0;
+  const cartCount = typeof getCartCount === "function" ? getCartCount() : 0;
 
   const toggleTheme = () => {
     setTheme(theme === "dark" ? "light" : "dark");
@@ -86,7 +78,9 @@ export default function Navbar() {
           px-4 sm:px-6 lg:px-8
         "
       >
-        {/* LOGO */}
+        {/* =====================================================
+            LOGO
+        ====================================================== */}
         <Link
           href="/"
           onClick={closeMenu}
@@ -99,20 +93,36 @@ export default function Navbar() {
           <Logo />
         </Link>
 
-        {/* DESKTOP NAVIGATION */}
+        {/* =====================================================
+            DESKTOP NAVIGATION
+        ====================================================== */}
         <nav className="hidden items-center gap-1 lg:flex">
           <NavLink href="/" label="Home" active={isActive("/")} />
-          <NavLink href="/home/menu" label="Menu" active={isActive("/home/menu")} />
-          <NavLink href="/home/about" label="About" active={isActive("/home/about")} />
-          <NavLink href="/home/services" label="Services" active={isActive("/home/services")} />
-          {/* Driver link - visible only when signed in, points to tracking page */}
-          {isSignedIn && (
-            <NavLink href="/home/tracking" label="Driver" active={isActive("/home/tracking")} />
-          )}
-          <NavLink href="/home/contact" label="Contact" active={isActive("/home/contact")} />
+          <NavLink
+            href="/home/menu"
+            label="Menu"
+            active={isActive("/home/menu")}
+          />
+          <NavLink
+            href="/home/about"
+            label="About"
+            active={isActive("/home/about")}
+          />
+          <NavLink
+            href="/home/services"
+            label="Services"
+            active={isActive("/home/services")}
+          />
+          <NavLink
+            href="/home/contact"
+            label="Contact"
+            active={isActive("/home/contact")}
+          />
         </nav>
 
-        {/* RIGHT CONTROLS */}
+        {/* =====================================================
+            RIGHT CONTROLS
+        ====================================================== */}
         <div className="flex items-center gap-2">
           {/* CART */}
           <button
@@ -182,7 +192,9 @@ export default function Navbar() {
           <button
             type="button"
             onClick={toggleTheme}
-            aria-label={theme === "dark" ? "Switch to light mode" : "Switch to dark mode"}
+            aria-label={
+              theme === "dark" ? "Switch to light mode" : "Switch to dark mode"
+            }
             className="
               group flex h-10 w-10
               items-center justify-center
@@ -220,6 +232,7 @@ export default function Navbar() {
 
           <Show when="signed-in">
             <ProfileAvatar />
+            <SignOutButton />
           </Show>
 
           {/* MOBILE MENU TOGGLE */}
@@ -242,7 +255,9 @@ export default function Navbar() {
           >
             <span
               className={`h-0.5 w-5 rounded-full bg-foreground transition-all duration-300 ${
-                isMenuOpen ? "translate-y-2 rotate-45 bg-primary" : "group-hover:bg-primary"
+                isMenuOpen
+                  ? "translate-y-2 rotate-45 bg-primary"
+                  : "group-hover:bg-primary"
               }`}
             />
             <span
@@ -252,29 +267,58 @@ export default function Navbar() {
             />
             <span
               className={`h-0.5 w-5 rounded-full bg-foreground transition-all duration-300 ${
-                isMenuOpen ? "-translate-y-2 -rotate-45 bg-primary" : "group-hover:bg-primary"
+                isMenuOpen
+                  ? "-translate-y-2 -rotate-45 bg-primary"
+                  : "group-hover:bg-primary"
               }`}
             />
           </button>
         </div>
       </div>
 
-      {/* MOBILE MENU */}
+      {/* =====================================================
+          MOBILE MENU
+      ====================================================== */}
       <div
-        className={`overflow-hidden border-t border-border/60 transition-all duration-300 lg:hidden ${
-          isMenuOpen ? "max-h-[700px] opacity-100" : "max-h-0 opacity-0"
-        }`}
+        className={`
+          overflow-hidden
+          border-t border-border/60
+          transition-all duration-300
+          lg:hidden
+          ${isMenuOpen ? "max-h-[700px] opacity-100" : "max-h-0 opacity-0"}
+        `}
       >
         <nav className="bg-background/95 px-4 py-4 backdrop-blur-xl">
-          <MobileNavLink href="/" label="Home" active={isActive("/")} onClick={closeMenu} />
-          <MobileNavLink href="/home/menu" label="Menu" active={isActive("/home/menu")} onClick={closeMenu} />
-          <MobileNavLink href="/home/about" label="About" active={isActive("/home/about")} onClick={closeMenu} />
-          <MobileNavLink href="/home/services" label="Services" active={isActive("/home/services")} onClick={closeMenu} />
-          {/* Driver link for mobile - visible only when signed in, points to tracking page */}
-          {isSignedIn && (
-            <MobileNavLink href="/home/tracking" label="Driver" active={isActive("/home/tracking")} onClick={closeMenu} />
-          )}
-          <MobileNavLink href="/home/contact" label="Contact" active={isActive("/home/contact")} onClick={closeMenu} />
+          <MobileNavLink
+            href="/"
+            label="Home"
+            active={isActive("/")}
+            onClick={closeMenu}
+          />
+          <MobileNavLink
+            href="/home/menu"
+            label="Menu"
+            active={isActive("/home/menu")}
+            onClick={closeMenu}
+          />
+          <MobileNavLink
+            href="/home/about"
+            label="About"
+            active={isActive("/home/about")}
+            onClick={closeMenu}
+          />
+          <MobileNavLink
+            href="/home/services"
+            label="Services"
+            active={isActive("/home/services")}
+            onClick={closeMenu}
+          />
+          <MobileNavLink
+            href="/home/contact"
+            label="Contact"
+            active={isActive("/home/contact")}
+            onClick={closeMenu}
+          />
 
           {/* MOBILE ACTIONS */}
           <div className="mt-3 grid grid-cols-2 gap-2 border-t border-border/60 pt-4">
@@ -372,7 +416,10 @@ export default function Navbar() {
   );
 }
 
-/* DESKTOP NAV LINK */
+/* =========================================================
+   DESKTOP NAV LINK
+========================================================= */
+
 function NavLink({
   href,
   label,
@@ -385,21 +432,34 @@ function NavLink({
   return (
     <Link
       href={href}
-      className={`group relative flex items-center rounded-xl px-4 py-2.5 text-sm font-semibold transition-all duration-300 ${
-        active ? "bg-primary/10 text-primary" : "text-foreground/70 hover:bg-primary/10 hover:text-primary"
-      }`}
+      className={`
+        group relative
+        flex items-center
+        rounded-xl
+        px-4 py-2.5
+        text-sm font-semibold
+        transition-all duration-300
+        ${active ? "bg-primary/10 text-primary" : "text-foreground/70 hover:bg-primary/10 hover:text-primary"}
+      `}
     >
       {label}
       <span
-        className={`absolute bottom-1 left-1/2 h-0.5 -translate-x-1/2 rounded-full bg-primary transition-all duration-300 ${
-          active ? "w-5" : "w-0 group-hover:w-5"
-        }`}
+        className={`
+          absolute bottom-1 left-1/2
+          h-0.5 -translate-x-1/2
+          rounded-full bg-primary
+          transition-all duration-300
+          ${active ? "w-5" : "w-0 group-hover:w-5"}
+        `}
       />
     </Link>
   );
 }
 
-/* MOBILE NAV LINK */
+/* =========================================================
+   MOBILE NAV LINK
+========================================================= */
+
 function MobileNavLink({
   href,
   label,
@@ -415,9 +475,15 @@ function MobileNavLink({
     <Link
       href={href}
       onClick={onClick}
-      className={`mb-1 flex items-center rounded-xl px-4 py-3.5 text-sm font-semibold transition-all duration-300 ${
-        active ? "bg-primary/10 text-primary" : "text-foreground/75 hover:bg-primary/10 hover:pl-5 hover:text-primary"
-      }`}
+      className={`
+        mb-1
+        flex items-center
+        rounded-xl
+        px-4 py-3.5
+        text-sm font-semibold
+        transition-all duration-300
+        ${active ? "bg-primary/10 text-primary" : "text-foreground/75 hover:bg-primary/10 hover:pl-5 hover:text-primary"}
+      `}
     >
       {label}
     </Link>

@@ -54,7 +54,7 @@ export default function DriverProfilePage() {
               </div>
               <div className="flex items-center justify-center md:justify-start space-x-6 mt-3">
                 <div className="flex items-center space-x-1">
-                  <FaStar color='gold'/>
+                  <FaStar color="gold" />
                   <span className="font-semibold text-gray-800">
                     {profile.rating}
                   </span>
@@ -96,7 +96,7 @@ export default function DriverProfilePage() {
                     onChange={(e) =>
                       setProfile({ ...profile, name: e.target.value })
                     }
-                    className="mt-1 w-full px-4 py-2 border border-gray-300 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-transparent outline-none"
+                    className="text-gray-400 mt-1 w-full px-4 py-2 border border-gray-300 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-transparent outline-none"
                   />
                 ) : (
                   <p className="font-medium text-gray-800">{profile.name}</p>
@@ -127,7 +127,7 @@ export default function DriverProfilePage() {
                     onChange={(e) =>
                       setProfile({ ...profile, phone: e.target.value })
                     }
-                    className="mt-1 w-full px-4 py-2 border border-gray-300 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-transparent outline-none"
+                    className="text-gray-400 mt-1 w-full px-4 py-2 border border-gray-300 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-transparent outline-none"
                   />
                 ) : (
                   <p className="font-medium text-gray-800">{profile.phone}</p>
@@ -155,7 +155,7 @@ export default function DriverProfilePage() {
                             vehicleType: e.target.value,
                           })
                         }
-                        className="mt-1 w-full px-4 py-2 border border-gray-300 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-transparent outline-none"
+                        className="text-gray-400 mt-1 w-full px-4 py-2 border border-gray-300 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-transparent outline-none"
                       >
                         <option value="Car">Car</option>
                         <option value="Motorcycle">Motorcycle</option>
@@ -186,7 +186,7 @@ export default function DriverProfilePage() {
                             licenseNumber: e.target.value,
                           })
                         }
-                        className="mt-1 w-full px-4 py-2 border border-gray-300 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-transparent outline-none"
+                        className="text-gray-400 mt-1 w-full px-4 py-2 border border-gray-300 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-transparent outline-none"
                       />
                     ) : (
                       <p className="font-medium text-gray-800">
@@ -212,7 +212,7 @@ export default function DriverProfilePage() {
                             plateNumber: e.target.value,
                           })
                         }
-                        className="mt-1 w-full px-4 py-2 border border-gray-300 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-transparent outline-none"
+                        className="text-gray-400 mt-1 w-full px-4 py-2 border border-gray-300 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-transparent outline-none"
                       />
                     ) : (
                       <p className="font-medium text-gray-800">
@@ -238,7 +238,7 @@ export default function DriverProfilePage() {
                             vehicleModel: e.target.value,
                           })
                         }
-                        className="mt-1 w-full px-4 py-2 border border-gray-300 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-transparent outline-none"
+                        className="text-gray-400 mt-1 w-full px-4 py-2 border border-gray-300 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-transparent outline-none"
                       />
                     ) : (
                       <p className="font-medium text-gray-800">

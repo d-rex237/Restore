@@ -1,15 +1,9 @@
 "use client";
 
 import { useEffect } from "react";
-import Image from "next/image";
 import { useRouter, usePathname } from "next/navigation";
 import { useCart } from "@/lib/cart-context";
-import {
-  FaTrash,
-  FaArrowRight,
-  FaTimes,
-  FaShoppingCart,
-} from "react-icons/fa";
+import { FaTrash, FaArrowRight, FaTimes, FaShoppingCart } from "react-icons/fa";
 
 export default function CartSidebar() {
   const router = useRouter();
@@ -43,7 +37,6 @@ export default function CartSidebar() {
       return;
     }
 
-    clearCart();
     toggleCart();
     router.push("/home/order-confirmation");
   };
@@ -55,10 +48,7 @@ export default function CartSidebar() {
     return null;
   }
 
-  const cartCount = cart.reduce(
-    (total, item) => total + item.quantity,
-    0
-  );
+  const cartCount = cart.reduce((total, item) => total + item.quantity, 0);
 
   return (
     <div className="fixed inset-0 z-[100] flex justify-end">
@@ -123,16 +113,12 @@ export default function CartSidebar() {
             </div>
 
             <div>
-              <h2 className="text-lg font-bold text-foreground">
-                Your Cart
-              </h2>
+              <h2 className="text-lg font-bold text-foreground">Your Cart</h2>
 
               <p className="text-xs text-foreground/55">
                 {cartCount === 0
                   ? "No items"
-                  : `${cartCount} ${
-                      cartCount === 1 ? "item" : "items"
-                    }`}
+                  : `${cartCount} ${cartCount === 1 ? "item" : "items"}`}
               </p>
             </div>
           </div>
@@ -245,18 +231,24 @@ export default function CartSidebar() {
                       bg-muted
                     "
                   >
-                    <Image
-                      src={item.image}
-                      alt={item.name}
-                      fill
-                      sizes="80px"
-                      className="
-                        object-cover
-                        transition-transform
-                        duration-300
-                        group-hover:scale-105
-                      "
-                    />
+                    {item.image ? (
+                      <img
+                        src={item.image}
+                        alt={item.name}
+                        className="
+                          h-full
+                          w-full
+                          object-cover
+                          transition-transform
+                          duration-300
+                          group-hover:scale-105
+                        "
+                      />
+                    ) : (
+                      <div className="flex h-full w-full items-center justify-center text-[10px] text-foreground/40">
+                        No image
+                      </div>
+                    )}
                   </div>
 
                   {/* PRODUCT DETAILS + QUANTITY CONTROLS */}
@@ -369,9 +361,7 @@ export default function CartSidebar() {
           >
             <div className="mb-5 space-y-2">
               <div className="flex items-center justify-between">
-                <span className="text-sm text-foreground/55">
-                  Subtotal
-                </span>
+                <span className="text-sm text-foreground/55">Subtotal</span>
 
                 <span className="text-sm font-semibold text-foreground">
                   {getCartTotal().toLocaleString()} FCFA
@@ -418,7 +408,6 @@ export default function CartSidebar() {
               "
             >
               Proceed to Checkout
-
               <FaArrowRight
                 className="
                   h-3.5

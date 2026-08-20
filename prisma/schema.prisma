@@ -101,7 +101,7 @@ model DriverProfile {
 
 model Restaurant {
   id            String   @id @default(cuid())
-  ownerId       String
+  ownerId       String @unique
   owner         User     @relation(fields: [ownerId], references: [id])
   name          String
   description   String?
