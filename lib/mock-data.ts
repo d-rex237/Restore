@@ -1,10 +1,15 @@
 // lib/mock-data.ts
-// Temporary mock data for UI development — remove/replace once Neon + Prisma are wired up.
-// Shapes intentionally mirror the Prisma models from the project spec so swapping
-// this out for real DB queries later requires minimal changes to your components.
+// Temporary mock data for UI development.
+// This file can later be replaced with Neon + Prisma queries.
+
+// ============================================================
+// TYPES
+// ============================================================
 
 export type Role = "customer" | "driver" | "provider" | "admin";
+
 export type ReqStatus = "pending" | "approved" | "rejected";
+
 export type OrderStatus =
   | "pending"
   | "accepted"
@@ -20,7 +25,7 @@ export type MockUser = {
   name: string;
   email: string;
   role: Role;
-  joinedAt: string; // ISO date
+  joinedAt: string;
   avatarUrl?: string;
 };
 
@@ -30,6 +35,8 @@ export type MockRestaurant = {
   name: string;
   address: string;
   imageUrl?: string;
+  logoUrl?: string;
+  description?: string;
   isOpen: boolean;
   rating: number;
 };
@@ -64,7 +71,7 @@ export type MockOrder = {
   items: MockOrderItem[];
   total: number;
   deliveryAddress: string;
-  createdAt: string; // ISO date
+  createdAt: string;
 };
 
 export type MockRoleRequest = {
@@ -77,7 +84,9 @@ export type MockRoleRequest = {
   createdAt: string;
 };
 
-// ---------------- Users ----------------
+// ============================================================
+// USERS
+// ============================================================
 
 export const mockUsers: MockUser[] = [
   {
@@ -131,7 +140,9 @@ export const mockUsers: MockUser[] = [
   },
 ];
 
-// ---------------- Restaurants ----------------
+// ============================================================
+// RESTAURANTS
+// ============================================================
 
 export const mockRestaurants: MockRestaurant[] = [
   {
@@ -139,28 +150,66 @@ export const mockRestaurants: MockRestaurant[] = [
     ownerId: "u5",
     name: "Mama Grace Kitchen",
     address: "Old Town, Bamenda",
+    imageUrl: "/images/restaurants/mama-grace.jpg",
+    logoUrl: "/images/restaurants/mama-grace-logo.jpg",
+    description:
+      "Authentic Cameroonian meals prepared with traditional recipes and fresh local ingredients.",
     isOpen: true,
     rating: 4.7,
   },
   {
     id: "r2",
     ownerId: "u6",
-    name: "Suya Spot",
+    name: "Bamboo Restaurant",
     address: "Commercial Avenue, Bamenda",
+    imageUrl: "/images/restaurants/bamboo.jpg",
+    logoUrl: "/images/restaurants/bamboo-logo.jpg",
+    description:
+      "A beautiful local restaurant serving traditional Cameroonian dishes, grilled specialties and refreshing drinks.",
     isOpen: true,
-    rating: 4.4,
+    rating: 4.8,
   },
   {
     id: "r3",
     ownerId: "u6",
-    name: "Suya Spot Express",
+    name: "Suya Spot",
     address: "Nkwen, Bamenda",
-    isOpen: false,
-    rating: 4.1,
+    imageUrl: "/images/restaurants/suya-spot.jpg",
+    logoUrl: "/images/restaurants/suya-spot-logo.jpg",
+    description:
+      "Enjoy smoky charcoal grilled suya, chicken, beef and delicious local sides.",
+    isOpen: true,
+    rating: 4.6,
+  },
+  {
+    id: "r4",
+    ownerId: "u6",
+    name: "Street Bites",
+    address: "Commercial Avenue, Bamenda",
+    imageUrl: "/images/restaurants/street-bites.jpg",
+    logoUrl: "/images/restaurants/street-bites-logo.jpg",
+    description:
+      "Quick, affordable and delicious Cameroonian street food made fresh every day.",
+    isOpen: true,
+    rating: 4.4,
+  },
+  {
+    id: "r5",
+    ownerId: "u6",
+    name: "Sea Catch",
+    address: "Nkwen, Bamenda",
+    imageUrl: "/images/restaurants/sea-catch.jpg",
+    logoUrl: "/images/restaurants/sea-catch-logo.jpg",
+    description:
+      "Fresh seafood, grilled fish and delicious coastal-inspired meals.",
+    isOpen: true,
+    rating: 4.5,
   },
 ];
 
-// ---------------- Menu Items ----------------
+// ============================================================
+// BASIC MENU ITEMS
+// ============================================================
 
 export const mockMenuItems: MockMenuItem[] = [
   {
@@ -219,10 +268,11 @@ export const mockMenuItems: MockMenuItem[] = [
   },
 ];
 
-// ---------------- Orders ----------------
+// ============================================================
+// ORDERS
+// ============================================================
 
 export const mockOrders: MockOrder[] = [
-  // August
   {
     id: "o6",
     customerId: "u2",
@@ -235,7 +285,7 @@ export const mockOrders: MockOrder[] = [
     items: [
       {
         menuItemId: "m3",
-        name: "Eru & Garri",
+        name: "Achu & Yellow Soup",
         quantity: 2,
         priceAtOrder: 4500,
       },
@@ -249,40 +299,38 @@ export const mockOrders: MockOrder[] = [
     customerId: "u1",
     customerName: "Achiri Divine",
     restaurantId: "r2",
-    restaurantName: "Suya Spot",
+    restaurantName: "Bamboo Restaurant",
     status: "delivered",
     items: [
       {
-        menuItemId: "m4",
-        name: "Beef Suya Skewers",
-        quantity: 4,
-        priceAtOrder: 2500,
+        menuItemId: "menu-20",
+        name: "Bamboo Special Jollof",
+        quantity: 2,
+        priceAtOrder: 3500,
       },
     ],
-    total: 10000,
+    total: 7000,
     deliveryAddress: "Ntarikon",
     createdAt: "2026-08-18T18:45:00Z",
   },
-
-  // September
   {
     id: "o8",
     customerId: "u2",
     customerName: "Ngwa Precious",
-    restaurantId: "r3",
-    restaurantName: "Suya Spot Express",
+    restaurantId: "r5",
+    restaurantName: "Sea Catch",
     status: "delivered",
     items: [
       {
-        menuItemId: "m6",
-        name: "Suya Platter",
+        menuItemId: "menu-39",
+        name: "Grilled Tilapia",
         quantity: 2,
-        priceAtOrder: 6000,
+        priceAtOrder: 4500,
       },
     ],
-    total: 12000,
+    total: 9000,
     deliveryAddress: "Mile 2",
-    createdAt: "2026-09-06T19:20:00Z",
+    createdAt: "2026-08-19T19:20:00Z",
   },
   {
     id: "o9",
@@ -301,20 +349,18 @@ export const mockOrders: MockOrder[] = [
     ],
     total: 12000,
     deliveryAddress: "Mankon",
-    createdAt: "2026-09-20T14:35:00Z",
+    createdAt: "2026-08-20T14:35:00Z",
   },
-
-  // October
   {
     id: "o10",
     customerId: "u2",
     customerName: "Ngwa Precious",
-    restaurantId: "r2",
+    restaurantId: "r3",
     restaurantName: "Suya Spot",
     status: "delivered",
     items: [
       {
-        menuItemId: "m5",
+        menuItemId: "menu-29",
         name: "Chicken Suya Wrap",
         quantity: 5,
         priceAtOrder: 2000,
@@ -322,110 +368,13 @@ export const mockOrders: MockOrder[] = [
     ],
     total: 10000,
     deliveryAddress: "Finance Junction",
-    createdAt: "2026-10-03T12:10:00Z",
-  },
-  {
-    id: "o11",
-    customerId: "u1",
-    customerName: "Achiri Divine",
-    restaurantId: "r1",
-    restaurantName: "Mama Grace Kitchen",
-    status: "delivered",
-    items: [
-      {
-        menuItemId: "m1",
-        name: "Jollof Rice & Chicken",
-        quantity: 4,
-        priceAtOrder: 3500,
-      },
-    ],
-    total: 14000,
-    deliveryAddress: "Foncha Street",
-    createdAt: "2026-10-25T20:10:00Z",
-  },
-
-  // November
-  {
-    id: "o12",
-    customerId: "u2",
-    customerName: "Ngwa Precious",
-    restaurantId: "r3",
-    restaurantName: "Suya Spot Express",
-    status: "delivered",
-    items: [
-      {
-        menuItemId: "m6",
-        name: "Suya Platter",
-        quantity: 3,
-        priceAtOrder: 6000,
-      },
-    ],
-    total: 18000,
-    deliveryAddress: "Bambili",
-    createdAt: "2026-11-09T16:30:00Z",
-  },
-  {
-    id: "o13",
-    customerId: "u1",
-    customerName: "Achiri Divine",
-    restaurantId: "r2",
-    restaurantName: "Suya Spot",
-    status: "delivered",
-    items: [
-      {
-        menuItemId: "m4",
-        name: "Beef Suya Skewers",
-        quantity: 6,
-        priceAtOrder: 2500,
-      },
-    ],
-    total: 15000,
-    deliveryAddress: "Mile 4",
-    createdAt: "2026-11-21T19:45:00Z",
-  },
-
-  // December
-  {
-    id: "o14",
-    customerId: "u2",
-    customerName: "Ngwa Precious",
-    restaurantId: "r1",
-    restaurantName: "Mama Grace Kitchen",
-    status: "delivered",
-    items: [
-      {
-        menuItemId: "m3",
-        name: "Eru & Garri",
-        quantity: 5,
-        priceAtOrder: 4500,
-      },
-    ],
-    total: 22500,
-    deliveryAddress: "Up Station",
-    createdAt: "2026-12-08T13:00:00Z",
-  },
-  {
-    id: "o15",
-    customerId: "u1",
-    customerName: "Achiri Divine",
-    restaurantId: "r3",
-    restaurantName: "Suya Spot Express",
-    status: "delivered",
-    items: [
-      {
-        menuItemId: "m6",
-        name: "Suya Platter",
-        quantity: 4,
-        priceAtOrder: 6000,
-      },
-    ],
-    total: 24000,
-    deliveryAddress: "Bamenda Commercial Avenue",
-    createdAt: "2026-12-28T18:00:00Z",
+    createdAt: "2026-08-20T12:10:00Z",
   },
 ];
 
-// ---------------- Role Requests (for Admin dashboard) ----------------
+// ============================================================
+// ROLE REQUESTS
+// ============================================================
 
 export const mockRoleRequests: MockRoleRequest[] = [
   {
@@ -549,279 +498,10 @@ export const mockRoleRequests: MockRoleRequest[] = [
     createdAt: "2026-07-18T17:20:00Z",
   },
 ];
-export const menuData = [
-  {
-    id: "1",
-    name: "Ndolé",
-    description:
-      "Classic Cameroonian dish with bitter leaves, peanuts, and tender beef.",
-    price: 3500,
-    category: "Main Course",
-    preparationTime: 30,
-    ingredients: ["Bitter leaves", "Peanuts", "Beef", "Onions", "Garlic"],
-    isPopular: true,
-    image: "/images/ndole.webp",
-    dietaryInfo: { isVegetarian: false, isVegan: false, isGlutenFree: true },
-    available: true,
-    restaurant: "Restor Kitchen",
-    restaurantLocation: "Bamenda, Cameroon",
-    preparationSteps: [
-      "Prep bitter leaves and beef",
-      "Grind peanuts into paste",
-      "Cook beef with spices",
-      "Combine leaves, paste, and beef",
-      "Simmer until tender"
-    ],
-    orderCount: 410,
-  },
-  {
-    id: "2",
-    name: "Eru Soup",
-    description:
-      "Rich, hearty soup made with water leaves, okra, and smoked fish.",
-    price: 3000,
-    category: "Main Course",
-    preparationTime: 25,
-    ingredients: ["Water leaves", "Okra", "Smoked fish", "Palm oil", "Pepper"],
-    isPopular: true,
-    image: "/images/fufu-and-eru.webp",
-    dietaryInfo: { isVegetarian: false, isVegan: false, isGlutenFree: true },
-    available: true,
-    restaurant: "Restor Kitchen",
-    restaurantLocation: "Bamenda, Cameroon",
-    preparationSteps: [
-      "Chop water leaves and okra",
-      "Soak smoked fish",
-      "Cook with palm oil and spices",
-      "Add water leaves and okra",
-      "Simmer until thick"
-    ],
-    orderCount: 385,
-  },
-  {
-    id: "3",
-    name: "Miondo",
-    description:
-      "Soft cassava sticks served with a flavorful, spicy peanut sauce.",
-    price: 1500,
-    category: "Street Food",
-    preparationTime: 15,
-    ingredients: ["Cassava", "Peanuts", "Pepper", "Salt"],
-    isPopular: false,
-    image: "/images/miondo.webp",
-    dietaryInfo: { isVegetarian: true, isVegan: true, isGlutenFree: true },
-    available: true,
-    restaurant: "Street Bites",
-    restaurantLocation: "Bamenda, Cameroon",
-    preparationSteps: [
-      "Peel and boil cassava",
-      "Pound into smooth dough",
-      "Shape into sticks",
-      "Steam until cooked",
-      "Serve with spicy peanut sauce"
-    ],
-    orderCount: 120,
-  },
-  {
-    id: "4",
-    name: "Grilled Tilapia",
-    description:
-      "Fresh tilapia grilled to perfection with local spices and lemon.",
-    price: 4000,
-    category: "Seafood",
-    preparationTime: 20,
-    ingredients: ["Tilapia", "Lemon", "Garlic", "Onions", "Spices"],
-    isPopular: true,
-    image: "/images/grilled-tilapia.webp",
-    dietaryInfo: { isVegetarian: false, isVegan: false, isGlutenFree: true },
-    available: true,
-    restaurant: "Sea Catch",
-    restaurantLocation: "Bamenda, Cameroon",
-    preparationSteps: [
-      "Clean and score fish",
-      "Marinate with lemon, garlic, and spices",
-      "Grill over charcoal",
-      "Baste with oil and turn",
-      "Serve with fresh vegetables"
-    ],
-    orderCount: 520,
-  },
-  {
-    id: "5",
-    name: "Plantain & Stew",
-    description:
-      "Fried ripe plantains served with a rich tomato and pepper stew.",
-    price: 2000,
-    category: "Street Food",
-    preparationTime: 10,
-    ingredients: ["Plantains", "Tomatoes", "Onions", "Peppers"],
-    isPopular: false,
-    image: "/images/plantain-and-stew.webp",
-    dietaryInfo: { isVegetarian: true, isVegan: true, isGlutenFree: true },
-    available: true,
-    restaurant: "Street Bites",
-    restaurantLocation: "Bamenda, Cameroon",
-    preparationSteps: [
-      "Peel and slice plantains",
-      "Fry until golden brown",
-      "Prepare tomato stew with onions and peppers",
-      "Serve plantains with stew"
-    ],
-    orderCount: 95,
-  },
-  {
-    id: "6",
-    name: "Cameroonian Pepper Soup",
-    description:
-      "Spicy, aromatic broth with chunks of beef or fish, perfect for a cold day.",
-    price: 2500,
-    category: "Appetizers",
-    preparationTime: 25,
-    ingredients: ["Beef", "Pepper", "Onions", "Garlic", "Ginger"],
-    isPopular: false,
-    image: "/images/pepper-soup.webp",
-    dietaryInfo: { isVegetarian: false, isVegan: false, isGlutenFree: true },
-    available: true,
-    restaurant: "Restor Kitchen",
-    restaurantLocation: "Bamenda, Cameroon",
-    preparationSteps: [
-      "Boil beef with spices and aromatics",
-      "Add ground peppers and ginger",
-      "Simmer until meat is tender",
-      "Adjust seasoning",
-      "Garnish with fresh herbs"
-    ],
-    orderCount: 200,
-  },
-  {
-    id: "7",
-    name: "Beef Stew with Rice",
-    description:
-      "Tender beef simmered in a rich tomato-based stew, served with white rice.",
-    price: 3500,
-    category: "Main Course",
-    preparationTime: 30,
-    ingredients: ["Beef", "Tomatoes", "Rice", "Onions", "Thyme"],
-    isPopular: true,
-    image: "/images/rice-and-stew.webp",
-    dietaryInfo: { isVegetarian: false, isVegan: false, isGlutenFree: true },
-    available: true,
-    restaurant: "Restor Kitchen",
-    restaurantLocation: "Bamenda, Cameroon",
-    preparationSteps: [
-      "Brown beef with onions",
-      "Add tomatoes and thyme",
-      "Simmer until beef is tender",
-      "Cook rice separately",
-      "Serve stew over rice"
-    ],
-    orderCount: 630,
-  },
-  {
-    id: "8",
-    name: "Puff Puff",
-    description: "Sweet, fluffy fried dough balls, a perfect snack or dessert.",
-    price: 1000,
-    category: "Desserts",
-    preparationTime: 20,
-    ingredients: ["Flour", "Sugar", "Yeast", "Nutmeg", "Oil"],
-    isPopular: true,
-    image: "/images/puff-puff.webp",
-    dietaryInfo: { isVegetarian: true, isVegan: true, isGlutenFree: false },
-    available: true,
-    restaurant: "Sweet Treats",
-    restaurantLocation: "Bamenda, Cameroon",
-    preparationSteps: [
-      "Mix flour, sugar, yeast, and nutmeg",
-      "Add water to form dough",
-      "Let rise for 15 minutes",
-      "Fry in hot oil until golden",
-      "Drain and serve warm"
-    ],
-    orderCount: 700,
-  },
-  {
-    id: "9",
-    name: "Fried Rice",
-    description:
-      "Savory fried rice loaded with mixed vegetables, juicy shrimp, and flavorful local spices.",
-    price: 3000,
-    category: "Main Course",
-    preparationTime: 20,
-    ingredients: [
-      "Rice",
-      "Shrimp",
-      "Carrots",
-      "Green peas",
-      "Onions",
-      "Spices",
-    ],
-    isPopular: true,
-    image: "/images/fried-rice.webp",
-    dietaryInfo: { isVegetarian: false, isVegan: false, isGlutenFree: true },
-    available: false,
-    restaurant: "Sea Catch",
-    restaurantLocation: "Bamenda, Cameroon",
-    preparationSteps: [
-      "Cook rice and let cool",
-      "Sauté onions and shrimp",
-      "Add vegetables and spices",
-      "Add rice and stir-fry",
-      "Garnish with green onions"
-    ],
-    orderCount: 450,
-  },
-];
 
-// ---------------- Helpers ----------------
-
-export function getOrdersByRestaurant(restaurantId: string) {
-  return mockOrders.filter((o) => o.restaurantId === restaurantId);
-}
-
-export function getMenuByRestaurant(restaurantId: string) {
-  return mockMenuItems.filter((m) => m.restaurantId === restaurantId);
-}
-
-export function getPendingRoleRequests() {
-  return mockRoleRequests.filter((r) => r.status === "pending");
-}
-
-export function getOrderStatusCounts() {
-  return mockOrders.reduce<Record<OrderStatus, number>>(
-    (acc, order) => {
-      acc[order.status] = (acc[order.status] ?? 0) + 1;
-      return acc;
-    },
-    {} as Record<OrderStatus, number>,
-  );
-}
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-// ---------------- Driver Profiles (mock, for live tracking demo) ----------------
+// ============================================================
+// DRIVER PROFILES
+// ============================================================
 
 export type MockDriverProfile = {
   userId: string;
@@ -851,14 +531,1267 @@ export const mockDriverProfiles: MockDriverProfile[] = [
   },
 ];
 
+// ============================================================
+// CUSTOMER MENU DATA
+// ============================================================
+//
+// Restaurant IDs:
+//
+// r1 = Mama Grace Kitchen
+// r2 = Bamboo Restaurant
+// r3 = Suya Spot
+// r4 = Street Bites
+// r5 = Sea Catch
+//
+// Every restaurant has:
+// - Starters
+// - Main Course
+// - Seafood / Local specialty where appropriate
+// - Desserts
+// - Drinks / More
+//
+// Images are loaded from:
+// /public/images/meals/
+//
+// ============================================================
+
+export const menuData = [
+  // ============================================================
+  // MAMA GRACE KITCHEN
+  // ============================================================
+
+  {
+    id: "menu-1",
+    restaurantId: "r1",
+    name: "Cameroonian Pepper Soup",
+    category: "starters",
+    price: 2000,
+    image: "/images/meals/pepper-soup.jpg",
+    description:
+      "A spicy traditional Cameroonian pepper soup prepared with fresh herbs and tender meat.",
+    preparationTime: 20,
+    isPopular: true,
+    ingredients: ["Beef", "Pepper", "Ginger", "Garlic", "Local spices"],
+    dietaryInfo: {
+      isVegetarian: false,
+      isVegan: false,
+      isGlutenFree: true,
+    },
+    available: true,
+    restaurant: "Mama Grace Kitchen",
+    restaurantLocation: "Old Town, Bamenda",
+    restaurantName: "Mama Grace Kitchen",
+    orderCount: 320,
+  },
+
+  {
+    id: "menu-2",
+    restaurantId: "r1",
+    name: "Plantain Chips",
+    category: "starters",
+    price: 1200,
+    image: "/images/meals/plantain-chips.jpg",
+    description:
+      "Crispy golden plantain chips lightly seasoned and served as a delicious starter.",
+    preparationTime: 10,
+    isPopular: false,
+    ingredients: ["Ripe Plantain", "Vegetable Oil", "Salt"],
+    dietaryInfo: {
+      isVegetarian: true,
+      isVegan: true,
+      isGlutenFree: true,
+    },
+    available: true,
+    restaurant: "Mama Grace Kitchen",
+    restaurantLocation: "Old Town, Bamenda",
+    restaurantName: "Mama Grace Kitchen",
+    orderCount: 180,
+  },
+
+  {
+    id: "menu-3",
+    restaurantId: "r1",
+    name: "Jollof Rice & Chicken",
+    category: "main course",
+    price: 3500,
+    image: "/images/meals/jollof-rice-chicken.jpg",
+    description:
+      "Smoky jollof rice served with grilled chicken and fresh vegetables.",
+    preparationTime: 30,
+    isPopular: true,
+    ingredients: [
+      "Rice",
+      "Chicken",
+      "Tomatoes",
+      "Pepper",
+      "Onions",
+      "Spices",
+    ],
+    dietaryInfo: {
+      isVegetarian: false,
+      isVegan: false,
+      isGlutenFree: true,
+    },
+    available: true,
+    restaurant: "Mama Grace Kitchen",
+    restaurantLocation: "Old Town, Bamenda",
+    restaurantName: "Mama Grace Kitchen",
+    orderCount: 820,
+  },
+
+  {
+    id: "menu-4",
+    restaurantId: "r1",
+    name: "Ndole & Plantain",
+    category: "main course",
+    price: 4000,
+    image: "/images/meals/ndole-plantain.jpg",
+    description:
+      "Traditional bitterleaf ndole prepared with groundnuts and served with fried plantain.",
+    preparationTime: 35,
+    isPopular: true,
+    ingredients: [
+      "Ndole",
+      "Groundnuts",
+      "Plantain",
+      "Beef",
+      "Shrimp",
+      "Palm oil",
+    ],
+    dietaryInfo: {
+      isVegetarian: false,
+      isVegan: false,
+      isGlutenFree: true,
+    },
+    available: true,
+    restaurant: "Mama Grace Kitchen",
+    restaurantLocation: "Old Town, Bamenda",
+    restaurantName: "Mama Grace Kitchen",
+    orderCount: 760,
+  },
+
+  {
+    id: "menu-5",
+    restaurantId: "r1",
+    name: "Achu & Yellow Soup",
+    category: "main course",
+    price: 4500,
+    image: "/images/meals/achu-yellow-soup.jpg",
+    description:
+      "Pounded cocoyam served with rich traditional palm-nut yellow soup.",
+    preparationTime: 40,
+    isPopular: true,
+    ingredients: [
+      "Cocoyam",
+      "Palm nuts",
+      "Meat",
+      "Pepper",
+      "Spices",
+    ],
+    dietaryInfo: {
+      isVegetarian: false,
+      isVegan: false,
+      isGlutenFree: true,
+    },
+    available: true,
+    restaurant: "Mama Grace Kitchen",
+    restaurantLocation: "Old Town, Bamenda",
+    restaurantName: "Mama Grace Kitchen",
+    orderCount: 680,
+  },
+
+  {
+    id: "menu-6",
+    restaurantId: "r1",
+    name: "Grilled Fish",
+    category: "seafood",
+    price: 4500,
+    image: "/images/meals/grilled-fish.jpg",
+    description:
+      "Fresh local fish grilled with onions, pepper and traditional spices.",
+    preparationTime: 30,
+    isPopular: false,
+    ingredients: ["Fresh Fish", "Onions", "Pepper", "Garlic", "Spices"],
+    dietaryInfo: {
+      isVegetarian: false,
+      isVegan: false,
+      isGlutenFree: true,
+    },
+    available: true,
+    restaurant: "Mama Grace Kitchen",
+    restaurantLocation: "Old Town, Bamenda",
+    restaurantName: "Mama Grace Kitchen",
+    orderCount: 270,
+  },
+
+  {
+    id: "menu-7",
+    restaurantId: "r1",
+    name: "Puff Puff",
+    category: "desserts",
+    price: 1000,
+    image: "/images/meals/puff-puff.jpg",
+    description:
+      "Soft golden Cameroonian puff puff freshly fried and lightly sweetened.",
+    preparationTime: 15,
+    isPopular: true,
+    ingredients: ["Flour", "Sugar", "Yeast", "Nutmeg", "Oil"],
+    dietaryInfo: {
+      isVegetarian: true,
+      isVegan: true,
+      isGlutenFree: false,
+    },
+    available: true,
+    restaurant: "Mama Grace Kitchen",
+    restaurantLocation: "Old Town, Bamenda",
+    restaurantName: "Mama Grace Kitchen",
+    orderCount: 700,
+  },
+
+  {
+    id: "menu-8",
+    restaurantId: "r1",
+    name: "Fresh Mango Juice",
+    category: "drinks",
+    price: 1500,
+    image: "/images/meals/mango-juice.jpg",
+    description:
+      "Refreshing natural mango juice made from ripe local mangoes.",
+    preparationTime: 5,
+    isPopular: false,
+    ingredients: ["Mango", "Water", "Ice"],
+    dietaryInfo: {
+      isVegetarian: true,
+      isVegan: true,
+      isGlutenFree: true,
+    },
+    available: true,
+    restaurant: "Mama Grace Kitchen",
+    restaurantLocation: "Old Town, Bamenda",
+    restaurantName: "Mama Grace Kitchen",
+    orderCount: 310,
+  },
+
+  // ============================================================
+  // BAMBOO RESTAURANT
+  // ============================================================
+
+  {
+    id: "menu-9",
+    restaurantId: "r2",
+    name: "Bamboo Pepper Soup",
+    category: "starters",
+    price: 2200,
+    image: "/images/meals/bamboo-pepper-soup.jpg",
+    description:
+      "A rich spicy pepper soup prepared with tender meat and aromatic local spices.",
+    preparationTime: 20,
+    isPopular: true,
+    ingredients: [
+      "Beef",
+      "Pepper",
+      "Ginger",
+      "Garlic",
+      "Basil",
+    ],
+    dietaryInfo: {
+      isVegetarian: false,
+      isVegan: false,
+      isGlutenFree: true,
+    },
+    available: true,
+    restaurant: "Bamboo Restaurant",
+    restaurantLocation: "Commercial Avenue, Bamenda",
+    restaurantName: "Bamboo Restaurant",
+    orderCount: 490,
+  },
+
+  {
+    id: "menu-10",
+    restaurantId: "r2",
+    name: "Chicken Wings",
+    category: "starters",
+    price: 2500,
+    image: "/images/meals/chicken-wings.jpg",
+    description:
+      "Crispy seasoned chicken wings served with a spicy homemade dip.",
+    preparationTime: 20,
+    isPopular: true,
+    ingredients: [
+      "Chicken",
+      "Pepper",
+      "Garlic",
+      "Paprika",
+      "Spices",
+    ],
+    dietaryInfo: {
+      isVegetarian: false,
+      isVegan: false,
+      isGlutenFree: true,
+    },
+    available: true,
+    restaurant: "Bamboo Restaurant",
+    restaurantLocation: "Commercial Avenue, Bamenda",
+    restaurantName: "Bamboo Restaurant",
+    orderCount: 420,
+  },
+
+  {
+    id: "menu-11",
+    restaurantId: "r2",
+    name: "Bamboo Special Jollof",
+    category: "main course",
+    price: 3500,
+    image: "/images/meals/bamboo-jollof.jpg",
+    description:
+      "Special smoky jollof rice served with grilled chicken and vegetables.",
+    preparationTime: 30,
+    isPopular: true,
+    ingredients: [
+      "Rice",
+      "Chicken",
+      "Tomatoes",
+      "Onions",
+      "Pepper",
+      "Spices",
+    ],
+    dietaryInfo: {
+      isVegetarian: false,
+      isVegan: false,
+      isGlutenFree: true,
+    },
+    available: true,
+    restaurant: "Bamboo Restaurant",
+    restaurantLocation: "Commercial Avenue, Bamenda",
+    restaurantName: "Bamboo Restaurant",
+    orderCount: 950,
+  },
+
+  {
+    id: "menu-12",
+    restaurantId: "r2",
+    name: "Ndole with Fried Plantain",
+    category: "main course",
+    price: 4500,
+    image: "/images/meals/ndole-plantain.jpg",
+    description:
+      "Creamy traditional ndole prepared with groundnuts and served with fried plantain.",
+    preparationTime: 35,
+    isPopular: true,
+    ingredients: [
+      "Ndole",
+      "Groundnuts",
+      "Plantain",
+      "Beef",
+      "Shrimp",
+    ],
+    dietaryInfo: {
+      isVegetarian: false,
+      isVegan: false,
+      isGlutenFree: true,
+    },
+    available: true,
+    restaurant: "Bamboo Restaurant",
+    restaurantLocation: "Commercial Avenue, Bamenda",
+    restaurantName: "Bamboo Restaurant",
+    orderCount: 780,
+  },
+
+  {
+    id: "menu-13",
+    restaurantId: "r2",
+    name: "Achu Yellow Soup",
+    category: "main course",
+    price: 5000,
+    image: "/images/meals/achu-yellow-soup.jpg",
+    description:
+      "Traditional pounded cocoyam served with rich yellow palm-nut soup.",
+    preparationTime: 40,
+    isPopular: true,
+    ingredients: [
+      "Cocoyam",
+      "Palm nuts",
+      "Beef",
+      "Pepper",
+      "Spices",
+    ],
+    dietaryInfo: {
+      isVegetarian: false,
+      isVegan: false,
+      isGlutenFree: true,
+    },
+    available: true,
+    restaurant: "Bamboo Restaurant",
+    restaurantLocation: "Commercial Avenue, Bamenda",
+    restaurantName: "Bamboo Restaurant",
+    orderCount: 640,
+  },
+
+  {
+    id: "menu-14",
+    restaurantId: "r2",
+    name: "Grilled Tilapia",
+    category: "seafood",
+    price: 5000,
+    image: "/images/meals/grilled-tilapia.jpg",
+    description:
+      "Fresh tilapia grilled with herbs, garlic, lemon and local spices.",
+    preparationTime: 30,
+    isPopular: true,
+    ingredients: [
+      "Tilapia",
+      "Garlic",
+      "Lemon",
+      "Onions",
+      "Spices",
+    ],
+    dietaryInfo: {
+      isVegetarian: false,
+      isVegan: false,
+      isGlutenFree: true,
+    },
+    available: true,
+    restaurant: "Bamboo Restaurant",
+    restaurantLocation: "Commercial Avenue, Bamenda",
+    restaurantName: "Bamboo Restaurant",
+    orderCount: 560,
+  },
+
+  {
+    id: "menu-15",
+    restaurantId: "r2",
+    name: "Fried Fish & Plantain",
+    category: "seafood",
+    price: 4500,
+    image: "/images/meals/fried-fish-plantain.jpg",
+    description:
+      "Crispy fried fish served with ripe fried plantain and pepper sauce.",
+    preparationTime: 25,
+    isPopular: false,
+    ingredients: [
+      "Fresh Fish",
+      "Plantain",
+      "Pepper",
+      "Tomatoes",
+      "Onions",
+    ],
+    dietaryInfo: {
+      isVegetarian: false,
+      isVegan: false,
+      isGlutenFree: true,
+    },
+    available: true,
+    restaurant: "Bamboo Restaurant",
+    restaurantLocation: "Commercial Avenue, Bamenda",
+    restaurantName: "Bamboo Restaurant",
+    orderCount: 390,
+  },
+
+  {
+    id: "menu-16",
+    restaurantId: "r2",
+    name: "Puff Puff",
+    category: "desserts",
+    price: 1200,
+    image: "/images/meals/puff-puff.jpg",
+    description:
+      "Freshly fried soft puff puff with a golden crispy outside.",
+    preparationTime: 15,
+    isPopular: true,
+    ingredients: ["Flour", "Sugar", "Yeast", "Nutmeg"],
+    dietaryInfo: {
+      isVegetarian: true,
+      isVegan: true,
+      isGlutenFree: false,
+    },
+    available: true,
+    restaurant: "Bamboo Restaurant",
+    restaurantLocation: "Commercial Avenue, Bamenda",
+    restaurantName: "Bamboo Restaurant",
+    orderCount: 620,
+  },
+
+  {
+    id: "menu-17",
+    restaurantId: "r2",
+    name: "Fresh Pineapple Juice",
+    category: "drinks",
+    price: 1500,
+    image: "/images/meals/pineapple-juice.jpg",
+    description:
+      "Freshly blended pineapple juice served chilled.",
+    preparationTime: 5,
+    isPopular: true,
+    ingredients: ["Pineapple", "Water", "Ice"],
+    dietaryInfo: {
+      isVegetarian: true,
+      isVegan: true,
+      isGlutenFree: true,
+    },
+    available: true,
+    restaurant: "Bamboo Restaurant",
+    restaurantLocation: "Commercial Avenue, Bamenda",
+    restaurantName: "Bamboo Restaurant",
+    orderCount: 510,
+  },
+
+  // ============================================================
+  // SUYA SPOT
+  // ============================================================
+
+  {
+    id: "menu-18",
+    restaurantId: "r3",
+    name: "Suya Wings",
+    category: "starters",
+    price: 2200,
+    image: "/images/meals/suya-wings.jpg",
+    description:
+      "Juicy chicken wings coated with authentic spicy suya seasoning.",
+    preparationTime: 20,
+    isPopular: true,
+    ingredients: [
+      "Chicken",
+      "Suya Spice",
+      "Pepper",
+      "Onions",
+    ],
+    dietaryInfo: {
+      isVegetarian: false,
+      isVegan: false,
+      isGlutenFree: true,
+    },
+    available: true,
+    restaurant: "Suya Spot",
+    restaurantLocation: "Nkwen, Bamenda",
+    restaurantName: "Suya Spot",
+    orderCount: 450,
+  },
+
+  {
+    id: "menu-19",
+    restaurantId: "r3",
+    name: "Beef Suya",
+    category: "main course",
+    price: 2500,
+    image: "/images/meals/beef-suya.jpg",
+    description:
+      "Tender beef skewers grilled over charcoal and coated with spicy suya seasoning.",
+    preparationTime: 20,
+    isPopular: true,
+    ingredients: [
+      "Beef",
+      "Suya Spice",
+      "Onions",
+      "Peppers",
+      "Peanuts",
+    ],
+    dietaryInfo: {
+      isVegetarian: false,
+      isVegan: false,
+      isGlutenFree: true,
+    },
+    available: true,
+    restaurant: "Suya Spot",
+    restaurantLocation: "Nkwen, Bamenda",
+    restaurantName: "Suya Spot",
+    orderCount: 850,
+  },
+
+  {
+    id: "menu-20",
+    restaurantId: "r3",
+    name: "Chicken Suya",
+    category: "main course",
+    price: 3000,
+    image: "/images/meals/chicken-suya.jpg",
+    description:
+      "Juicy grilled chicken pieces coated in authentic Cameroonian suya spice.",
+    preparationTime: 25,
+    isPopular: true,
+    ingredients: [
+      "Chicken",
+      "Suya Spice",
+      "Peanuts",
+      "Pepper",
+      "Onions",
+    ],
+    dietaryInfo: {
+      isVegetarian: false,
+      isVegan: false,
+      isGlutenFree: true,
+    },
+    available: true,
+    restaurant: "Suya Spot",
+    restaurantLocation: "Nkwen, Bamenda",
+    restaurantName: "Suya Spot",
+    orderCount: 730,
+  },
+
+  {
+    id: "menu-21",
+    restaurantId: "r3",
+    name: "Suya Platter",
+    category: "main course",
+    price: 6000,
+    image: "/images/meals/suya-platter.jpg",
+    description:
+      "A generous sharing platter of beef and chicken suya with onions and peppers.",
+    preparationTime: 30,
+    isPopular: true,
+    ingredients: [
+      "Beef",
+      "Chicken",
+      "Suya Spice",
+      "Onions",
+      "Pepper",
+      "Peanuts",
+    ],
+    dietaryInfo: {
+      isVegetarian: false,
+      isVegan: false,
+      isGlutenFree: true,
+    },
+    available: true,
+    restaurant: "Suya Spot",
+    restaurantLocation: "Nkwen, Bamenda",
+    restaurantName: "Suya Spot",
+    orderCount: 510,
+  },
+
+  {
+    id: "menu-22",
+    restaurantId: "r3",
+    name: "Beef & Plantain",
+    category: "main course",
+    price: 4000,
+    image: "/images/meals/beef-plantain.jpg",
+    description:
+      "Charcoal grilled beef served with golden fried ripe plantains.",
+    preparationTime: 25,
+    isPopular: false,
+    ingredients: [
+      "Beef",
+      "Plantain",
+      "Pepper",
+      "Onions",
+      "Spices",
+    ],
+    dietaryInfo: {
+      isVegetarian: false,
+      isVegan: false,
+      isGlutenFree: true,
+    },
+    available: true,
+    restaurant: "Suya Spot",
+    restaurantLocation: "Nkwen, Bamenda",
+    restaurantName: "Suya Spot",
+    orderCount: 275,
+  },
+
+  {
+    id: "menu-23",
+    restaurantId: "r3",
+    name: "Chicken Suya Wrap",
+    category: "main course",
+    price: 2000,
+    image: "/images/meals/chicken-suya-wrap.jpg",
+    description:
+      "Spicy grilled chicken suya wrapped with fresh vegetables in soft flatbread.",
+    preparationTime: 15,
+    isPopular: false,
+    ingredients: [
+      "Chicken",
+      "Flatbread",
+      "Lettuce",
+      "Tomatoes",
+      "Suya Spice",
+    ],
+    dietaryInfo: {
+      isVegetarian: false,
+      isVegan: false,
+      isGlutenFree: false,
+    },
+    available: true,
+    restaurant: "Suya Spot",
+    restaurantLocation: "Nkwen, Bamenda",
+    restaurantName: "Suya Spot",
+    orderCount: 390,
+  },
+
+  {
+    id: "menu-24",
+    restaurantId: "r3",
+    name: "Grilled Chicken",
+    category: "main course",
+    price: 3500,
+    image: "/images/meals/grilled-chicken.jpg",
+    description:
+      "Tender charcoal grilled chicken served with spicy pepper sauce.",
+    preparationTime: 30,
+    isPopular: false,
+    ingredients: [
+      "Chicken",
+      "Pepper",
+      "Garlic",
+      "Onions",
+      "Spices",
+    ],
+    dietaryInfo: {
+      isVegetarian: false,
+      isVegan: false,
+      isGlutenFree: true,
+    },
+    available: true,
+    restaurant: "Suya Spot",
+    restaurantLocation: "Nkwen, Bamenda",
+    restaurantName: "Suya Spot",
+    orderCount: 330,
+  },
+
+  {
+    id: "menu-25",
+    restaurantId: "r3",
+    name: "Chin Chin",
+    category: "desserts",
+    price: 1500,
+    image: "/images/meals/chin-chin.jpg",
+    description:
+      "Crunchy homemade chin chin with a lightly sweet buttery flavor.",
+    preparationTime: 15,
+    isPopular: false,
+    ingredients: [
+      "Flour",
+      "Sugar",
+      "Butter",
+      "Milk",
+      "Nutmeg",
+    ],
+    dietaryInfo: {
+      isVegetarian: true,
+      isVegan: false,
+      isGlutenFree: false,
+    },
+    available: true,
+    restaurant: "Suya Spot",
+    restaurantLocation: "Nkwen, Bamenda",
+    restaurantName: "Suya Spot",
+    orderCount: 240,
+  },
+
+  {
+    id: "menu-26",
+    restaurantId: "r3",
+    name: "Cold Soft Drink",
+    category: "drinks",
+    price: 1000,
+    image: "/images/meals/soft-drink.jpg",
+    description:
+      "A chilled refreshing soft drink to enjoy with your meal.",
+    preparationTime: 2,
+    isPopular: false,
+    ingredients: ["Soft drink", "Ice"],
+    dietaryInfo: {
+      isVegetarian: true,
+      isVegan: true,
+      isGlutenFree: true,
+    },
+    available: true,
+    restaurant: "Suya Spot",
+    restaurantLocation: "Nkwen, Bamenda",
+    restaurantName: "Suya Spot",
+    orderCount: 280,
+  },
+
+  // ============================================================
+  // STREET BITES
+  // ============================================================
+
+  {
+    id: "menu-27",
+    restaurantId: "r4",
+    name: "Miondo",
+    category: "starters",
+    price: 1500,
+    image: "/images/meals/miondo.jpg",
+    description:
+      "Soft fermented cassava sticks served with spicy peanut sauce.",
+    preparationTime: 15,
+    isPopular: true,
+    ingredients: [
+      "Cassava",
+      "Peanuts",
+      "Pepper",
+      "Salt",
+    ],
+    dietaryInfo: {
+      isVegetarian: true,
+      isVegan: true,
+      isGlutenFree: true,
+    },
+    available: true,
+    restaurant: "Street Bites",
+    restaurantLocation: "Commercial Avenue, Bamenda",
+    restaurantName: "Street Bites",
+    orderCount: 430,
+  },
+
+  {
+    id: "menu-28",
+    restaurantId: "r4",
+    name: "Fried Plantain",
+    category: "starters",
+    price: 1200,
+    image: "/images/meals/fried-plantain.jpg",
+    description:
+      "Golden fried ripe plantains served hot with spicy pepper sauce.",
+    preparationTime: 10,
+    isPopular: true,
+    ingredients: [
+      "Ripe Plantain",
+      "Oil",
+      "Salt",
+      "Pepper",
+    ],
+    dietaryInfo: {
+      isVegetarian: true,
+      isVegan: true,
+      isGlutenFree: true,
+    },
+    available: true,
+    restaurant: "Street Bites",
+    restaurantLocation: "Commercial Avenue, Bamenda",
+    restaurantName: "Street Bites",
+    orderCount: 620,
+  },
+
+  {
+    id: "menu-29",
+    restaurantId: "r4",
+    name: "Beans & Plantain",
+    category: "main course",
+    price: 2500,
+    image: "/images/meals/beans-plantain.jpg",
+    description:
+      "Seasoned beans served with sweet fried ripe plantain.",
+    preparationTime: 25,
+    isPopular: true,
+    ingredients: [
+      "Beans",
+      "Plantain",
+      "Palm Oil",
+      "Onions",
+      "Pepper",
+    ],
+    dietaryInfo: {
+      isVegetarian: true,
+      isVegan: true,
+      isGlutenFree: true,
+    },
+    available: true,
+    restaurant: "Street Bites",
+    restaurantLocation: "Commercial Avenue, Bamenda",
+    restaurantName: "Street Bites",
+    orderCount: 570,
+  },
+
+  {
+    id: "menu-30",
+    restaurantId: "r4",
+    name: "Koki Beans",
+    category: "main course",
+    price: 3000,
+    image: "/images/meals/koki.jpg",
+    description:
+      "Traditional steamed koki beans prepared with palm oil and local spices.",
+    preparationTime: 35,
+    isPopular: true,
+    ingredients: [
+      "Beans",
+      "Palm Oil",
+      "Pepper",
+      "Banana Leaves",
+    ],
+    dietaryInfo: {
+      isVegetarian: true,
+      isVegan: true,
+      isGlutenFree: true,
+    },
+    available: true,
+    restaurant: "Street Bites",
+    restaurantLocation: "Commercial Avenue, Bamenda",
+    restaurantName: "Street Bites",
+    orderCount: 380,
+  },
+
+  {
+    id: "menu-31",
+    restaurantId: "r4",
+    name: "Fried Fish & Plantain",
+    category: "seafood",
+    price: 3500,
+    image: "/images/meals/fried-fish-plantain.jpg",
+    description:
+      "Crispy fried fish served with ripe plantain and pepper sauce.",
+    preparationTime: 25,
+    isPopular: true,
+    ingredients: [
+      "Fish",
+      "Plantain",
+      "Pepper",
+      "Onions",
+      "Spices",
+    ],
+    dietaryInfo: {
+      isVegetarian: false,
+      isVegan: false,
+      isGlutenFree: true,
+    },
+    available: true,
+    restaurant: "Street Bites",
+    restaurantLocation: "Commercial Avenue, Bamenda",
+    restaurantName: "Street Bites",
+    orderCount: 410,
+  },
+
+  {
+    id: "menu-32",
+    restaurantId: "r4",
+    name: "Accra Banana",
+    category: "desserts",
+    price: 1000,
+    image: "/images/meals/accra-banana.jpg",
+    description:
+      "Crispy fried banana fritters with a soft sweet center.",
+    preparationTime: 15,
+    isPopular: false,
+    ingredients: [
+      "Banana",
+      "Flour",
+      "Sugar",
+      "Oil",
+    ],
+    dietaryInfo: {
+      isVegetarian: true,
+      isVegan: true,
+      isGlutenFree: false,
+    },
+    available: true,
+    restaurant: "Street Bites",
+    restaurantLocation: "Commercial Avenue, Bamenda",
+    restaurantName: "Street Bites",
+    orderCount: 280,
+  },
+
+  {
+    id: "menu-33",
+    restaurantId: "r4",
+    name: "Fresh Watermelon Juice",
+    category: "drinks",
+    price: 1500,
+    image: "/images/meals/watermelon-juice.jpg",
+    description:
+      "Refreshing natural watermelon juice served chilled.",
+    preparationTime: 5,
+    isPopular: true,
+    ingredients: ["Watermelon", "Ice"],
+    dietaryInfo: {
+      isVegetarian: true,
+      isVegan: true,
+      isGlutenFree: true,
+    },
+    available: true,
+    restaurant: "Street Bites",
+    restaurantLocation: "Commercial Avenue, Bamenda",
+    restaurantName: "Street Bites",
+    orderCount: 360,
+  },
+
+  // ============================================================
+  // SEA CATCH
+  // ============================================================
+
+  {
+    id: "menu-34",
+    restaurantId: "r5",
+    name: "Fish Pepper Soup",
+    category: "starters",
+    price: 3000,
+    image: "/images/meals/fish-pepper-soup.jpg",
+    description:
+      "Aromatic spicy fish broth prepared with fresh herbs and traditional spices.",
+    preparationTime: 25,
+    isPopular: true,
+    ingredients: [
+      "Fresh Fish",
+      "Pepper",
+      "Ginger",
+      "Garlic",
+      "Herbs",
+    ],
+    dietaryInfo: {
+      isVegetarian: false,
+      isVegan: false,
+      isGlutenFree: true,
+    },
+    available: true,
+    restaurant: "Sea Catch",
+    restaurantLocation: "Nkwen, Bamenda",
+    restaurantName: "Sea Catch",
+    orderCount: 300,
+  },
+
+  {
+    id: "menu-35",
+    restaurantId: "r5",
+    name: "Prawn Cocktail",
+    category: "starters",
+    price: 3500,
+    image: "/images/meals/prawn-cocktail.jpg",
+    description:
+      "Fresh prawns served with vegetables and a creamy homemade sauce.",
+    preparationTime: 15,
+    isPopular: false,
+    ingredients: [
+      "Prawns",
+      "Lettuce",
+      "Tomatoes",
+      "Lemon",
+      "Sauce",
+    ],
+    dietaryInfo: {
+      isVegetarian: false,
+      isVegan: false,
+      isGlutenFree: true,
+    },
+    available: true,
+    restaurant: "Sea Catch",
+    restaurantLocation: "Nkwen, Bamenda",
+    restaurantName: "Sea Catch",
+    orderCount: 190,
+  },
+
+  {
+    id: "menu-36",
+    restaurantId: "r5",
+    name: "Seafood Rice",
+    category: "main course",
+    price: 4500,
+    image: "/images/meals/seafood-rice.jpg",
+    description:
+      "Fragrant rice cooked with fresh seafood, vegetables and local spices.",
+    preparationTime: 30,
+    isPopular: true,
+    ingredients: [
+      "Rice",
+      "Fish",
+      "Prawns",
+      "Vegetables",
+      "Spices",
+    ],
+    dietaryInfo: {
+      isVegetarian: false,
+      isVegan: false,
+      isGlutenFree: true,
+    },
+    available: true,
+    restaurant: "Sea Catch",
+    restaurantLocation: "Nkwen, Bamenda",
+    restaurantName: "Sea Catch",
+    orderCount: 470,
+  },
+
+  {
+    id: "menu-37",
+    restaurantId: "r5",
+    name: "Grilled Prawns",
+    category: "seafood",
+    price: 5500,
+    image: "/images/meals/grilled-prawns.jpg",
+    description:
+      "Fresh prawns grilled with garlic, lemon and a blend of local spices.",
+    preparationTime: 20,
+    isPopular: true,
+    ingredients: [
+      "Prawns",
+      "Garlic",
+      "Lemon",
+      "Butter",
+      "Spices",
+    ],
+    dietaryInfo: {
+      isVegetarian: false,
+      isVegan: false,
+      isGlutenFree: true,
+    },
+    available: true,
+    restaurant: "Sea Catch",
+    restaurantLocation: "Nkwen, Bamenda",
+    restaurantName: "Sea Catch",
+    orderCount: 245,
+  },
+
+  {
+    id: "menu-38",
+    restaurantId: "r5",
+    name: "Fried Fish & Plantain",
+    category: "seafood",
+    price: 4000,
+    image: "/images/meals/fried-fish-plantain.jpg",
+    description:
+      "Crispy fried fish served with golden ripe plantains and fresh vegetables.",
+    preparationTime: 25,
+    isPopular: true,
+    ingredients: [
+      "Fresh Fish",
+      "Plantain",
+      "Tomatoes",
+      "Onions",
+      "Pepper",
+    ],
+    dietaryInfo: {
+      isVegetarian: false,
+      isVegan: false,
+      isGlutenFree: true,
+    },
+    available: true,
+    restaurant: "Sea Catch",
+    restaurantLocation: "Nkwen, Bamenda",
+    restaurantName: "Sea Catch",
+    orderCount: 460,
+  },
+
+  {
+    id: "menu-39",
+    restaurantId: "r5",
+    name: "Grilled Tilapia",
+    category: "seafood",
+    price: 4500,
+    image: "/images/meals/grilled-tilapia.jpg",
+    description:
+      "Fresh tilapia grilled with local spices and served with vegetables.",
+    preparationTime: 30,
+    isPopular: true,
+    ingredients: [
+      "Tilapia",
+      "Lemon",
+      "Garlic",
+      "Onions",
+      "Local spices",
+    ],
+    dietaryInfo: {
+      isVegetarian: false,
+      isVegan: false,
+      isGlutenFree: true,
+    },
+    available: true,
+    restaurant: "Sea Catch",
+    restaurantLocation: "Nkwen, Bamenda",
+    restaurantName: "Sea Catch",
+    orderCount: 520,
+  },
+
+  {
+    id: "menu-40",
+    restaurantId: "r5",
+    name: "Coconut Cake",
+    category: "desserts",
+    price: 2500,
+    image: "/images/meals/coconut-cake.jpg",
+    description:
+      "Soft homemade cake infused with fresh coconut flavor.",
+    preparationTime: 30,
+    isPopular: false,
+    ingredients: [
+      "Coconut",
+      "Flour",
+      "Sugar",
+      "Eggs",
+      "Butter",
+    ],
+    dietaryInfo: {
+      isVegetarian: true,
+      isVegan: false,
+      isGlutenFree: false,
+    },
+    available: true,
+    restaurant: "Sea Catch",
+    restaurantLocation: "Nkwen, Bamenda",
+    restaurantName: "Sea Catch",
+    orderCount: 230,
+  },
+
+  {
+    id: "menu-41",
+    restaurantId: "r5",
+    name: "Fresh Pineapple Juice",
+    category: "drinks",
+    price: 1500,
+    image: "/images/meals/pineapple-juice.jpg",
+    description:
+      "Freshly blended pineapple juice made from locally sourced fruit.",
+    preparationTime: 5,
+    isPopular: true,
+    ingredients: ["Fresh Pineapple", "Water", "Ice"],
+    dietaryInfo: {
+      isVegetarian: true,
+      isVegan: true,
+      isGlutenFree: true,
+    },
+    available: true,
+    restaurant: "Sea Catch",
+    restaurantLocation: "Nkwen, Bamenda",
+    restaurantName: "Sea Catch",
+    orderCount: 340,
+  },
+];
+
+// ============================================================
+// HELPERS
+// ============================================================
+
+export function getOrdersByRestaurant(restaurantId: string) {
+  return mockOrders.filter((o) => o.restaurantId === restaurantId);
+}
+
+export function getMenuByRestaurant(restaurantId: string) {
+  return mockMenuItems.filter((m) => m.restaurantId === restaurantId);
+}
+
+export function getPendingRoleRequests() {
+  return mockRoleRequests.filter((r) => r.status === "pending");
+}
+
+export function getOrderStatusCounts() {
+  return mockOrders.reduce<Record<OrderStatus, number>>(
+    (acc, order) => {
+      acc[order.status] = (acc[order.status] ?? 0) + 1;
+      return acc;
+    },
+    {} as Record<OrderStatus, number>,
+  );
+}
+
+// ============================================================
+// DRIVER LOOKUP
+// ============================================================
+
 export function getDriverForOrder(orderId: string) {
   const order = mockOrders.find((o) => o.id === orderId);
-  if (!order || !order.driverId) return null;
+
+  if (!order || !order.driverId) {
+    return null;
+  }
 
   const user = mockUsers.find((u) => u.id === order.driverId);
-  const profile = mockDriverProfiles.find((p) => p.userId === order.driverId);
 
-  if (!user || !profile) return null;
+  const profile = mockDriverProfiles.find(
+    (p) => p.userId === order.driverId,
+  );
+
+  if (!user || !profile) {
+    return null;
+  }
 
   return {
     name: user.name,

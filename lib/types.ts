@@ -74,3 +74,30 @@ export type PaginatedOrders = {
   limit: number;
   totalPages: number;
 };
+
+
+
+
+
+
+
+
+export interface MenuItem {
+  id: string;
+  restaurantId: string;
+  name: string;
+  description: string;
+  price: number;
+  image: string;
+  category: string;
+  preparationTime?: number;
+  isPopular?: boolean;
+
+  ingredients?: string[];
+
+  dietaryInfo?: {
+    isVegetarian?: boolean;
+    isVegan?: boolean;
+    isGlutenFree?: boolean;
+  };
+}

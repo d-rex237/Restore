@@ -17,7 +17,7 @@ import {
   Menu,
   X,
 } from "lucide-react";
-import { SignOutButton } from "@clerk/nextjs";
+import { useClerk, useUser } from "@clerk/nextjs";
 
 interface SidebarProps {
   isOpen: boolean;
@@ -27,13 +27,11 @@ interface SidebarProps {
 const Sidebar: React.FC<SidebarProps> = ({ isOpen, setIsOpen }) => {
   const router = useRouter();
   const pathname = usePathname();
+  const { signOut } = useClerk();
+  const { user } = useUser();
 
   const handleLogout = () => {
-    localStorage.removeItem("token");
-    localStorage.removeItem("user");
-
-    router.push("/");
-
+    signOut(() => router.push("/"));
     setIsOpen(false);
   };
 
@@ -144,10 +142,11 @@ const Sidebar: React.FC<SidebarProps> = ({ isOpen, setIsOpen }) => {
             <LogOut className="w-5 h-5" />
             <span className="font-medium">Logout</span>
           </button>
-          <SignOutButton />
           <div className="mt-3 px-4 py-2 bg-gray-50 rounded-xl">
             <p className="text-xs text-gray-500">Logged in as Customer</p>
-            <p className="text-sm font-medium text-gray-700">John Doe</p>
+            <p className="text-sm font-medium text-gray-700">
+              {user?.fullName ?? user?.username ?? "User"}
+            </p>
           </div>
         </div>
       </aside>
