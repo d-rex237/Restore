@@ -2,7 +2,9 @@
 
 import {
   createRestaurant,
+  getAllRestaurants,
   getOwnRestaurant,
+  getRestaurantById,
   RestaurantInput,
 } from "@/lib/actions/restaurants";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
@@ -25,5 +27,22 @@ export function useCreateRestaurant() {
       queryClient.invalidateQueries({ queryKey: RESTAURANT_KEY });
       queryClient.invalidateQueries({ queryKey: ["menu-items"] });
     },
+  });
+}
+
+// ---------------- Public browsing ----------------
+
+export function useGetAllRestaurants() {
+  return useQuery({
+    queryKey: ["restaurants", "all"],
+    queryFn: getAllRestaurants,
+  });
+}
+
+export function useGetRestaurant(id: string) {
+  return useQuery({
+    queryKey: ["restaurants", id],
+    queryFn: () => getRestaurantById(id),
+    enabled: !!id,
   });
 }

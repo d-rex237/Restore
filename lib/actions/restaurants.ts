@@ -69,3 +69,42 @@ export async function createRestaurant(data: RestaurantInput) {
       : new Error("Failed to create restaurant");
   }
 }
+
+// ---------------- Public browsing (no auth required) ----------------
+
+export async function getAllRestaurants() {
+  try {
+    return await prisma.restaurant.findMany({
+      where: { isOpen: true },
+      orderBy: { rating: "desc" },
+    });
+  } catch (error) {
+    console.error("Error fetching restaurants:", error);
+    throw new Error("Failed to fetch restaurants");
+  }
+}
+
+export async function getRestaurantById(id: string) {
+  try {
+    const restaurant = await prisma.restaurant.findUnique({ where: { id } });
+    if (!restaurant) throw new Error("Restaurant not found");
+    return restaurant;
+  } catch (error) {
+    console.error("Error fetching restaurant:", error);
+    throw new Error("Failed to fetch restaurant");
+  }
+}
+
+// ---------------- Public browsing (no auth required) ----------------
+
+export async function getRestaurants() {
+  try {
+    return await prisma.restaurant.findMany({
+      where: { isOpen: true },
+      orderBy: { rating: "desc" },
+    });
+  } catch (error) {
+    console.error("Error fetching restaurants:", error);
+    throw new Error("Failed to fetch restaurants");
+  }
+}

@@ -3,13 +3,13 @@
 
 import { currentUser } from "@clerk/nextjs/server";
 import { prisma } from "../prisma";
-import { requireOwnRestaurant } from "./restaurants"; // adjust path to match your generated client output
-import {
+import { requireOwnRestaurant } from "./restaurants";
+import type {
   MappedOrder,
   OrderFilters,
   OrderStatusValue,
   PaginatedOrders,
-} from "../types";
+} from "../types"; // adjust path to match your generated client output
 import { Prisma } from "@/src/generated/prisma/client";
 
 // ---------------- Shared include + mapper ----------------
@@ -367,5 +367,149 @@ export async function claimDelivery(orderId: string) {
     throw error instanceof Error
       ? error
       : new Error("Failed to claim delivery");
+  }
+}
+
+// ============================================================
+// CHECKOUT — creates a real Order from the client-side cart
+// ============================================================
+
+export type CheckoutItem = {
+  menuItemId: string;
+  quantity: number;
+};
+
+export type CheckoutInput = {
+  items: CheckoutItem[];
+  deliveryAddress: string; // free text for now, e.g. "Hospital Roundabout, Bamenda"
+};
+
+export async function createOrder(input: CheckoutInput) {
+  try {
+    const dbUser = await requireDbUser();
+
+    if (!input.items || input.items.length === 0) {
+      throw new Error("Your cart is empty");
+    }
+    if (!input.deliveryAddress?.trim()) {
+      throw new Error("Delivery address is required");
+    }
+
+    // Look up real menu items from the DB — never trust client-sent
+    // prices or restaurant IDs, since those could be tampered with.
+    const menuItemIds = input.items.map((i) => i.menuItemId);
+    const menuItems = await prisma.menuItem.findMany({
+      where: { id: { in: menuItemIds } },
+    });
+
+    if (menuItems.length !== menuItemIds.length) {
+      throw new Error("One or more items in your cart are no longer available");
+    }
+
+    const unavailable = menuItems.find((m) => !m.available);
+    if (unavailable) {
+      throw new Error(`"${unavailable.name}" is currently unavailable`);
+    }
+
+    // Enforce single-restaurant orders, matching the schema
+    // (Order.restaurantId is singular, not per-item).
+    const restaurantIds = new Set(menuItems.map((m) => m.restaurantId));
+    if (restaurantIds.size > 1) {
+      throw new Error(
+        "Your cart has items from multiple restaurants. Please check out one restaurant at a time.",
+      );
+    }
+    const restaurantId = menuItems[0].restaurantId;
+
+    const total = input.items.reduce((sum, item) => {
+      const menuItem = menuItems.find((m) => m.id === item.menuItemId)!;
+      return sum + menuItem.price * item.quantity;
+    }, 0);
+
+    // No saved-address flow yet — create a lightweight Address row
+    // per order from the free-text input, since Order.addressId is required.
+    const address = await prisma.address.create({
+      data: {
+        userId: dbUser.id,
+        label: "Delivery",
+        address: input.deliveryAddress.trim(),
+        city: "",
+      },
+    });
+
+    const order = await prisma.order.create({
+      data: {
+        customerId: dbUser.id,
+        restaurantId,
+        addressId: address.id,
+        total,
+        status: "PENDING",
+        items: {
+          create: input.items.map((item) => {
+            const menuItem = menuItems.find((m) => m.id === item.menuItemId)!;
+            return {
+              menuItemId: item.menuItemId,
+              quantity: item.quantity,
+              priceAtOrder: menuItem.price,
+            };
+          }),
+        },
+      },
+      include: ORDER_INCLUDE,
+    });
+
+    return mapOrder(order);
+  } catch (error) {
+    console.error("Error creating order:", error);
+    throw error instanceof Error ? error : new Error("Failed to place order");
+  }
+}
+
+// Single order lookup, scoped to the signed-in customer who placed it.
+export async function getOrderById(orderId: string) {
+  try {
+    const dbUser = await requireDbUser();
+
+    const order = await prisma.order.findUnique({
+      where: { id: orderId },
+      include: ORDER_INCLUDE,
+    });
+
+    if (!order || order.customerId !== dbUser.id) {
+      throw new Error("Order not found");
+    }
+
+    return mapOrder(order);
+  } catch (error) {
+    console.error("Error fetching order:", error);
+    throw error instanceof Error ? error : new Error("Failed to fetch order");
+  }
+}
+
+// Deletes an order outright (not just status change). OrderItems cascade-delete
+// automatically per the schema. Scoped so a provider can only delete orders
+// belonging to their own restaurant — prevents deleting someone else's order
+// by guessing an id.
+export async function deleteOrder(orderId: string) {
+  try {
+    const dbUser = await requireDbUser();
+
+    const order = await prisma.order.findUnique({ where: { id: orderId } });
+    if (!order) throw new Error("Order not found");
+
+    if (dbUser.role === "PROVIDER") {
+      const restaurant = await requireOwnRestaurant();
+      if (order.restaurantId !== restaurant.id) {
+        throw new Error("Not authorized to delete this order");
+      }
+    } else if (dbUser.role !== "ADMIN") {
+      throw new Error("Not authorized to delete this order");
+    }
+
+    await prisma.order.delete({ where: { id: orderId } });
+    return { success: true };
+  } catch (error) {
+    console.error("Error deleting order:", error);
+    throw error instanceof Error ? error : new Error("Failed to delete order");
   }
 }
