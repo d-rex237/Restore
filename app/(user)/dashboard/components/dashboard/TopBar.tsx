@@ -2,6 +2,7 @@
 "use client";
 
 import React from "react";
+import  Link from "next/link";
 import { Menu, Bell, Search, UserCircle } from "lucide-react";
 
 interface TopBarProps {
@@ -34,9 +35,11 @@ const TopBar: React.FC<TopBarProps> = ({ sidebarOpen, setSidebarOpen }) => {
           <Bell className="w-5 h-5 text-gray-600" />
           <span className="absolute top-1 right-1 w-2 h-2 bg-red-500 rounded-full"></span>
         </button>
-        <button className="flex items-center space-x-2 p-2 rounded-lg hover:bg-gray-100 transition-colors">
+        <Link 
+        href= "/dashboard/profile"
+        className="flex items-center space-x-2 p-2 rounded-lg hover:bg-gray-100 transition-colors">
           <UserCircle className="w-8 h-8 text-gray-600" />
-        </button>
+        </Link>
       </div>
     </header>
   );
