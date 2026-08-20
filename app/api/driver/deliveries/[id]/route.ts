@@ -66,7 +66,7 @@ export async function PATCH(
       data: {
         orderId,
         status: status === "PICKED_UP" ? "OUT_FOR_DELIVERY" : status,
-        note: note || Driver updated status to ${status},
+        note: note || `Driver updated status to ${status}`,
       },
     });
 
