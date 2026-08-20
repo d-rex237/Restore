@@ -1,11 +1,16 @@
 "use client";
 
 import React from "react";
-import  DashboardLayout from '../components/dashboard/DashboardLayout';
+import DashboardLayout from "../components/dashboard/DashboardLayout";
 import { Search, Filter, Eye } from "lucide-react";
 import Link from "next/link";
+import { useGetCustomerOrders } from "@/hooks/use-orders";
 
 export default function OrdersPage() {
+  const { data, isLoading } = useGetCustomerOrders();
+
+  const orderss = data?.orders ?? [];
+
   const orders = [
     {
       id: "#ORD-001",
@@ -68,6 +73,9 @@ export default function OrdersPage() {
   return (
     <DashboardLayout>
       <div className="space-y-6">
+        {orderss.map((orders: any) => (
+          <>console.log("orders" orders)</>
+        ))}
         <div className="flex flex-col md:flex-row md:items-center justify-between gap-4">
           <div>
             <h1 className="text-2xl font-bold text-gray-800">My Orders</h1>
