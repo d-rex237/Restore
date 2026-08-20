@@ -121,7 +121,7 @@ export default function PaymentsPage() {
                   How do you want to pay?
                 </label>
                 <div
-                  style={{ display: "flex", flexDirection: "row", gap: "50px" }}
+                  style={{display: "flex", flexDirection: "row", gap: "50px" }}
                 >
                   <div
                     style={{
@@ -140,7 +140,11 @@ export default function PaymentsPage() {
                       />
                     </label>
                     <FaMobileAlt style={{ color: "#FFCC00" }} />
-                    <span>MTN Mobile Money</span>
+                    <span style={{
+                      color: "gray",
+                      fontSize: "15px",
+                      fontFamily: "Arial",
+                    }}>MTN Mobile Money</span>
                   </div>
 
                   <div
@@ -160,7 +164,12 @@ export default function PaymentsPage() {
                       />
                     </label>
                     <FaMobileAlt style={{ color: "#FF7900" }} />
-                    <span>Orange Money</span>
+                    <span
+                    style={{
+                      color: "gray",
+                      fontSize: "15px",
+                      fontFamily: "Arial",
+                    }}>Orange Money</span>
                   </div>
                 </div>
               </div>

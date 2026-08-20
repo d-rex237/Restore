@@ -15,9 +15,11 @@ export const navConfig: Record<UserType, NavItem[]> = {
     { label: "Users", href: "/admin/users", icon: "Users" },
     { label: "Orders", href: "/admin/orders", icon: "ClipboardList" },
   ],
+
   provider: [
     { label: "Dashboard", href: "/provider", icon: "LayoutDashboard" },
     { label: "Menu", href: "/provider/menu", icon: "Store" },
+    { label: "Restaurants", href: "/home/restaurants", icon: "Store" },
     { label: "Orders", href: "/provider/orders", icon: "ClipboardList" },
     { label: "Settings", href: "/provider/settings", icon: "Settings" },
   ],

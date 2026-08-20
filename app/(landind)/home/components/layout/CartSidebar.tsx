@@ -12,6 +12,7 @@ export default function CartSidebar() {
   const {
     cart,
     removeFromCart,
+    updateQuantity,   // <-- ADD THIS
     getCartTotal,
     isCartOpen,
     toggleCart,
@@ -51,9 +52,7 @@ export default function CartSidebar() {
 
   return (
     <div className="fixed inset-0 z-[100] flex justify-end">
-      {/* =====================================================
-          BACKDROP
-      ====================================================== */}
+      {/* BACKDROP */}
       <button
         type="button"
         aria-label="Close shopping cart"
@@ -69,9 +68,7 @@ export default function CartSidebar() {
         "
       />
 
-      {/* =====================================================
-          CART SIDEBAR
-      ====================================================== */}
+      {/* CART SIDEBAR */}
       <aside
         className="
           relative
@@ -87,9 +84,7 @@ export default function CartSidebar() {
           shadow-2xl
         "
       >
-        {/* ===================================================
-            HEADER
-        ==================================================== */}
+        {/* HEADER */}
         <div
           className="
             flex
@@ -154,9 +149,7 @@ export default function CartSidebar() {
           </button>
         </div>
 
-        {/* ===================================================
-            CART CONTENT
-        ==================================================== */}
+        {/* CART CONTENT */}
         <div className="flex-1 overflow-y-auto px-6 py-5">
           {cart.length === 0 ? (
             <div className="flex h-full flex-col items-center justify-center text-center">
@@ -258,23 +251,74 @@ export default function CartSidebar() {
                     )}
                   </div>
 
-                  {/* PRODUCT DETAILS */}
+                  {/* PRODUCT DETAILS + QUANTITY CONTROLS */}
                   <div className="flex min-w-0 flex-1 items-center justify-between gap-3">
                     <div className="min-w-0">
                       <h4 className="truncate text-sm font-semibold text-foreground">
                         {item.name}
                       </h4>
 
-                      <p className="mt-1 text-xs text-foreground/50">
-                        Quantity: {item.quantity}
-                      </p>
+                      {/* ── NEW QUANTITY CONTROLS ── */}
+                      <div className="mt-1 flex items-center gap-2">
+                        <button
+                          onClick={() =>
+                            updateQuantity(item.id, Math.max(1, item.quantity - 1))
+                          }
+                          className="
+                            flex
+                            h-7
+                            w-7
+                            items-center
+                            justify-center
+                            rounded-full
+                            border
+                            border-border
+                            text-foreground/60
+                            transition
+                            hover:bg-muted
+                            hover:text-foreground
+                            active:scale-95
+                          "
+                          type="button"
+                        >
+                          −
+                        </button>
+
+                        <span className="w-6 text-center text-sm font-semibold text-foreground">
+                          {item.quantity}
+                        </span>
+
+                        <button
+                          onClick={() =>
+                            updateQuantity(item.id, item.quantity + 1)
+                          }
+                          className="
+                            flex
+                            h-7
+                            w-7
+                            items-center
+                            justify-center
+                            rounded-full
+                            border
+                            border-border
+                            text-foreground/60
+                            transition
+                            hover:bg-muted
+                            hover:text-foreground
+                            active:scale-95
+                          "
+                          type="button"
+                        >
+                          +
+                        </button>
+                      </div>
 
                       <p className="mt-1 text-sm font-bold text-primary">
                         {item.price.toLocaleString()} FCFA
                       </p>
                     </div>
 
-                    {/* DELETE */}
+                    {/* DELETE BUTTON */}
                     <button
                       type="button"
                       onClick={() => removeFromCart(item.id)}
@@ -304,9 +348,7 @@ export default function CartSidebar() {
           )}
         </div>
 
-        {/* ===================================================
-            FOOTER
-        ==================================================== */}
+        {/* FOOTER */}
         {cart.length > 0 && (
           <div
             className="
@@ -317,7 +359,6 @@ export default function CartSidebar() {
               py-5
             "
           >
-            {/* TOTAL */}
             <div className="mb-5 space-y-2">
               <div className="flex items-center justify-between">
                 <span className="text-sm text-foreground/55">Subtotal</span>
@@ -338,7 +379,6 @@ export default function CartSidebar() {
               </div>
             </div>
 
-            {/* CHECKOUT */}
             <button
               type="button"
               onClick={handleCheckout}
@@ -379,7 +419,6 @@ export default function CartSidebar() {
               />
             </button>
 
-            {/* CLEAR CART */}
             <button
               type="button"
               onClick={clearCart}

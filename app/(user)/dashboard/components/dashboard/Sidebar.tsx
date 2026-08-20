@@ -1,23 +1,21 @@
-"use client";
+'use client';
 
-import React from "react";
-import Link from "next/link";
-import { usePathname } from "next/navigation";
-import { useRouter } from "next/navigation";
-import {
-  Home,
-  ShoppingBag,
-  History,
-  CreditCard,
-  User,
+import React from 'react';
+import Link from 'next/link';
+import { usePathname } from 'next/navigation';
+import { 
+  Home, 
+  ShoppingBag, 
+  History, 
+  CreditCard, 
+  User, 
   Settings,
   Truck,
   Store,
   LogOut,
   Menu,
-  X,
-} from "lucide-react";
-import { SignOutButton } from "@clerk/nextjs";
+  X
+} from 'lucide-react';
 
 interface SidebarProps {
   isOpen: boolean;
@@ -25,59 +23,42 @@ interface SidebarProps {
 }
 
 const Sidebar: React.FC<SidebarProps> = ({ isOpen, setIsOpen }) => {
-  const router = useRouter();
   const pathname = usePathname();
-
-  const handleLogout = () => {
-    localStorage.removeItem("token");
-    localStorage.removeItem("user");
-
-    router.push("/");
-
-    setIsOpen(false);
-  };
+  const { signOut } = useClerk();
+  const { user } = useUser();
 
   const menuItems = [
-    { icon: Home, label: "Dashboard", href: "/dashboard" },
-    { icon: ShoppingBag, label: "My Orders", href: "/dashboard/orders" },
-    { icon: CreditCard, label: "Payments", href: "/dashboard/payments" },
-    { icon: User, label: "Profile", href: "/dashboard/profile" },
-    { icon: Settings, label: "Settings", href: "/dashboard/settings" },
+    { icon: Home, label: 'Dashboard', href: '/dashboard' },
+    { icon: ShoppingBag, label: 'My Orders', href: '/dashboard/orders' },
+    { icon: CreditCard, label: 'Payments', href: '/dashboard/payments' },
+    { icon: Settings, label: 'Settings', href: '/dashboard/settings' },
   ];
 
   const actionItems = [
-    { icon: Truck, label: "Become a Driver", href: "/dashboard/become-driver" },
-    { icon: Store, label: "Become a Vendor", href: "/dashboard/become-vendor" },
+    { icon: Truck, label: 'Become a Driver', href: '/dashboard/become-driver' },
+    { icon: Store, label: 'Become a Vendor', href: '/dashboard/become-vendor' },
   ];
 
   return (
     <>
-      {/* Mobile Overlay */}
-      {isOpen && (
-        <div
-          className="fixed inset-0 z-30 bg-black bg-opacity-50 lg:hidden"
-          onClick={() => setIsOpen(false)}
-        />
-      )}
-
       {/* Sidebar */}
-      <aside
+      <aside 
         className={`
           fixed lg:static inset-y-0 left-0 z-40
           w-72 bg-white shadow-lg transform transition-transform duration-300 ease-in-out
-          ${isOpen ? "translate-x-0" : "-translate-x-full lg:translate-x-0"}
-          flex flex-col
-        `}
+          ${isOpen ? 'translate-x-0' : '-translate-x-full lg:translate-x-0'}
+          flex flex-col`
+        }
       >
         {/* Header */}
         <div className="flex items-center justify-between p-6 border-b border-gray-200">
           <div className="flex items-center space-x-3">
-            <div className="w-10 h-10 bg-green-600 rounded-xl flex items-center justify-center">
+            <div className="w-10 h-10 bg-blue-600 rounded-xl flex items-center justify-center">
               <span className="text-white font-bold text-xl">R</span>
             </div>
-            <h1 className="text-2xl font-bold text-gray-800">Restore</h1>
+            <h1 className="text-2xl font-bold text-gray-800">Restor</h1>
           </div>
-          <button
+          <button 
             onClick={() => setIsOpen(false)}
             className="lg:hidden p-2 rounded-lg hover:bg-gray-100"
           >
@@ -137,17 +118,15 @@ const Sidebar: React.FC<SidebarProps> = ({ isOpen, setIsOpen }) => {
 
         {/* Footer */}
         <div className="p-4 border-t border-gray-200">
-          <button
-            onClick={handleLogout}
-            className="flex items-center space-x-3 px-4 py-3 w-full rounded-xl text-gray-600 hover:bg-red-50 hover:text-red-700 transition-all duration-200"
-          >
+          <button className="flex items-center space-x-3 px-4 py-3 w-full rounded-xl text-gray-600 hover:bg-red-50 hover:text-red-700 transition-all duration-200">
             <LogOut className="w-5 h-5" />
             <span className="font-medium">Logout</span>
           </button>
-          <SignOutButton />
           <div className="mt-3 px-4 py-2 bg-gray-50 rounded-xl">
             <p className="text-xs text-gray-500">Logged in as Customer</p>
-            <p className="text-sm font-medium text-gray-700">John Doe</p>
+            <p className="text-sm font-medium text-gray-700">
+              {user?.fullName ?? user?.username ?? "User"}
+            </p>
           </div>
         </div>
       </aside>

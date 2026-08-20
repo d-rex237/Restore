@@ -1,73 +1,195 @@
-'use client';
-import MenuCard from './MenuCard';
-import React, { useState, useMemo, useEffect, useRef } from 'react';
-import { useSearchParams } from 'next/navigation'; // ✅ Added to catch search
-import { menuData } from '@/lib/mock-data';
+"use client";
 
-interface FilterOptions {
-  category: string;
-  priceRange: 'all' | 'low' | 'medium' | 'high';
-  dietary: string;
-}
+import MenuCard from "./MenuCard";
+import React, { useMemo, useState, useEffect, useRef } from "react";
+import { useSearchParams } from "next/navigation";
+import { menuData } from "@/lib/mock-data";
+import {
+  History,
+  Search,
+  Utensils,
+  ChefHat,
+  IceCreamBowl,
+  Fish,
+  Coffee,
+  X,
+} from "lucide-react";
+
+const recentOrderIds = ["1", "3", "5"];
+
+const categories = [
+  {
+    id: "all",
+    label: "All",
+    icon: Utensils,
+  },
+  {
+    id: "starters",
+    label: "Starters",
+    icon: Coffee,
+  },
+  {
+    id: "main course",
+    label: "Main Meals",
+    icon: ChefHat,
+  },
+  {
+    id: "seafood",
+    label: "Seafood",
+    icon: Fish,
+  },
+  {
+    id: "desserts",
+    label: "Desserts",
+    icon: IceCreamBowl,
+  },
+];
 
 const MenuPage = () => {
   const searchParams = useSearchParams();
-  const urlSearchQuery = searchParams.get('q') || ''; // ✅ Get search from URL
 
-  const [filters, setFilters] = useState<FilterOptions>({
-    category: 'all',
-    priceRange: 'all',
-    dietary: 'all'
+  const restaurantId = searchParams.get("restaurant");
+  const urlSearchQuery = searchParams.get("q") || "";
+
+  const [searchQuery, setSearchQuery] = useState(urlSearchQuery);
+
+  const [category, setCategory] = useState("all");
+
+  const [filters, setFilters] = useState({
+    priceRange: "all" as "all" | "low" | "medium" | "high",
+    dietary: "all",
   });
 
-  const [searchQuery, setSearchQuery] = useState(urlSearchQuery); // ✅ Sync with URL
+  const dishRefs = useRef<{
+    [key: string]: HTMLDivElement | null;
+  }>({});
 
-  // ✅ Refs to scroll to the exact card
-  const dishRefs = useRef<{ [key: string]: HTMLDivElement | null }>({});
-  
-  // Filter + Search Logic
+  /*
+   * =========================================================
+   * RESTAURANT FILTER
+   * =========================================================
+   *
+   * If a restaurant ID is provided in the URL:
+   *
+   * /home/menu?restaurant=1
+   *
+   * only that restaurant's meals are shown.
+   *
+   * If no restaurant is provided, all meals are shown.
+   */
+
+  const restaurantItems = useMemo(() => {
+    if (!restaurantId) {
+      return menuData;
+    }
+
+    return menuData.filter((item: any) => {
+      return (
+        String(item.restaurantId) === String(restaurantId) ||
+        String(item.restaurant?.id) === String(restaurantId)
+      );
+    });
+  }, [restaurantId]);
+
+  /*
+   * =========================================================
+   * FILTER MEALS
+   * =========================================================
+   */
+
   const filteredItems = useMemo(() => {
-    let filtered = menuData;
+    let filtered = restaurantItems;
 
-    if (filters.category !== 'all') {
-      filtered = filtered.filter((item) => 
-        item.category.toLowerCase() === filters.category
+    // Category
+    if (category !== "all") {
+      filtered = filtered.filter(
+        (item) =>
+          item.category?.toLowerCase() === category.toLowerCase(),
       );
     }
 
-    if (filters.priceRange !== 'all') {
+    // Price
+    if (filters.priceRange !== "all") {
       filtered = filtered.filter((item) => {
-        if (filters.priceRange === 'low') return item.price < 10;
-        if (filters.priceRange === 'medium') return item.price >= 10 && item.price <= 15;
-        if (filters.priceRange === 'high') return item.price > 15;
+        if (filters.priceRange === "low") {
+          return item.price < 2000;
+        }
+
+        if (filters.priceRange === "medium") {
+          return item.price >= 2000 && item.price <= 4000;
+        }
+
+        if (filters.priceRange === "high") {
+          return item.price > 4000;
+        }
+
         return true;
       });
     }
 
-    if (filters.dietary !== 'all') {
+    // Dietary
+    if (filters.dietary !== "all") {
       filtered = filtered.filter((item) => {
-        if (filters.dietary === 'vegetarian') return item.dietaryInfo?.isVegetarian;
-        if (filters.dietary === 'vegan') return item.dietaryInfo?.isVegan;
-        if (filters.dietary === 'gluten free') return item.dietaryInfo?.isGlutenFree;
+        if (filters.dietary === "vegetarian") {
+          return item.dietaryInfo?.isVegetarian;
+        }
+
+        if (filters.dietary === "vegan") {
+          return item.dietaryInfo?.isVegan;
+        }
+
+        if (filters.dietary === "gluten free") {
+          return item.dietaryInfo?.isGlutenFree;
+        }
+
         return true;
       });
     }
 
-    if (searchQuery) {
-      filtered = filtered.filter((item) => 
-        item.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
-        item.description.toLowerCase().includes(searchQuery.toLowerCase())
+    // Search
+    if (searchQuery.trim()) {
+      const query = searchQuery.toLowerCase();
+
+      filtered = filtered.filter(
+        (item) =>
+          item.name?.toLowerCase().includes(query) ||
+          item.description?.toLowerCase().includes(query),
       );
     }
 
     return filtered;
-  }, [filters, searchQuery]);
+  }, [
+    restaurantItems,
+    category,
+    filters,
+    searchQuery,
+  ]);
 
-  // ✅ PROFESSIONAL SCROLL-TO-RESULT LOGIC
+  /*
+   * =========================================================
+   * RECENT MEALS
+   * =========================================================
+   */
+
+  const recentItems = useMemo(() => {
+    return restaurantItems.filter((item) =>
+      recentOrderIds.includes(item.id),
+    );
+  }, [restaurantItems]);
+
+  /*
+   * =========================================================
+   * SCROLL TO SEARCH RESULT
+   * =========================================================
+   */
+
   useEffect(() => {
     if (urlSearchQuery && filteredItems.length > 0) {
-      const matchingKey = Object.keys(dishRefs.current).find(key => 
-        key.toLowerCase().includes(urlSearchQuery.toLowerCase())
+      const matchingKey = Object.keys(dishRefs.current).find(
+        (key) =>
+          key.toLowerCase().includes(
+            urlSearchQuery.toLowerCase(),
+          ),
       );
 
       if (matchingKey && dishRefs.current[matchingKey]) {
@@ -76,79 +198,260 @@ const MenuPage = () => {
             behavior: "smooth",
             block: "center",
           });
-        }, 300); // Delay to ensure DOM is fully rendered
+        }, 300);
       }
     }
   }, [filteredItems, urlSearchQuery]);
 
+  /*
+   * =========================================================
+   * GROUP BY CATEGORY
+   * =========================================================
+   */
+
+  const groupedMeals = useMemo(() => {
+    const groups: Record<string, typeof filteredItems> = {};
+
+    filteredItems.forEach((item) => {
+      const key = item.category?.toLowerCase() || "other";
+
+      if (!groups[key]) {
+        groups[key] = [];
+      }
+
+      groups[key].push(item);
+    });
+
+    return groups;
+  }, [filteredItems]);
+
   return (
-    <div className="min-h-screen bg-[var(--background)] text-[var(--foreground)] transition-colors duration-200">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
-        
-        {/* Menu Header */}
-        <div className="relative overflow-hidden rounded-2xl mb-8 bg-gradient-to-r from-orange-500 via-red-500 to-pink-500 dark:from-orange-600 dark:via-red-600 dark:to-pink-600 p-8 text-center text-white">
-          <h1 className="text-4xl font-bold">Discover Cameroonian Cuisine</h1>
-          <p className="mt-2 text-lg opacity-90">Explore authentic flavors from across Cameroon</p>
-        </div>
+    <main className="min-h-screen bg-gray-50 text-gray-900 dark:bg-gray-950 dark:text-white">
+      {/* =====================================================
+          HERO
+      ====================================================== */}
 
-        {/* Search Bar */}
-        <div className="flex flex-col md:flex-row gap-4 mb-6">
-          <div className="flex-1">
-            <input
-              type="text"
-              placeholder="🔍 Search menu items..."
-              value={searchQuery}
-              onChange={(e) => setSearchQuery(e.target.value)}
-              className="w-full bg-[var(--surface)] border-[var(--border)] text-[var(--foreground)] rounded-lg px-4 py-2.5 focus:ring-2 focus:ring-[var(--primary)] focus:border-transparent transition-colors"
-            />
+      <section className="relative overflow-hidden bg-gradient-to-br from-orange-600 via-orange-500 to-red-500">
+        <div className="absolute -right-20 -top-20 h-72 w-72 rounded-full bg-white/10 blur-3xl" />
+
+        <div className="absolute -bottom-32 -left-20 h-80 w-80 rounded-full bg-red-900/20 blur-3xl" />
+
+        <div className="relative mx-auto max-w-7xl px-4 py-14 sm:px-6 lg:px-8">
+          <div className="max-w-3xl">
+            <div className="mb-5 inline-flex items-center gap-2 rounded-full border border-white/20 bg-white/10 px-4 py-2 text-sm font-semibold text-white backdrop-blur-md">
+              <Utensils className="h-4 w-4" />
+              Authentic Cameroonian Food
+            </div>
+
+            <h1 className="text-4xl font-extrabold tracking-tight text-white sm:text-5xl">
+              Explore the menu
+            </h1>
+
+            <p className="mt-4 max-w-2xl text-white/85">
+              Discover delicious meals, starters, seafood and desserts
+              prepared by local restaurants.
+            </p>
+
+            {/* Search */}
+            <div className="relative mt-7 max-w-2xl">
+              <Search className="absolute left-5 top-1/2 h-5 w-5 -translate-y-1/2 text-gray-400" />
+
+              <input
+                type="text"
+                placeholder="Search meals..."
+                value={searchQuery}
+                onChange={(e) =>
+                  setSearchQuery(e.target.value)
+                }
+                className="h-14 w-full rounded-2xl border border-white/20 bg-white pl-14 pr-12 text-gray-900 shadow-xl outline-none placeholder:text-gray-400 focus:ring-4 focus:ring-white/20"
+              />
+
+              {searchQuery && (
+                <button
+                  onClick={() => setSearchQuery("")}
+                  className="absolute right-4 top-1/2 -translate-y-1/2 text-gray-400 hover:text-gray-700"
+                >
+                  <X className="h-5 w-5" />
+                </button>
+              )}
+            </div>
           </div>
-          
-          {/* Filters Dropdowns */}
-          <div className="flex gap-2 flex-wrap">
-            <select
-              value={filters.category}
-              onChange={(e) => setFilters({...filters, category: e.target.value})}
-              className="bg-[var(--surface)] border-[var(--border)] rounded-lg px-3 py-2.5"
-            >
-              <option value="all">All Categories</option>
-              <option value="main course">Main Course</option>
-              <option value="seafood">Seafood</option>
-              <option value="street food">Street Food</option>
-              <option value="desserts">Desserts</option>
-            </select>
+        </div>
+      </section>
 
-            <select
-              value={filters.priceRange}
-              onChange={(e) => setFilters({...filters, priceRange: e.target.value as any})}
-              className="bg-[var(--surface)] border-[var(--border)] rounded-lg px-3 py-2.5"
-            >
-              <option value="all">All Prices</option>
-              <option value="low">Under $10</option>
-              <option value="medium">$10 - $15</option>
-              <option value="high">$15+</option>
-            </select>
+      {/* =====================================================
+          CONTENT
+      ====================================================== */}
+
+      <div className="mx-auto max-w-7xl px-4 py-10 sm:px-6 lg:px-8">
+
+        {/* CATEGORY NAVIGATION */}
+
+        <div className="mb-8 overflow-x-auto pb-2">
+          <div className="flex min-w-max gap-3">
+            {categories.map((item) => {
+              const Icon = item.icon;
+
+              const active = category === item.id;
+
+              return (
+                <button
+                  key={item.id}
+                  onClick={() => setCategory(item.id)}
+                  className={`
+                    flex items-center gap-2 rounded-xl px-5 py-3
+                    text-sm font-bold transition-all
+                    ${
+                      active
+                        ? "bg-orange-500 text-white shadow-lg shadow-orange-500/20"
+                        : "border border-gray-200 bg-white text-gray-600 hover:border-orange-300 hover:text-orange-500 dark:border-gray-800 dark:bg-gray-900 dark:text-gray-300"
+                    }
+                  `}
+                >
+                  <Icon className="h-4 w-4" />
+                  {item.label}
+                </button>
+              );
+            })}
           </div>
         </div>
 
-        {/* Results count */}
-        <div className="mb-6 flex justify-between items-center">
-          <h2 className="text-2xl font-semibold text-[var(--foreground)]">Our Menu</h2>
-          <span className="text-sm text-gray-500 dark:text-gray-400">{filteredItems.length} items found</span>
+        {/* FILTERS */}
+
+        <div className="mb-10 flex flex-wrap gap-3">
+          <select
+            value={filters.priceRange}
+            onChange={(e) =>
+              setFilters({
+                ...filters,
+                priceRange:
+                  e.target.value as
+                    | "all"
+                    | "low"
+                    | "medium"
+                    | "high",
+              })
+            }
+            className="rounded-xl border border-gray-200 bg-white px-4 py-3 text-sm dark:border-gray-800 dark:bg-gray-900"
+          >
+            <option value="all">All Prices</option>
+            <option value="low">Under 2,000 FCFA</option>
+            <option value="medium">2,000 – 4,000 FCFA</option>
+            <option value="high">Over 4,000 FCFA</option>
+          </select>
+
+          <select
+            value={filters.dietary}
+            onChange={(e) =>
+              setFilters({
+                ...filters,
+                dietary: e.target.value,
+              })
+            }
+            className="rounded-xl border border-gray-200 bg-white px-4 py-3 text-sm dark:border-gray-800 dark:bg-gray-900"
+          >
+            <option value="all">All Dietary</option>
+            <option value="vegetarian">Vegetarian</option>
+            <option value="vegan">Vegan</option>
+            <option value="gluten free">Gluten Free</option>
+          </select>
         </div>
 
-        {/* Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
-          {filteredItems.map((item) => (
-            <MenuCard 
-              key={item.id} 
-              ref={(el) => { dishRefs.current[item.name] = el; }} // ✅ Important! Adds the ref to the card
-              item={item} 
-            />
-          ))}
-        </div>
+        {/* =====================================================
+            RECENT MEALS
+        ====================================================== */}
+
+        {recentItems.length > 0 && category === "all" && (
+          <section className="mb-12">
+            <div className="mb-5 flex items-center gap-3">
+              <History className="h-5 w-5 text-orange-500" />
+
+              <div>
+                <h2 className="text-xl font-extrabold">
+                  Your Recent Meals
+                </h2>
+
+                <p className="text-sm text-gray-500">
+                  Quickly order something you've enjoyed before.
+                </p>
+              </div>
+            </div>
+
+            <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
+              {recentItems.map((item) => (
+                <MenuCard
+                  key={item.id}
+                  ref={(el) => {
+                    dishRefs.current[item.name] = el;
+                  }}
+                  item={item}
+                />
+              ))}
+            </div>
+          </section>
+        )}
+
+        {/* =====================================================
+            MEAL CATEGORIES
+        ====================================================== */}
+
+        {filteredItems.length === 0 ? (
+          <div className="rounded-3xl border border-dashed border-gray-300 bg-white py-24 text-center dark:border-gray-800 dark:bg-gray-900">
+            <Utensils className="mx-auto h-12 w-12 text-orange-400" />
+
+            <h3 className="mt-5 text-xl font-bold">
+              No meals found
+            </h3>
+
+            <p className="mt-2 text-sm text-gray-500">
+              Try another search or category.
+            </p>
+          </div>
+        ) : (
+          <div className="space-y-14">
+            {Object.entries(groupedMeals).map(
+              ([categoryName, items]) => (
+                <section key={categoryName}>
+                  {/* CATEGORY HEADER */}
+
+                  <div className="mb-6 flex items-end justify-between">
+                    <div>
+                      <p className="text-xs font-bold uppercase tracking-[0.2em] text-orange-500">
+                        Our selection
+                      </p>
+
+                      <h2 className="mt-1 text-2xl font-extrabold capitalize sm:text-3xl">
+                        {categoryName}
+                      </h2>
+                    </div>
+
+                    <span className="rounded-full bg-orange-500/10 px-3 py-1 text-xs font-bold text-orange-500">
+                      {items.length}{" "}
+                      {items.length === 1 ? "meal" : "meals"}
+                    </span>
+                  </div>
+
+                  {/* MEAL CARDS */}
+
+                  <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
+                    {items.map((item) => (
+                      <MenuCard
+                        key={item.id}
+                        ref={(el) => {
+                          dishRefs.current[item.name] = el;
+                        }}
+                        item={item}
+                      />
+                    ))}
+                  </div>
+                </section>
+              ),
+            )}
+          </div>
+        )}
       </div>
-    </div>
+    </main>
   );
-}
+};
 
 export default MenuPage;

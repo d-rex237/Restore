@@ -4,11 +4,20 @@ import Link from "next/link";
 import { useEffect, useState } from "react";
 import { usePathname } from "next/navigation";
 import { useTheme } from "next-themes";
-import { FaSun, FaMoon, FaSearch, FaShoppingCart } from "react-icons/fa";
+import {
+  FaSun,
+  FaMoon,
+  FaSearch,
+  FaShoppingCart,
+} from "react-icons/fa";
 
 import Logo from "./logo";
 import { useCart } from "@/lib/cart-context";
-import { Show, SignInButton, SignOutButton, SignUpButton } from "@clerk/nextjs";
+import {
+  Show,
+  SignInButton,
+  SignUpButton,
+} from "@clerk/nextjs";
 import ProfileAvatar from "@/components/ProfileAvatar";
 
 export default function Navbar() {
@@ -32,13 +41,19 @@ export default function Navbar() {
     if (path === "/") {
       return pathname === "/";
     }
+
     return pathname === path || pathname.startsWith(path + "/");
   };
 
   const scrollToHeroSearch = () => {
-    window.scrollTo({ top: 0, behavior: "smooth" });
+    window.scrollTo({
+      top: 0,
+      behavior: "smooth",
+    });
+
     window.setTimeout(() => {
       const input = document.getElementById("hero-search-input");
+
       if (input instanceof HTMLInputElement) {
         input.focus();
       }
@@ -55,7 +70,10 @@ export default function Navbar() {
     );
   }
 
-  const cartCount = typeof getCartCount === "function" ? getCartCount() : 0;
+  const cartCount =
+    typeof getCartCount === "function"
+      ? getCartCount()
+      : 0;
 
   const toggleTheme = () => {
     setTheme(theme === "dark" ? "light" : "dark");
@@ -97,33 +115,54 @@ export default function Navbar() {
             DESKTOP NAVIGATION
         ====================================================== */}
         <nav className="hidden items-center gap-1 lg:flex">
-          <NavLink href="/" label="Home" active={isActive("/")} />
           <NavLink
-            href="/home/menu"
-            label="Menu"
-            active={isActive("/home/menu")}
+            href="/"
+            label="Home"
+            active={isActive("/")}
           />
+
+         <NavLink
+  href="/home/restaurants"
+  label="Restaurants"
+  active={isActive("/home/restaurants")}
+/>
+
           <NavLink
             href="/home/about"
             label="About"
             active={isActive("/home/about")}
           />
+
           <NavLink
             href="/home/services"
             label="Services"
             active={isActive("/home/services")}
           />
+
           <NavLink
             href="/home/contact"
             label="Contact"
             active={isActive("/home/contact")}
           />
+
+          {/* =================================================
+              DRIVER
+              Only visible when signed in
+          ================================================== */}
+          <Show when="signed-in">
+            <NavLink
+              href="/home/driver"
+              label="Driver"
+              active={isActive("/home/driver")}
+            />
+          </Show>
         </nav>
 
         {/* =====================================================
             RIGHT CONTROLS
         ====================================================== */}
         <div className="flex items-center gap-2">
+
           {/* CART */}
           <button
             type="button"
@@ -145,6 +184,7 @@ export default function Navbar() {
             "
           >
             <FaShoppingCart className="h-4 w-4 transition-transform duration-300 group-hover:scale-110" />
+
             {cartCount > 0 && (
               <span
                 className="
@@ -193,7 +233,9 @@ export default function Navbar() {
             type="button"
             onClick={toggleTheme}
             aria-label={
-              theme === "dark" ? "Switch to light mode" : "Switch to dark mode"
+              theme === "dark"
+                ? "Switch to light mode"
+                : "Switch to dark mode"
             }
             className="
               group flex h-10 w-10
@@ -216,29 +258,63 @@ export default function Navbar() {
             )}
           </button>
 
-          {/* AUTH */}
+          {/* =================================================
+              SIGNED OUT
+          ================================================== */}
           <Show when="signed-out">
             <SignInButton mode="modal">
-              <button className="hidden sm:block rounded-lg border border-border px-5 py-2.5 text-sm font-semibold text-foreground/80 hover:border-primary hover:text-primary transition">
+              <button
+                className="
+                  hidden sm:block
+                  rounded-lg
+                  border border-border
+                  px-5 py-2.5
+                  text-sm font-semibold
+                  text-foreground/80
+                  transition
+                  hover:border-primary
+                  hover:text-primary
+                "
+              >
                 Sign In
               </button>
             </SignInButton>
+
             <SignUpButton mode="modal">
-              <button className="hidden sm:block rounded-lg bg-primary px-6 py-2.5 text-sm font-semibold text-primary-foreground hover:bg-primary-hover transition">
+              <button
+                className="
+                  hidden sm:block
+                  rounded-lg
+                  bg-primary
+                  px-6 py-2.5
+                  text-sm font-semibold
+                  text-primary-foreground
+                  transition
+                  hover:bg-primary-hover
+                "
+              >
                 Sign Up
               </button>
             </SignUpButton>
           </Show>
 
+          {/* =================================================
+              SIGNED IN
+          ================================================== */}
           <Show when="signed-in">
-            <ProfileAvatar />
-            <SignOutButton />
+            <div className="hidden items-center sm:flex">
+              <ProfileAvatar />
+            </div>
           </Show>
 
-          {/* MOBILE MENU TOGGLE */}
+          {/* =================================================
+              MOBILE MENU TOGGLE
+          ================================================== */}
           <button
             type="button"
-            onClick={() => setIsMenuOpen((prev) => !prev)}
+            onClick={() =>
+              setIsMenuOpen((prev) => !prev)
+            }
             aria-label="Toggle navigation menu"
             aria-expanded={isMenuOpen}
             className="
@@ -260,11 +336,15 @@ export default function Navbar() {
                   : "group-hover:bg-primary"
               }`}
             />
+
             <span
               className={`h-0.5 w-5 rounded-full bg-foreground transition-all duration-300 ${
-                isMenuOpen ? "opacity-0" : "group-hover:bg-primary"
+                isMenuOpen
+                  ? "opacity-0"
+                  : "group-hover:bg-primary"
               }`}
             />
+
             <span
               className={`h-0.5 w-5 rounded-full bg-foreground transition-all duration-300 ${
                 isMenuOpen
@@ -285,34 +365,44 @@ export default function Navbar() {
           border-t border-border/60
           transition-all duration-300
           lg:hidden
-          ${isMenuOpen ? "max-h-[700px] opacity-100" : "max-h-0 opacity-0"}
+          ${
+            isMenuOpen
+              ? "max-h-[700px] opacity-100"
+              : "max-h-0 opacity-0"
+          }
         `}
       >
         <nav className="bg-background/95 px-4 py-4 backdrop-blur-xl">
+
           <MobileNavLink
             href="/"
             label="Home"
             active={isActive("/")}
             onClick={closeMenu}
           />
-          <MobileNavLink
-            href="/home/menu"
-            label="Menu"
-            active={isActive("/home/menu")}
-            onClick={closeMenu}
-          />
+
+        
+  <MobileNavLink
+    href="/home/restaurants"
+    label="Restaurants"
+    active={isActive("/home/restaurants")}
+    onClick={closeMenu}
+  />
+
           <MobileNavLink
             href="/home/about"
             label="About"
             active={isActive("/home/about")}
             onClick={closeMenu}
           />
+
           <MobileNavLink
             href="/home/services"
             label="Services"
             active={isActive("/home/services")}
             onClick={closeMenu}
           />
+
           <MobileNavLink
             href="/home/contact"
             label="Contact"
@@ -320,8 +410,22 @@ export default function Navbar() {
             onClick={closeMenu}
           />
 
+          {/* =================================================
+              MOBILE DRIVER
+          ================================================== */}
+          <Show when="signed-in">
+            <MobileNavLink
+              href="/home/driver"
+              label="Driver"
+              active={isActive("/home/driver")}
+              onClick={closeMenu}
+            />
+          </Show>
+
           {/* MOBILE ACTIONS */}
           <div className="mt-3 grid grid-cols-2 gap-2 border-t border-border/60 pt-4">
+
+            {/* CART */}
             <button
               type="button"
               onClick={() => {
@@ -343,7 +447,9 @@ export default function Navbar() {
               "
             >
               <FaShoppingCart className="transition-transform group-hover:scale-110" />
+
               <span>Cart</span>
+
               {cartCount > 0 && (
                 <span className="rounded-full bg-primary px-1.5 py-0.5 text-[10px] font-bold text-primary-foreground">
                   {cartCount > 99 ? "99+" : cartCount}
@@ -351,6 +457,7 @@ export default function Navbar() {
               )}
             </button>
 
+            {/* THEME */}
             <button
               type="button"
               onClick={toggleTheme}
@@ -382,33 +489,58 @@ export default function Navbar() {
             </button>
           </div>
 
-          {/* MOBILE AUTH */}
+          {/* =================================================
+              MOBILE AUTH
+          ================================================== */}
           <div className="mt-3">
+
             <Show when="signed-out">
               <div className="grid grid-cols-2 gap-2">
+
                 <SignInButton mode="modal">
                   <button
                     onClick={closeMenu}
-                    className="rounded-xl border border-border px-4 py-3.5 text-sm font-bold text-foreground/80 hover:border-primary hover:text-primary transition"
+                    className="
+                      rounded-xl
+                      border border-border
+                      px-4 py-3.5
+                      text-sm font-bold
+                      text-foreground/80
+                      transition
+                      hover:border-primary
+                      hover:text-primary
+                    "
                   >
                     Sign In
                   </button>
                 </SignInButton>
+
                 <SignUpButton mode="modal">
                   <button
                     onClick={closeMenu}
-                    className="rounded-xl bg-primary px-4 py-3.5 text-sm font-bold text-primary-foreground hover:bg-primary-hover transition"
+                    className="
+                      rounded-xl
+                      bg-primary
+                      px-4 py-3.5
+                      text-sm font-bold
+                      text-primary-foreground
+                      transition
+                      hover:bg-primary-hover
+                    "
                   >
                     Sign Up
                   </button>
                 </SignUpButton>
+
               </div>
             </Show>
+
             <Show when="signed-in">
               <div className="flex justify-center">
                 <ProfileAvatar />
               </div>
             </Show>
+
           </div>
         </nav>
       </div>
@@ -439,10 +571,15 @@ function NavLink({
         px-4 py-2.5
         text-sm font-semibold
         transition-all duration-300
-        ${active ? "bg-primary/10 text-primary" : "text-foreground/70 hover:bg-primary/10 hover:text-primary"}
+        ${
+          active
+            ? "bg-primary/10 text-primary"
+            : "text-foreground/70 hover:bg-primary/10 hover:text-primary"
+        }
       `}
     >
       {label}
+
       <span
         className={`
           absolute bottom-1 left-1/2
@@ -482,7 +619,11 @@ function MobileNavLink({
         px-4 py-3.5
         text-sm font-semibold
         transition-all duration-300
-        ${active ? "bg-primary/10 text-primary" : "text-foreground/75 hover:bg-primary/10 hover:pl-5 hover:text-primary"}
+        ${
+          active
+            ? "bg-primary/10 text-primary"
+            : "text-foreground/75 hover:bg-primary/10 hover:pl-5 hover:text-primary"
+        }
       `}
     >
       {label}

@@ -24,7 +24,14 @@ const nextConfig: NextConfig = {
       },
       {
         protocol: 'https',
-        hostname: 'dummyimage.com', // ✅ Added this one!
+        hostname: 'dummyimage.com',
+      },
+      // 👇 Add this one – that's it
+      {
+        protocol: 'https',
+        hostname: 'ui-avatars.com',
+        port: '',
+        pathname: '/api/**',
       },
     ],
   },

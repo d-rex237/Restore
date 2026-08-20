@@ -7,6 +7,7 @@ import Footer from "./components/layout/Footer";
 import { Providers } from "./providers";
 import CartSidebar from "./components/layout/CartSidebar";
 
+
 const inter = Inter({
   subsets: ["latin"],
   variable: "--font-sans",
