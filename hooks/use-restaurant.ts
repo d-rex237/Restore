@@ -6,6 +6,7 @@ import {
   getOwnRestaurant,
   getRestaurantById,
   RestaurantInput,
+  updateRestaurant,
 } from "@/lib/actions/restaurants";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 
@@ -46,3 +47,16 @@ export function useGetRestaurant(id: string) {
     enabled: !!id,
   });
 }
+
+export function useUpdateRestaurant() {
+  const queryClient = useQueryClient();
+
+  return useMutation({
+    mutationFn: (data: Partial<RestaurantInput>) => updateRestaurant(data),
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: RESTAURANT_KEY });
+    },
+  });
+}
+
+// ---------------- Public browsing ----------------

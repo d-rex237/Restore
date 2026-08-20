@@ -4,7 +4,11 @@ import {
   useUpdateOrderStatus,
   useDeleteOrder,
 } from "@/hooks/use-orders";
-import { CheckIcon, EyeIcon, Loader2, Trash2Icon } from "lucide-react";
+import {
+  OrderStatusSelect,
+  PROVIDER_STATUS_OPTIONS,
+} from "@/components/order-status-select";
+import { EyeIcon, Loader2, Trash2Icon } from "lucide-react";
 import { useState } from "react";
 
 function OrdersPage() {
@@ -29,12 +33,12 @@ function OrdersPage() {
           ? "bg-purple-100 text-purple-700"
           : "bg-red-100 text-red-700";
 
-  async function handleApprove(orderId: string) {
+  async function handleStatusChange(orderId: string, status: string) {
     setActioningId(orderId);
     try {
-      await updateStatus.mutateAsync({ orderId, status: "ACCEPTED" });
+      await updateStatus.mutateAsync({ orderId, status: status as any });
       setSelectedOrder((prev: any) =>
-        prev?.id === orderId ? { ...prev, status: "accepted" } : prev,
+        prev?.id === orderId ? { ...prev, status: status.toLowerCase() } : prev,
       );
     } finally {
       setActioningId(null);
@@ -75,7 +79,7 @@ function OrdersPage() {
           </div>
         ) : (
           <div className="overflow-x-auto">
-            <table className="w-full min-w-[720px]">
+            <table className="w-full min-w-[820px]">
               <thead>
                 <tr className="border-b border-gray-100 text-left text-sm text-gray-500">
                   <th className="pb-4 font-medium">Order</th>
@@ -90,7 +94,6 @@ function OrdersPage() {
 
               <tbody>
                 {orders.map((order: any) => {
-                  const isPending = order.status === "pending";
                   const isActioning = actioningId === order.id;
 
                   return (
@@ -150,22 +153,14 @@ function OrdersPage() {
                             <EyeIcon size={18} />
                           </button>
 
-                          {/* Approve only shows while pending — once acted on,
-                              the status badge alone communicates the outcome. */}
-                          {isPending && (
-                            <button
-                              onClick={() => handleApprove(order.id)}
-                              disabled={isActioning}
-                              className="cursor-pointer text-green-600 transition hover:text-green-800 disabled:opacity-50"
-                              aria-label="Approve order"
-                            >
-                              {isActioning ? (
-                                <Loader2 size={18} className="animate-spin" />
-                              ) : (
-                                <CheckIcon size={18} />
-                              )}
-                            </button>
-                          )}
+                          <OrderStatusSelect
+                            currentStatus={order.status}
+                            options={PROVIDER_STATUS_OPTIONS}
+                            disabled={isActioning}
+                            onChange={(status) =>
+                              handleStatusChange(order.id, status)
+                            }
+                          />
 
                           <button
                             onClick={() => handleDelete(order.id)}
@@ -283,7 +278,7 @@ function OrdersPage() {
                 </div>
               </div>
 
-              <div className="mt-8 flex justify-end gap-3">
+              <div className="mt-8 flex items-center justify-end gap-3">
                 <button
                   onClick={() => setSelectedOrder(null)}
                   className="rounded-lg border px-5 py-2 hover:bg-gray-100"
@@ -291,18 +286,14 @@ function OrdersPage() {
                   Close
                 </button>
 
-                {/* Matches the row-level gating — only shown while pending */}
-                {selectedOrder.status === "pending" && (
-                  <button
-                    onClick={() => handleApprove(selectedOrder.id)}
-                    disabled={actioningId === selectedOrder.id}
-                    className="rounded-lg bg-green-600 px-5 py-2 text-white hover:bg-green-700 disabled:opacity-50"
-                  >
-                    {actioningId === selectedOrder.id
-                      ? "Approving..."
-                      : "Approve Order"}
-                  </button>
-                )}
+                <OrderStatusSelect
+                  currentStatus={selectedOrder.status}
+                  options={PROVIDER_STATUS_OPTIONS}
+                  disabled={actioningId === selectedOrder.id}
+                  onChange={(status) =>
+                    handleStatusChange(selectedOrder.id, status)
+                  }
+                />
               </div>
             </div>
           </div>

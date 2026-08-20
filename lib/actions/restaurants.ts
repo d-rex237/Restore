@@ -108,3 +108,19 @@ export async function getRestaurants() {
     throw new Error("Failed to fetch restaurants");
   }
 }
+
+export async function updateRestaurant(data: Partial<RestaurantInput>) {
+  try {
+    const restaurant = await requireOwnRestaurant();
+
+    return await prisma.restaurant.update({
+      where: { id: restaurant.id },
+      data,
+    });
+  } catch (error) {
+    console.error("Error updating restaurant:", error);
+    throw error instanceof Error
+      ? error
+      : new Error("Failed to update restaurant");
+  }
+}

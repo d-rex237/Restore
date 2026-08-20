@@ -314,6 +314,11 @@ export async function getCustomerOrders(
 // provider stage updates, driver pickup/delivery)
 // ============================================================
 
+// ============================================================
+// Shared mutation — status update (admin approve/reject,
+// provider stage updates, driver pickup/delivery)
+// ============================================================
+
 const VALID_STATUSES: OrderStatusValue[] = [
   "PENDING",
   "ACCEPTED",
@@ -325,6 +330,24 @@ const VALID_STATUSES: OrderStatusValue[] = [
   "CANCELLED",
 ];
 
+// Which statuses each role is allowed to *set* an order to.
+// Admin can set anything; provider handles the kitchen side of the
+// lifecycle; driver only confirms pickup/delivery on orders assigned
+// to them (READY_FOR_PICKUP -> OUT_FOR_DELIVERY normally happens via
+// claimDelivery, but it's allowed here too in case a driver needs to
+// re-set it, e.g. after an app retry).
+const ROLE_ALLOWED_STATUSES: Record<string, OrderStatusValue[]> = {
+  ADMIN: VALID_STATUSES,
+  PROVIDER: [
+    "ACCEPTED",
+    "PREPARING",
+    "READY_FOR_PICKUP",
+    "REJECTED",
+    "CANCELLED",
+  ],
+  DRIVER: ["OUT_FOR_DELIVERY", "DELIVERED"],
+};
+
 export async function updateOrderStatus(
   orderId: string,
   status: OrderStatusValue,
@@ -334,13 +357,37 @@ export async function updateOrderStatus(
       throw new Error("Invalid order status");
     }
 
+    const dbUser = await requireDbUser();
+
+    const order = await prisma.order.findUnique({ where: { id: orderId } });
+    if (!order) throw new Error("Order not found");
+
+    const allowed = ROLE_ALLOWED_STATUSES[dbUser.role];
+    if (!allowed || !allowed.includes(status)) {
+      throw new Error(`Not authorized to set status to ${status}`);
+    }
+
+    if (dbUser.role === "PROVIDER") {
+      const restaurant = await requireOwnRestaurant();
+      if (order.restaurantId !== restaurant.id) {
+        throw new Error("Not authorized to update this order");
+      }
+    } else if (dbUser.role === "DRIVER") {
+      if (order.driverId !== dbUser.id) {
+        throw new Error("Not authorized to update this order");
+      }
+    }
+    // ADMIN: no additional scoping needed.
+
     return await prisma.order.update({
       where: { id: orderId },
       data: { status },
     });
   } catch (error) {
     console.error("Error updating order status:", error);
-    throw new Error("Failed to update order status");
+    throw error instanceof Error
+      ? error
+      : new Error("Failed to update order status");
   }
 }
 

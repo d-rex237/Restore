@@ -1,6 +1,6 @@
 // app/api/driver/deliveries/[id]/route.ts
 import { NextResponse } from "next/server";
-import { auth } from "@clerk/nextjs";
+import { auth } from "@clerk/nextjs/server";
 import { prisma } from "@/lib/prisma/client";
 import { z } from "zod";
 
