@@ -11,13 +11,15 @@ import {
   Clock,
 } from "lucide-react";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 
 export default function RestaurantsPage() {
   const { data: restaurants = [], isLoading } = useGetAllRestaurants();
+  const router = useRouter();
 
   // Try to find "Restor" in the DB, otherwise use a fallback
   const found = restaurants.find(
-    (r: any) => r.name?.toLowerCase() === "restor"
+    (r: any) => r.name?.toLowerCase() === "restor",
   );
 
   // Fallback restaurant object (displayed as "Restore")
@@ -36,8 +38,13 @@ export default function RestaurantsPage() {
     return (
       <main className="min-h-screen bg-[var(--background)] text-[var(--foreground)]">
         <div className="flex min-h-[350px] flex-col items-center justify-center">
-          <Loader2 className="h-9 w-9 animate-spin text-orange-500" strokeWidth={2} />
-          <p className="mt-4 text-sm font-medium text-gray-500">Loading Restore...</p>
+          <Loader2
+            className="h-9 w-9 animate-spin text-orange-500"
+            strokeWidth={2}
+          />
+          <p className="mt-4 text-sm font-medium text-gray-500">
+            Loading Restore...
+          </p>
         </div>
       </main>
     );
@@ -63,7 +70,8 @@ export default function RestaurantsPage() {
             </h1>
 
             <p className="mt-6 max-w-2xl text-base leading-7 text-white/85 sm:text-lg">
-              Explore our menu and order your favorite Cameroonian dishes, prepared with fresh, local ingredients.
+              Explore our menu and order your favorite Cameroonian dishes,
+              prepared with fresh, local ingredients.
             </p>
           </div>
         </div>
@@ -71,8 +79,8 @@ export default function RestaurantsPage() {
 
       {/* ========== RESTAURANT CARD (clickable) ========== */}
       <div className="mx-auto max-w-4xl px-4 py-12 sm:px-6 lg:px-8">
-        <Link
-          href="/home/menu"  // ✅ Now goes directly to the menu page (no restaurant ID)
+        <div
+          onClick={() => router.push(`/home/restaurants/${restor.id}`)}
           className="group block overflow-hidden rounded-3xl border border-[var(--border)] bg-[var(--surface)] shadow-sm transition-all duration-300 hover:shadow-2xl hover:-translate-y-1 cursor-pointer"
         >
           {/* Cover */}
@@ -116,14 +124,18 @@ export default function RestaurantsPage() {
             <div className="absolute bottom-4 left-4 right-4">
               <div className="flex items-center gap-2 text-sm font-medium text-white">
                 <MapPin className="h-4 w-4 shrink-0" />
-                <span className="truncate">{restor.address || "Bamenda, Cameroon"}</span>
+                <span className="truncate">
+                  {restor.address || "Bamenda, Cameroon"}
+                </span>
               </div>
             </div>
           </div>
 
           {/* Details */}
           <div className="p-6">
-            <h2 className="text-2xl font-black tracking-tight">{restor.name}</h2>
+            <h2 className="text-2xl font-black tracking-tight">
+              {restor.name}
+            </h2>
             <div className="mt-3 flex flex-wrap items-center gap-3 text-sm font-medium text-gray-500">
               <span className="inline-flex items-center gap-1.5">
                 <Clock className="h-4 w-4 text-orange-500" />
@@ -141,22 +153,25 @@ export default function RestaurantsPage() {
 
             {/* Actions */}
             <div className="mt-6 grid grid-cols-2 gap-3">
-              {/* "View Menu" – now just a visual button, as the whole card is the link */}
               <span className="flex items-center justify-center gap-2 rounded-xl bg-orange-500 px-4 py-3 text-sm font-bold text-white shadow-sm transition-all duration-300 group-hover:bg-orange-600 group-hover:shadow-lg">
                 <Utensils className="h-4 w-4" />
                 View Menu
               </span>
-              <Link
-                href={`/home/restaurants/${restor.id}`}
+
+              <button
+                type="button"
+                onClick={(e) => {
+                  e.stopPropagation();
+                  router.push(`/home/restaurants/${restor.id}`);
+                }}
                 className="flex items-center justify-center gap-2 rounded-xl border border-[var(--border)] bg-[var(--background)] px-4 py-3 text-sm font-bold text-[var(--foreground)] transition-all duration-300 hover:border-orange-500 hover:bg-orange-500/10 hover:text-orange-500 active:scale-[0.98]"
-                onClick={(e) => e.stopPropagation()}
               >
                 <Info className="h-4 w-4" />
                 About
-              </Link>
+              </button>
             </div>
           </div>
-        </Link>
+        </div>
       </div>
     </main>
   );
