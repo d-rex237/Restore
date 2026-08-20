@@ -1,14 +1,14 @@
-'use client';
+"use client";
 
-import React, { useState } from 'react';
-import DriverLayout from '../components/driver/DriverLayout';
-import { 
-  Bell, 
-  Shield, 
-  Moon, 
-  Globe, 
-  Volume2, 
-  MapPin, 
+import React, { useState } from "react";
+import DriverLayout from "../components/driver/DriverLayout";
+import {
+  Bell,
+  Shield,
+  Moon,
+  Globe,
+  Volume2,
+  MapPin,
   CreditCard,
   Smartphone,
   Eye,
@@ -22,8 +22,8 @@ import {
   ChevronRight,
   DollarSign,
   Clock,
-  Truck
-} from 'lucide-react';
+  Truck,
+} from "lucide-react";
 
 export default function DriverSettingsPage() {
   const [settings, setSettings] = useState({
@@ -34,48 +34,45 @@ export default function DriverSettingsPage() {
     orderUpdates: true,
     paymentAlerts: true,
     marketingEmails: false,
-    
+
     // Privacy Settings
     showOnlineStatus: true,
     showEarnings: true,
     shareLocation: true,
-    
+
     // Appearance
     darkMode: false,
     compactView: false,
-    
+
     // Language
-    language: 'English',
-    
+    language: "English",
+
     // Delivery Preferences
-    maxDistance: '10',
-    preferredArea: 'All',
-    vehicleType: 'Car',
+    maxDistance: "10",
+    preferredArea: "All",
+    vehicleType: "Car",
     acceptAuto: false,
-    
+
     // Payment Settings
-    defaultTip: '10',
-    paymentMethod: 'Card',
-    
+    defaultTip: "10",
+    paymentMethod: "Card",
+
     // Account Settings
     twoFactorAuth: false,
-    sessionTimeout: '30',
+    sessionTimeout: "30",
   });
 
   const [isSaving, setIsSaving] = useState(false);
   const [saveSuccess, setSaveSuccess] = useState(false);
 
-  const handleToggle = (key: string) => {
-    setSettings(prev => ({
-      ...prev,
-      [key]: !prev[key]
-    }));
+  const handleToggle = (key: keyof typeof settings) => {
+    setSettings((prev) => ({ ...prev, [key]: !prev[key] }));
   };
 
   const handleChange = (key: string, value: string | boolean) => {
-    setSettings(prev => ({
+    setSettings((prev) => ({
       ...prev,
-      [key]: value
+      [key]: value,
     }));
   };
 
@@ -88,13 +85,13 @@ export default function DriverSettingsPage() {
     }, 1500);
   };
 
-  const SettingSection = ({ 
-    title, 
-    icon: Icon, 
-    children 
-  }: { 
-    title: string; 
-    icon: any; 
+  const SettingSection = ({
+    title,
+    icon: Icon,
+    children,
+  }: {
+    title: string;
+    icon: any;
     children: React.ReactNode;
   }) => (
     <div className="bg-white rounded-2xl shadow-sm border border-gray-100 p-6">
@@ -104,39 +101,35 @@ export default function DriverSettingsPage() {
         </div>
         <h2 className="text-lg font-bold text-gray-800">{title}</h2>
       </div>
-      <div className="space-y-4">
-        {children}
-      </div>
+      <div className="space-y-4">{children}</div>
     </div>
   );
 
-  const ToggleItem = ({ 
-    label, 
-    description, 
-    value, 
-    onChange 
-  }: { 
-    label: string; 
-    description?: string; 
-    value: boolean; 
+  const ToggleItem = ({
+    label,
+    description,
+    value,
+    onChange,
+  }: {
+    label: string;
+    description?: string;
+    value: boolean;
     onChange: () => void;
   }) => (
     <div className="flex items-center justify-between py-2">
       <div>
         <p className="text-sm font-medium text-gray-700">{label}</p>
-        {description && (
-          <p className="text-xs text-gray-500">{description}</p>
-        )}
+        {description && <p className="text-xs text-gray-500">{description}</p>}
       </div>
       <button
         onClick={onChange}
         className={`relative w-11 h-6 rounded-full transition-colors duration-200 ${
-          value ? 'bg-blue-600' : 'bg-gray-300'
+          value ? "bg-blue-600" : "bg-gray-300"
         }`}
       >
         <span
           className={`absolute top-0.5 left-0.5 w-5 h-5 bg-white rounded-full transition-transform duration-200 ${
-            value ? 'transform translate-x-5' : ''
+            value ? "transform translate-x-5" : ""
           }`}
         />
       </button>

@@ -4,18 +4,6 @@ export interface DietaryInfo {
   isGlutenFree?: boolean;
 }
 
-export interface MenuItem {
-  id: string;
-  name: string;
-  description: string;
-  price: number;
-  category: string;
-  preparationTime?: number;
-  ingredients: string[];
-  isPopular?: boolean;
-  dietaryInfo?: DietaryInfo;
-}
-
 // lib/types/orders.ts
 
 export type OrderStatusValue =
@@ -75,13 +63,6 @@ export type PaginatedOrders = {
   totalPages: number;
 };
 
-
-
-
-
-
-
-
 export interface MenuItem {
   id: string;
   restaurantId: string;
@@ -92,12 +73,6 @@ export interface MenuItem {
   category: string;
   preparationTime?: number;
   isPopular?: boolean;
-
   ingredients?: string[];
-
-  dietaryInfo?: {
-    isVegetarian?: boolean;
-    isVegan?: boolean;
-    isGlutenFree?: boolean;
-  };
+  dietaryInfo?: DietaryInfo;
 }
