@@ -51,7 +51,7 @@ const Sidebar: React.FC<SidebarProps> = ({ isOpen, setIsOpen }) => {
         {/* Header */}
         <div className="flex items-center justify-between p-6 border-b border-gray-200">
           <div className="flex items-center space-x-3">
-            <div className="w-10 h-10 bg-green-600 rounded-xl flex items-center justify-center">
+            <div className="w-10 h-10 bg-blue-600 rounded-xl flex items-center justify-center">
               <span className="text-white font-bold text-xl">R</span>
             </div>
             <h1 className="text-2xl font-bold text-gray-800">Restor</h1>
@@ -79,13 +79,15 @@ const Sidebar: React.FC<SidebarProps> = ({ isOpen, setIsOpen }) => {
                   href={item.href}
                   className={`
                     flex items-center space-x-3 px-4 py-3 rounded-xl transition-all duration-200
-                    ${isActive 
-                      ? 'bg-green-50 text-green-700 shadow-sm' 
-                      : 'text-gray-600 hover:bg-gray-100 hover:text-gray-900'
-                    }`
-                  }
+                    ${
+                      isActive
+                        ? "bg-green-50 text-green-700 shadow-sm"
+                        : "text-gray-600 hover:bg-gray-100 hover:text-gray-900"
+                    }`}
                 >
-                  <item.icon className={`w-5 h-5 ${isActive ? 'text-green-700' : 'text-gray-500'}`} />
+                  <item.icon
+                    className={`w-5 h-5 ${isActive ? "text-green-700" : "text-gray-500"}`}
+                  />
                   <span className="font-medium">{item.label}</span>
                 </Link>
               );
