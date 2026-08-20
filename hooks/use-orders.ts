@@ -3,12 +3,16 @@
 
 import {
   claimDelivery,
+  createOrder,
+  deleteOrder,
   getAdminOrders,
   getAvailableDeliveries,
   getCustomerOrders,
   getDriverOrders,
+  getOrderById,
   getProviderOrders,
   updateOrderStatus,
+  type CheckoutInput,
 } from "@/lib/actions/orders";
 import type { OrderFilters, OrderStatusValue } from "@/lib/types";
 import {
@@ -122,6 +126,40 @@ export function useUpdateOrderStatus() {
       orderId: string;
       status: OrderStatusValue;
     }) => updateOrderStatus(orderId, status),
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ALL_ORDERS_KEY });
+    },
+  });
+}
+
+// ============================================================
+// CHECKOUT
+// ============================================================
+
+export function useCreateOrder() {
+  const queryClient = useQueryClient();
+
+  return useMutation({
+    mutationFn: (input: CheckoutInput) => createOrder(input),
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ALL_ORDERS_KEY });
+    },
+  });
+}
+
+export function useGetOrder(orderId: string) {
+  return useQuery({
+    queryKey: ["orders", "single", orderId],
+    queryFn: () => getOrderById(orderId),
+    enabled: !!orderId,
+  });
+}
+
+export function useDeleteOrder() {
+  const queryClient = useQueryClient();
+
+  return useMutation({
+    mutationFn: (orderId: string) => deleteOrder(orderId),
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ALL_ORDERS_KEY });
     },
