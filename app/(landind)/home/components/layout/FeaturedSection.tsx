@@ -84,7 +84,7 @@ const chefSpecials = [
     name: "Poulet DG",
     price: 4500,
     rating: 5,
-    image: "/images/poulet.JFIF",
+    image: "/images/poulet.jfif",
     desc: "Spicy chicken stew with plantains and vegetables, a local favorite.",
   },
   {
