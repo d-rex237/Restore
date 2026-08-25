@@ -3,7 +3,12 @@
 import { useEffect } from "react";
 import { useRouter, usePathname } from "next/navigation";
 import { useCart } from "@/lib/cart-context";
-import { FaTrash, FaArrowRight, FaTimes, FaShoppingCart } from "react-icons/fa";
+import {
+  FaTrash,
+  FaArrowRight,
+  FaTimes,
+  FaShoppingCart,
+} from "react-icons/fa";
 
 export default function CartSidebar() {
   const router = useRouter();
@@ -12,7 +17,7 @@ export default function CartSidebar() {
   const {
     cart,
     removeFromCart,
-    updateQuantity,   // <-- ADD THIS
+    updateQuantity,
     getCartTotal,
     isCartOpen,
     toggleCart,
@@ -26,6 +31,7 @@ export default function CartSidebar() {
     if (isCartOpen) {
       toggleCart();
     }
+
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [pathname]);
 
@@ -48,7 +54,13 @@ export default function CartSidebar() {
     return null;
   }
 
-  const cartCount = cart.reduce((total, item) => total + item.quantity, 0);
+  /*
+   * Total number of products in cart.
+   */
+  const cartCount = cart.reduce(
+    (total, item) => total + item.quantity,
+    0
+  );
 
   return (
     <div className="fixed inset-0 z-[100] flex justify-end">
@@ -113,16 +125,21 @@ export default function CartSidebar() {
             </div>
 
             <div>
-              <h2 className="text-lg font-bold text-foreground">Your Cart</h2>
+              <h2 className="text-lg font-bold text-foreground">
+                Your Cart
+              </h2>
 
               <p className="text-xs text-foreground/55">
                 {cartCount === 0
                   ? "No items"
-                  : `${cartCount} ${cartCount === 1 ? "item" : "items"}`}
+                  : `${cartCount} ${
+                      cartCount === 1 ? "item" : "items"
+                    }`}
               </p>
             </div>
           </div>
 
+          {/* CLOSE BUTTON */}
           <button
             type="button"
             onClick={toggleCart}
@@ -152,6 +169,7 @@ export default function CartSidebar() {
         {/* CART CONTENT */}
         <div className="flex-1 overflow-y-auto px-6 py-5">
           {cart.length === 0 ? (
+            /* EMPTY CART */
             <div className="flex h-full flex-col items-center justify-center text-center">
               <div
                 className="
@@ -191,8 +209,8 @@ export default function CartSidebar() {
                   text-primary-foreground
                   transition-all
                   duration-200
-                  hover:bg-primary-hover
                   hover:-translate-y-0.5
+                  hover:bg-primary-hover
                   active:scale-[0.98]
                 "
               >
@@ -200,6 +218,7 @@ export default function CartSidebar() {
               </button>
             </div>
           ) : (
+            /* CART ITEMS */
             <div className="space-y-4">
               {cart.map((item) => (
                 <div
@@ -251,18 +270,25 @@ export default function CartSidebar() {
                     )}
                   </div>
 
-                  {/* PRODUCT DETAILS + QUANTITY CONTROLS */}
+                  {/* PRODUCT DETAILS */}
                   <div className="flex min-w-0 flex-1 items-center justify-between gap-3">
                     <div className="min-w-0">
+                      {/* PRODUCT NAME */}
                       <h4 className="truncate text-sm font-semibold text-foreground">
                         {item.name}
                       </h4>
 
-                      {/* ── NEW QUANTITY CONTROLS ── */}
-                      <div className="mt-1 flex items-center gap-2">
+                      {/* QUANTITY CONTROLS */}
+                      <div className="mt-2 flex items-center gap-2">
+                        {/* MINUS */}
                         <button
+                          type="button"
+                          aria-label={`Decrease quantity of ${item.name}`}
                           onClick={() =>
-                            updateQuantity(item.id, Math.max(1, item.quantity - 1))
+                            updateQuantity(
+                              item.id,
+                              Math.max(1, item.quantity - 1)
+                            )
                           }
                           className="
                             flex
@@ -279,18 +305,24 @@ export default function CartSidebar() {
                             hover:text-foreground
                             active:scale-95
                           "
-                          type="button"
                         >
                           −
                         </button>
 
+                        {/* QUANTITY */}
                         <span className="w-6 text-center text-sm font-semibold text-foreground">
                           {item.quantity}
                         </span>
 
+                        {/* PLUS */}
                         <button
+                          type="button"
+                          aria-label={`Increase quantity of ${item.name}`}
                           onClick={() =>
-                            updateQuantity(item.id, item.quantity + 1)
+                            updateQuantity(
+                              item.id,
+                              item.quantity + 1
+                            )
                           }
                           className="
                             flex
@@ -307,14 +339,23 @@ export default function CartSidebar() {
                             hover:text-foreground
                             active:scale-95
                           "
-                          type="button"
                         >
                           +
                         </button>
                       </div>
 
-                      <p className="mt-1 text-sm font-bold text-primary">
-                        {item.price.toLocaleString()} FCFA
+                      {/* ITEM TOTAL */}
+                      <p className="mt-2 text-sm font-bold text-primary">
+                        {(
+                          item.price * item.quantity
+                        ).toLocaleString()}{" "}
+                        FCFA
+                      </p>
+
+                      {/* UNIT PRICE */}
+                      <p className="text-xs text-foreground/45">
+                        {item.price.toLocaleString()} FCFA ×{" "}
+                        {item.quantity}
                       </p>
                     </div>
 
@@ -359,15 +400,20 @@ export default function CartSidebar() {
               py-5
             "
           >
+            {/* PRICE SUMMARY */}
             <div className="mb-5 space-y-2">
+              {/* SUBTOTAL */}
               <div className="flex items-center justify-between">
-                <span className="text-sm text-foreground/55">Subtotal</span>
+                <span className="text-sm text-foreground/55">
+                  Subtotal
+                </span>
 
                 <span className="text-sm font-semibold text-foreground">
                   {getCartTotal().toLocaleString()} FCFA
                 </span>
               </div>
 
+              {/* TOTAL */}
               <div className="flex items-center justify-between">
                 <span className="text-base font-bold text-foreground">
                   Total
@@ -379,6 +425,7 @@ export default function CartSidebar() {
               </div>
             </div>
 
+            {/* CHECKOUT */}
             <button
               type="button"
               onClick={handleCheckout}
@@ -408,6 +455,7 @@ export default function CartSidebar() {
               "
             >
               Proceed to Checkout
+
               <FaArrowRight
                 className="
                   h-3.5
@@ -419,6 +467,7 @@ export default function CartSidebar() {
               />
             </button>
 
+            {/* CLEAR CART */}
             <button
               type="button"
               onClick={clearCart}

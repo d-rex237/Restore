@@ -4,6 +4,7 @@ import Hero from "@/app/(landind)/home/components/layout/hero";
 import FeaturedSection from "@/app/(landind)/home/components/layout/FeaturedSection";
 import Footer from "@/app/(landind)/home/components/layout/Footer";
 import Navbar from "@/app/(landind)/home/components/layout/Navbar";
+import CartSidebar from "@/app/(landind)/home/components/layout/CartSidebar";
 
 export default async function Home() {
   const { sessionClaims } = await auth();
@@ -28,6 +29,8 @@ export default async function Home() {
       <Hero />
       <FeaturedSection />
       <Footer />
+       {/* CART SIDEBAR */}
+      <CartSidebar />
     </main>
   );
 }
