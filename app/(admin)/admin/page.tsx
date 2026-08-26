@@ -1,10 +1,7 @@
 "use client";
-import {
-  mockOrders,
-  mockRestaurants,
-  mockRoleRequests,
-  mockUsers,
-} from "@/lib/mock-data";
+import { useGetAdminOrders } from "@/hooks/use-orders";
+import { useGetAllRestaurants } from "@/hooks/use-restaurant";
+import { useGetAllUsers } from "@/hooks/use-users";
 import {
   Bell,
   Handshake,
@@ -14,19 +11,29 @@ import {
   User2Icon,
   Users,
 } from "lucide-react";
-import React, { useState } from "react";
+import { useState } from "react";
 
 function AdminPage() {
+  const { data: ordersData, isLoading } = useGetAdminOrders();
+  const orders = ordersData?.orders ?? [];
+
+  const { data: restaurants = [] } = useGetAllRestaurants();
+  const { data: users = [] } = useGetAllUsers();
   const ITEMS_PER_PAGE = 5;
 
   const [currentPage, setCurrentPage] = useState(1);
-  const totalPages = Math.ceil(mockUsers.length / ITEMS_PER_PAGE);
+  const totalPages = Math.max(1, Math.ceil(users.length / ITEMS_PER_PAGE));
 
-  const paginatedUsers = mockUsers.slice(
+  const paginatedUsers = users.slice(
     (currentPage - 1) * ITEMS_PER_PAGE,
     currentPage * ITEMS_PER_PAGE,
   );
-  const currentUser = mockUsers.find((u) => u.role === "admin");
+  const currentUser = users.find((u: any) => u.role === "ADMIN");
+
+  const activeOrdersCount = orders.filter(
+    (o: any) => !["delivered", "cancelled", "rejected"].includes(o.status),
+  ).length;
+
   return (
     <div>
       <div className="">
@@ -73,7 +80,7 @@ function AdminPage() {
             <div className="my-3 h-px bg-white/20" />
 
             <div className="flex items-end justify-between">
-              <p className="text-3xl font-bold">{mockUsers.length}</p>
+              <p className="text-3xl font-bold">{users.length}</p>
               <div className="text-right">
                 <p className="text-green-200 font-medium">+2.5%</p>
                 <p className="text-xs text-white/70">Last Month</p>
@@ -81,7 +88,7 @@ function AdminPage() {
             </div>
           </div>
 
-          {/* Brands */}
+          {/* Active Orders */}
           <div className="rounded-lg bg-blue-600 px-4 py-3 text-white shadow">
             <div className="flex items-center gap-2">
               <div className="rounded-full bg-white/20 p-2">
@@ -93,7 +100,9 @@ function AdminPage() {
             <div className="my-3 h-px bg-white/20" />
 
             <div className="flex items-end justify-between">
-              <p className="text-3xl font-bold">{mockOrders.length}</p>
+              <p className="text-3xl font-bold">
+                {isLoading ? "—" : activeOrdersCount}
+              </p>
               <div className="text-right">
                 <p className="text-green-200 font-medium">+1.0%</p>
                 <p className="text-xs text-white/70">Last Month</p>
@@ -101,7 +110,7 @@ function AdminPage() {
             </div>
           </div>
 
-          {/* Deals */}
+          {/* Providers */}
           <div className="rounded-lg bg-orange-500 px-4 py-3 text-white shadow">
             <div className="flex items-center gap-2">
               <div className="rounded-full bg-white/20 p-2">
@@ -113,7 +122,7 @@ function AdminPage() {
             <div className="my-3 h-px bg-white/20" />
 
             <div className="flex items-end justify-between">
-              <p className="text-3xl font-bold">{mockRestaurants.length}</p>
+              <p className="text-3xl font-bold">{restaurants.length}</p>
               <div className="text-right">
                 <p className="text-green-200 font-medium">+4.0%</p>
                 <p className="text-xs text-white/70">Last Month</p>
@@ -149,44 +158,48 @@ function AdminPage() {
               <h3 className="text-xl">Recent Transactions</h3>
             </div>
             <div className="my-3 h-px bg-black/20 " />
-            {mockOrders.slice(0, 3).map((order) => (
-              <div key={order.id}>
-                <div className="flex justify-between">
-                  <div className="">{order.customerName}</div>
-                  <div
-                    className={`flex items-center gap-2 rounded-full border px-3 py-1 text-xs
-              ${
-                order.status === "delivered"
-                  ? "border-green-500 text-green-700 bg-green-100"
-                  : order.status === "pending" ||
-                      order.status === "preparing" ||
-                      order.status === "accepted" ||
-                      order.status === "ready_for_pickup" ||
-                      order.status === "out_for_delivery"
-                    ? "border-orange-500 text-orange-700  bg-orange-100"
-                    : "border-red-500 text-red-700 bg-red-100"
-              }`}
-                  >
+            {orders.length === 0 ? (
+              <p className="py-4 text-sm text-gray-400">No orders yet.</p>
+            ) : (
+              orders.slice(0, 3).map((order: any) => (
+                <div key={order.id}>
+                  <div className="flex justify-between">
+                    <div className="">{order.customerName}</div>
                     <div
-                      className={`h-2 w-2 rounded-full
+                      className={`flex items-center gap-2 rounded-full border px-3 py-1 text-xs
                 ${
                   order.status === "delivered"
-                    ? "bg-green-500"
+                    ? "border-green-500 text-green-700 bg-green-100"
                     : order.status === "pending" ||
                         order.status === "preparing" ||
                         order.status === "accepted" ||
                         order.status === "ready_for_pickup" ||
                         order.status === "out_for_delivery"
-                      ? "bg-orange-500"
-                      : "bg-red-500"
+                      ? "border-orange-500 text-orange-700  bg-orange-100"
+                      : "border-red-500 text-red-700 bg-red-100"
                 }`}
-                    />
-                    <p className="text-xs">{order.status}</p>
+                    >
+                      <div
+                        className={`h-2 w-2 rounded-full
+                  ${
+                    order.status === "delivered"
+                      ? "bg-green-500"
+                      : order.status === "pending" ||
+                          order.status === "preparing" ||
+                          order.status === "accepted" ||
+                          order.status === "ready_for_pickup" ||
+                          order.status === "out_for_delivery"
+                        ? "bg-orange-500"
+                        : "bg-red-500"
+                  }`}
+                      />
+                      <p className="text-xs">{order.status}</p>
+                    </div>
                   </div>
+                  <div className="my-3 h-px bg-green-700/20 " />
                 </div>
-                <div className="my-3 h-px bg-green-700/20 " />
-              </div>
-            ))}
+              ))
+            )}
           </div>
           {/* Recent Users */}
           <div className="rounded-lg bg-[#f5f5f5] px-6 py-5">
@@ -194,17 +207,17 @@ function AdminPage() {
 
             <div className="my-4 h-px bg-black/10" />
 
-            {mockUsers.slice(0, 3).map((user) => (
+            {users.slice(0, 3).map((user: any) => (
               <div key={user.id}>
                 <div className="flex items-center justify-between py-2">
                   <p>{user.name}</p>
 
                   <div
                     className={`flex items-center gap-2 rounded-full border px-3 py-1 text-xs
-                 ${user.role == "customer" ? "bg-green-100 text-green-700 border-green-500 " : user.role == "driver" ? "bg-blue-100  text-blue-700 border-blue-500" : user.role == "provider" ? " bg-orange-300  text-orange-700 border-orange-500" : "bg-orange-500"}`}
+                 ${user.role == "CUSTOMER" ? "bg-green-100 text-green-700 border-green-500 " : user.role == "DRIVER" ? "bg-blue-100  text-blue-700 border-blue-500" : user.role == "PROVIDER" ? " bg-orange-300  text-orange-700 border-orange-500" : "bg-orange-500"}`}
                   >
                     <div
-                      className={`h-2 w-2 rounded-full ${user.role == "customer" ? "bg-green-500" : user.role == "driver" ? "bg-blue-500" : user.role == "provider" ? " bg-orange-300" : "bg-red-500"}`}
+                      className={`h-2 w-2 rounded-full ${user.role == "CUSTOMER" ? "bg-green-500" : user.role == "DRIVER" ? "bg-blue-500" : user.role == "PROVIDER" ? " bg-orange-300" : "bg-red-500"}`}
                     />
                     {user.role}
                   </div>
@@ -221,7 +234,7 @@ function AdminPage() {
 
             <div className="my-4 h-px bg-black/10" />
 
-            {mockRestaurants.slice(0, 3).map((restaurant) => (
+            {restaurants.slice(0, 3).map((restaurant: any) => (
               <div key={restaurant.id}>
                 <div className="flex items-center justify-between py-2">
                   <p>{restaurant.name}</p>
@@ -248,21 +261,23 @@ function AdminPage() {
           </div>
         </section>
 
-        {/* New Users */}
-        <section className="mt-8 overflow-hidden rounded-xl border border-gray-200 bg-green-100 shadow-sm">
+        {/* All Users */}
+        <section className="mt-8 overflow-hidden rounded-xl border border-gray-200 bg-white shadow-sm">
           <div className="flex items-center justify-between border-b px-6 py-4">
             <div>
-              <h2 className="text-lg font-semibold text-gray-900">New Users</h2>
-              <p className="text-sm text-gray-500">Recently registered users</p>
+              <h2 className="text-lg font-semibold text-gray-900">All Users</h2>
+              <p className="text-sm text-gray-500">
+                Everyone registered on the platform
+              </p>
             </div>
 
             <span className="rounded-full bg-blue-100 px-3 py-1 text-sm font-medium text-blue-700">
-              {mockUsers.length} Users
+              {users.length} Users
             </span>
           </div>
 
           <table className="w-full">
-            <thead className="bg-green-200">
+            <thead className="bg-gray-50">
               <tr className="text-left text-sm font-semibold uppercase tracking-wide text-gray-500">
                 <th className="px-6 py-4">User</th>
                 <th className="px-6 py-4">Email</th>
@@ -272,8 +287,8 @@ function AdminPage() {
             </thead>
 
             <tbody className="divide-y divide-gray-100">
-              {paginatedUsers.map((user) => (
-                <tr key={user.id} className="bg-white hover:bg-green-100">
+              {paginatedUsers.map((user: any) => (
+                <tr key={user.id} className="bg-white hover:bg-gray-50">
                   {/* User */}
                   <td className="px-6 py-4">
                     <div className="flex items-center gap-3">
@@ -283,7 +298,9 @@ function AdminPage() {
 
                       <div>
                         <p className="font-medium text-gray-900">{user.name}</p>
-                        <p className="text-xs text-gray-500">ID: {user.id}</p>
+                        <p className="text-xs text-gray-500">
+                          ID: {user.id.slice(0, 8)}
+                        </p>
                       </div>
                     </div>
                   </td>
@@ -296,11 +313,11 @@ function AdminPage() {
                     <span
                       className={`inline-flex items-center gap-2 rounded-full border px-3 py-1 text-xs font-medium capitalize
                 ${
-                  user.role === "customer"
+                  user.role === "CUSTOMER"
                     ? "border-green-500 bg-green-50 text-green-700"
-                    : user.role === "driver"
+                    : user.role === "DRIVER"
                       ? "border-blue-500 bg-blue-50 text-blue-700"
-                      : user.role === "provider"
+                      : user.role === "PROVIDER"
                         ? "border-orange-500 bg-orange-50 text-orange-700"
                         : "border-purple-500 bg-purple-50 text-purple-700"
                 }`}
@@ -308,11 +325,11 @@ function AdminPage() {
                       <span
                         className={`h-2 w-2 rounded-full
                   ${
-                    user.role === "customer"
+                    user.role === "CUSTOMER"
                       ? "bg-green-500"
-                      : user.role === "driver"
+                      : user.role === "DRIVER"
                         ? "bg-blue-500"
-                        : user.role === "provider"
+                        : user.role === "PROVIDER"
                           ? "bg-orange-500"
                           : "bg-purple-500"
                   }`}
@@ -323,7 +340,7 @@ function AdminPage() {
 
                   {/* Date */}
                   <td className="px-6 py-4 text-gray-600">
-                    {new Date(user.joinedAt).toLocaleDateString()}
+                    {new Date(user.createdAt).toLocaleDateString()}
                   </td>
                 </tr>
               ))}
@@ -331,9 +348,10 @@ function AdminPage() {
           </table>
           <div className="flex items-center justify-between border-t bg-white px-6 py-4">
             <p className="text-sm text-gray-500">
-              Showing {(currentPage - 1) * ITEMS_PER_PAGE + 1}–
-              {Math.min(currentPage * ITEMS_PER_PAGE, mockUsers.length)} of{" "}
-              {mockUsers.length} users
+              Showing{" "}
+              {users.length === 0 ? 0 : (currentPage - 1) * ITEMS_PER_PAGE + 1}–
+              {Math.min(currentPage * ITEMS_PER_PAGE, users.length)} of{" "}
+              {users.length} users
             </p>
 
             <div className="flex items-center gap-2">

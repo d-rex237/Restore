@@ -3,6 +3,10 @@
 import { currentUser, clerkClient } from "@clerk/nextjs/server";
 import { prisma } from "../prisma";
 
+// ============================================================
+// SYNC — Clerk → DB on sign-in
+// ============================================================
+
 export async function syncUser() {
   try {
     const user = await currentUser();
@@ -33,9 +37,6 @@ export async function syncUser() {
       },
     });
 
-    // New user defaults to CUSTOMER in the DB (schema default) —
-    // mirror that into Clerk's publicMetadata so sessionClaims.metadata.role
-    // and user.publicMetadata.role are populated immediately.
     const client = await clerkClient();
     await client.users.updateUserMetadata(user.id, {
       publicMetadata: { role: dbUser.role },
@@ -45,5 +46,55 @@ export async function syncUser() {
   } catch (error) {
     console.error("Error syncing user:", error);
     return null;
+  }
+}
+
+// ============================================================
+// ADMIN — user management
+// ============================================================
+
+async function requireAdmin() {
+  const user = await currentUser();
+  if (!user) throw new Error("Not signed in");
+
+  const dbUser = await prisma.user.findUnique({ where: { clerkId: user.id } });
+  if (!dbUser) throw new Error("User not found in database");
+  if (dbUser.role !== "ADMIN") throw new Error("Not authorized");
+
+  return dbUser;
+}
+
+export async function getAllUsers() {
+  try {
+    await requireAdmin();
+
+    return await prisma.user.findMany({
+      orderBy: { createdAt: "desc" },
+    });
+  } catch (error) {
+    console.error("Error fetching users:", error);
+    throw new Error("Failed to fetch users");
+  }
+}
+
+export async function getUserById(userId: string) {
+  try {
+    await requireAdmin();
+
+    const user = await prisma.user.findUnique({
+      where: { id: userId },
+      include: {
+        customerProfile: true,
+        providerProfile: true,
+        driverProfile: true,
+        restaurants: true,
+      },
+    });
+    if (!user) throw new Error("User not found");
+
+    return user;
+  } catch (error) {
+    console.error("Error fetching user:", error);
+    throw error instanceof Error ? error : new Error("Failed to fetch user");
   }
 }

@@ -1,4 +1,5 @@
 "use client";
+import { useGetAllUsers } from "@/hooks/use-users";
 import {
   mockOrders,
   mockRestaurants,
@@ -18,16 +19,17 @@ import {
 import { useState } from "react";
 
 function AdminUSer() {
+  const { data: users = [], isLoading } = useGetAllUsers();
   const ITEMS_PER_PAGE = 5;
 
   const [currentPage, setCurrentPage] = useState(1);
-  const totalPages = Math.ceil(mockUsers.length / ITEMS_PER_PAGE);
+  const totalPages = Math.ceil(users.length / ITEMS_PER_PAGE);
 
-  const paginatedUsers = mockUsers.slice(
+  const paginatedUsers = users.slice(
     (currentPage - 1) * ITEMS_PER_PAGE,
     currentPage * ITEMS_PER_PAGE,
   );
-  const currentUser = mockUsers.find((u) => u.role === "admin");
+  const currentUser = users.find((u) => u.role === "ADMIN");
   return (
     <div>
       <header className=" bg-[#f5f5f5] border-b border-border px-8 py-4 rounded-full">
@@ -107,11 +109,11 @@ function AdminUSer() {
                   <span
                     className={`inline-flex items-center gap-2 rounded-full border px-3 py-1 text-xs font-medium capitalize
                         ${
-                          user.role === "customer"
+                          user.role === "CUSTOMER"
                             ? "border-green-500 bg-green-50 text-green-700"
-                            : user.role === "driver"
+                            : user.role === "DRIVER"
                               ? "border-blue-500 bg-blue-50 text-blue-700"
-                              : user.role === "provider"
+                              : user.role === "PROVIDER"
                                 ? "border-orange-500 bg-orange-50 text-orange-700"
                                 : "border-purple-500 bg-purple-50 text-purple-700"
                         }`}
@@ -119,11 +121,11 @@ function AdminUSer() {
                     <span
                       className={`h-2 w-2 rounded-full
                           ${
-                            user.role === "customer"
+                            user.role === "CUSTOMER"
                               ? "bg-green-500"
-                              : user.role === "driver"
+                              : user.role === "DRIVER"
                                 ? "bg-blue-500"
-                                : user.role === "provider"
+                                : user.role === "PROVIDER"
                                   ? "bg-orange-500"
                                   : "bg-purple-500"
                           }`}
@@ -134,7 +136,7 @@ function AdminUSer() {
 
                 {/* Date */}
                 <td className="px-6 py-4 text-gray-600">
-                  {new Date(user.joinedAt).toLocaleDateString()}
+                  {new Date(user.createdAt).toLocaleDateString()}
                 </td>
               </tr>
             ))}

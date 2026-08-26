@@ -1,10 +1,10 @@
-'use client';
+"use client";
 
-import React from 'react';
-import Link from 'next/link';
-import { usePathname } from 'next/navigation';
+import React from "react";
+import Link from "next/link";
+import { usePathname } from "next/navigation";
 import { useRouter } from "next/navigation";
-import { 
+import {
   LayoutDashboard,
   Truck,
   History,
@@ -15,10 +15,10 @@ import {
   X,
   Package,
   CheckCircle,
-  Clock
-} from 'lucide-react';
-import { GrCurrency } from 'react-icons/gr';
-import { SignOutButton } from '@clerk/nextjs';
+  Clock,
+} from "lucide-react";
+import { GrCurrency } from "react-icons/gr";
+import { SignOutButton } from "@clerk/nextjs";
 
 interface DriverSidebarProps {
   isOpen: boolean;
@@ -29,38 +29,41 @@ const DriverSidebar: React.FC<DriverSidebarProps> = ({ isOpen, setIsOpen }) => {
   const pathname = usePathname();
   const router = useRouter();
 
-  const handleLogout = () =>{
-    localStorage.removeItem('token');
-        localStorage.removeItem('driver');
-        router.push('/');
-        setIsOpen(false);
-
-  }
+  const handleLogout = () => {
+    localStorage.removeItem("token");
+    localStorage.removeItem("driver");
+    router.push("/");
+    setIsOpen(false);
+  };
 
   const menuItems = [
-    { icon: LayoutDashboard, label: 'Dashboard', href: '/driver' },
-    { icon: Package, label: 'Available Deliveries', href: '/driver/deliveries' },
-    { icon: Truck, label: 'Active Deliveries', href: '/driver/active' },
-    { icon: History, label: 'Delivery History', href: '/driver/history' },
-    { icon: GrCurrency, label: 'Earnings', href: '/driver/earnings' },
-    { icon: User, label: 'Profile', href: '/driver/profile' },
-    { icon: Settings, label: 'Settings', href: '/driver/settings' },
+    { icon: LayoutDashboard, label: "Dashboard", href: "/driver" },
+    {
+      icon: Package,
+      label: "Available Deliveries",
+      href: "/driver/deliveries",
+    },
+    { icon: Truck, label: "Active Deliveries", href: "/driver/active" },
+    { icon: History, label: "Delivery History", href: "/driver/history" },
+    { icon: GrCurrency, label: "Earnings", href: "/driver/earnings" },
+    { icon: User, label: "Profile", href: "/driver/profile" },
+    { icon: Settings, label: "Settings", href: "/driver/settings" },
   ];
 
   return (
     <>
       {isOpen && (
-        <div 
+        <div
           className="fixed inset-0 z-30 bg-black bg-opacity-50 lg:hidden"
           onClick={() => setIsOpen(false)}
         />
       )}
 
-      <aside 
+      <aside
         className={`
           fixed lg:static inset-y-0 left-0 z-40
           w-72 bg-white shadow-lg transform transition-transform duration-300 ease-in-out
-          ${isOpen ? 'translate-x-0' : '-translate-x-full lg:translate-x-0'}
+          ${isOpen ? "translate-x-0" : "-translate-x-full lg:translate-x-0"}
           flex flex-col
         `}
       >
@@ -74,7 +77,7 @@ const DriverSidebar: React.FC<DriverSidebarProps> = ({ isOpen, setIsOpen }) => {
               <p className="text-xs text-blue-600 font-medium">Driver Portal</p>
             </div>
           </div>
-          <button 
+          <button
             onClick={() => setIsOpen(false)}
             className="lg:hidden p-2 rounded-lg hover:bg-gray-100"
           >
@@ -91,13 +94,15 @@ const DriverSidebar: React.FC<DriverSidebarProps> = ({ isOpen, setIsOpen }) => {
                 href={item.href}
                 className={`
                   flex items-center space-x-3 px-4 py-3 rounded-xl transition-all duration-200
-                  ${isActive 
-                    ? 'bg-blue-50 text-blue-700 shadow-sm' 
-                    : 'text-gray-600 hover:bg-gray-100 hover:text-gray-900'
-                  }`
-                }
+                  ${
+                    isActive
+                      ? "bg-blue-50 text-blue-700 shadow-sm"
+                      : "text-gray-600 hover:bg-gray-100 hover:text-gray-900"
+                  }`}
               >
-                <item.icon className={`w-5 h-5 ${isActive ? 'text-blue-700' : 'text-gray-500'}`} />
+                <item.icon
+                  className={`w-5 h-5 ${isActive ? "text-blue-700" : "text-gray-500"}`}
+                />
                 <span className="font-medium">{item.label}</span>
               </Link>
             );
@@ -111,23 +116,28 @@ const DriverSidebar: React.FC<DriverSidebarProps> = ({ isOpen, setIsOpen }) => {
                 <p className="text-xs text-blue-600 font-medium">Status</p>
                 <div className="flex items-center mt-1">
                   <span className="w-2 h-2 bg-green-500 rounded-full animate-pulse mr-2"></span>
-                  <span className="text-sm font-semibold text-green-700">Online</span>
+                  <span className="text-sm font-semibold text-green-700">
+                    Online
+                  </span>
                 </div>
               </div>
               <button className="px-3 py-1 bg-red-500 hover:bg-red-600 text-white text-xs rounded-lg font-medium transition-colors">
-                  Go Offline
+                Go Offline
               </button>
             </div>
           </div>
-          
+
           <button
             onClick={handleLogout}
-            className="flex items-center space-x-3 px-4 py-3 w-full rounded-xl text-gray-600 hover:bg-red-50 hover:text-red-700 transition-all duration-200">
+            className="flex items-center space-x-3 px-4 py-3 w-full rounded-xl text-gray-600 hover:bg-red-50 hover:text-red-700 transition-all duration-200"
+          >
             <LogOut className="w-5 h-5" />
-            <span className="font-medium">Logout</span>
+            <span className="font-medium">
+              <SignOutButton />
+            </span>
           </button>
-          <SignOutButton/>
-          
+          <SignOutButton />
+
           <div className="mt-3 px-4 py-2 bg-gray-50 rounded-xl">
             <p className="text-xs text-gray-500">Logged in as Driver</p>
             <p className="text-sm font-medium text-gray-700">John Driver</p>
