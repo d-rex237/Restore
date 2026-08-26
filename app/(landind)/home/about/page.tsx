@@ -54,7 +54,7 @@ const TEAM = [
   {
     name: "Brandon Mane",
     role: "Frontend & UI",
-    image: "/images/brandon.jpeg",
+    image: "/images/brandon.jpg",
   },
   {
     name: "D-ReX",

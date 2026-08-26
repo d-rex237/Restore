@@ -99,6 +99,7 @@ export default function Navbar() {
         {/* =====================================================
             LOGO
         ====================================================== */}
+
         <Link
           href="/"
           onClick={closeMenu}
@@ -114,6 +115,7 @@ export default function Navbar() {
         {/* =====================================================
             DESKTOP NAVIGATION
         ====================================================== */}
+
         <nav className="hidden items-center gap-1 lg:flex">
           <NavLink
             href="/"
@@ -121,11 +123,11 @@ export default function Navbar() {
             active={isActive("/")}
           />
 
-         <NavLink
-  href="/home/restaurants"
-  label="Restaurants"
-  active={isActive("/home/restaurants")}
-/>
+          <NavLink
+            href="/home/restaurants"
+            label="Restaurants"
+            active={isActive("/home/restaurants")}
+          />
 
           <NavLink
             href="/home/about"
@@ -149,6 +151,7 @@ export default function Navbar() {
               DRIVER
               Only visible when signed in
           ================================================== */}
+
           <Show when="signed-in">
             <NavLink
               href="/home/driver"
@@ -161,26 +164,38 @@ export default function Navbar() {
         {/* =====================================================
             RIGHT CONTROLS
         ====================================================== */}
+
         <div className="flex items-center gap-2">
 
-          {/* CART */}
+          {/* =================================================
+              DESKTOP CART
+          ================================================== */}
+
           <button
             type="button"
             onClick={toggleCart}
             aria-label="Open shopping cart"
             className="
-              group relative hidden h-10 w-10
-              items-center justify-center
-              rounded-xl border border-border
+              group
+              relative
+              hidden
+              h-10
+              w-10
+              items-center
+              justify-center
+              rounded-xl
+              border
+              border-border
               bg-background/50
               text-foreground/70
-              transition-all duration-300
+              transition-all
+              duration-300
               hover:-translate-y-0.5
               hover:border-primary
               hover:bg-primary/10
               hover:text-primary
               active:scale-95
-              sm:flex
+              lg:flex
             "
           >
             <FaShoppingCart className="h-4 w-4 transition-transform duration-300 group-hover:scale-110" />
@@ -188,16 +203,22 @@ export default function Navbar() {
             {cartCount > 0 && (
               <span
                 className="
-                  absolute -right-1.5 -top-1.5
-                  flex h-5 min-w-5
-                  items-center justify-center
+                  absolute
+                  -right-1.5
+                  -top-1.5
+                  flex
+                  h-5
+                  min-w-5
+                  items-center
+                  justify-center
                   rounded-full
                   bg-primary
                   px-1
                   text-[10px]
                   font-bold
                   text-primary-foreground
-                  ring-2 ring-background
+                  ring-2
+                  ring-background
                 "
               >
                 {cartCount > 99 ? "99+" : cartCount}
@@ -205,18 +226,28 @@ export default function Navbar() {
             )}
           </button>
 
-          {/* SEARCH */}
+          {/* =================================================
+              SEARCH
+          ================================================== */}
+
           <button
             type="button"
             onClick={scrollToHeroSearch}
             aria-label="Search"
             className="
-              group hidden h-10 w-10
-              items-center justify-center
-              rounded-xl border border-border
+              group
+              hidden
+              h-10
+              w-10
+              items-center
+              justify-center
+              rounded-xl
+              border
+              border-border
               bg-background/50
               text-foreground/70
-              transition-all duration-300
+              transition-all
+              duration-300
               hover:-translate-y-0.5
               hover:border-primary
               hover:bg-primary/10
@@ -228,7 +259,10 @@ export default function Navbar() {
             <FaSearch className="h-4 w-4 transition-transform duration-300 group-hover:scale-110" />
           </button>
 
-          {/* THEME */}
+          {/* =================================================
+              THEME
+          ================================================== */}
+
           <button
             type="button"
             onClick={toggleTheme}
@@ -238,12 +272,19 @@ export default function Navbar() {
                 : "Switch to dark mode"
             }
             className="
-              group flex h-10 w-10
-              items-center justify-center
-              rounded-xl border border-border
+              group
+              flex
+              h-10
+              w-10
+              items-center
+              justify-center
+              rounded-xl
+              border
+              border-border
               bg-background/50
               text-foreground/70
-              transition-all duration-300
+              transition-all
+              duration-300
               hover:-translate-y-0.5
               hover:border-primary
               hover:bg-primary/10
@@ -259,17 +300,101 @@ export default function Navbar() {
           </button>
 
           {/* =================================================
+              MOBILE CART
+              
+              This is the NEW cart button.
+              
+              Visible only on mobile/tablet.
+              
+              Layout:
+              Theme → Cart → Hamburger
+          ================================================== */}
+
+          <button
+            type="button"
+            onClick={() => {
+              toggleCart();
+              closeMenu();
+            }}
+            aria-label="Open shopping cart"
+            className="
+              group
+              relative
+              flex
+              h-10
+              w-10
+              items-center
+              justify-center
+              rounded-xl
+              border
+              border-border
+              bg-background/50
+              text-foreground/70
+              transition-all
+              duration-300
+              hover:-translate-y-0.5
+              hover:border-primary
+              hover:bg-primary/10
+              hover:text-primary
+              active:scale-95
+              lg:hidden
+            "
+          >
+            <FaShoppingCart
+              className="
+                h-4
+                w-4
+                transition-transform
+                duration-300
+                group-hover:scale-110
+              "
+            />
+
+            {/* CART COUNT */}
+
+            {cartCount > 0 && (
+              <span
+                className="
+                  absolute
+                  -right-1.5
+                  -top-1.5
+                  flex
+                  h-5
+                  min-w-5
+                  items-center
+                  justify-center
+                  rounded-full
+                  bg-primary
+                  px-1
+                  text-[10px]
+                  font-bold
+                  text-primary-foreground
+                  ring-2
+                  ring-background
+                "
+              >
+                {cartCount > 99 ? "99+" : cartCount}
+              </span>
+            )}
+          </button>
+
+          {/* =================================================
               SIGNED OUT
           ================================================== */}
+
           <Show when="signed-out">
             <SignInButton mode="modal">
               <button
                 className="
-                  hidden sm:block
+                  hidden
+                  sm:block
                   rounded-lg
-                  border border-border
-                  px-5 py-2.5
-                  text-sm font-semibold
+                  border
+                  border-border
+                  px-5
+                  py-2.5
+                  text-sm
+                  font-semibold
                   text-foreground/80
                   transition
                   hover:border-primary
@@ -283,11 +408,14 @@ export default function Navbar() {
             <SignUpButton mode="modal">
               <button
                 className="
-                  hidden sm:block
+                  hidden
+                  sm:block
                   rounded-lg
                   bg-primary
-                  px-6 py-2.5
-                  text-sm font-semibold
+                  px-6
+                  py-2.5
+                  text-sm
+                  font-semibold
                   text-primary-foreground
                   transition
                   hover:bg-primary-hover
@@ -301,6 +429,7 @@ export default function Navbar() {
           {/* =================================================
               SIGNED IN
           ================================================== */}
+
           <Show when="signed-in">
             <div className="hidden items-center sm:flex">
               <ProfileAvatar />
@@ -310,6 +439,7 @@ export default function Navbar() {
           {/* =================================================
               MOBILE MENU TOGGLE
           ================================================== */}
+
           <button
             type="button"
             onClick={() =>
@@ -318,12 +448,20 @@ export default function Navbar() {
             aria-label="Toggle navigation menu"
             aria-expanded={isMenuOpen}
             className="
-              group flex h-10 w-10
-              flex-col items-center justify-center
+              group
+              flex
+              h-10
+              w-10
+              flex-col
+              items-center
+              justify-center
               gap-1.5
-              rounded-xl border border-border
+              rounded-xl
+              border
+              border-border
               bg-background/50
-              transition-all duration-300
+              transition-all
+              duration-300
               hover:border-primary
               hover:bg-primary/10
               lg:hidden
@@ -359,11 +497,14 @@ export default function Navbar() {
       {/* =====================================================
           MOBILE MENU
       ====================================================== */}
+
       <div
         className={`
           overflow-hidden
-          border-t border-border/60
-          transition-all duration-300
+          border-t
+          border-border/60
+          transition-all
+          duration-300
           lg:hidden
           ${
             isMenuOpen
@@ -374,6 +515,8 @@ export default function Navbar() {
       >
         <nav className="bg-background/95 px-4 py-4 backdrop-blur-xl">
 
+          {/* HOME */}
+
           <MobileNavLink
             href="/"
             label="Home"
@@ -381,13 +524,16 @@ export default function Navbar() {
             onClick={closeMenu}
           />
 
-        
-  <MobileNavLink
-    href="/home/restaurants"
-    label="Restaurants"
-    active={isActive("/home/restaurants")}
-    onClick={closeMenu}
-  />
+          {/* RESTAURANTS */}
+
+          <MobileNavLink
+            href="/home/restaurants"
+            label="Restaurants"
+            active={isActive("/home/restaurants")}
+            onClick={closeMenu}
+          />
+
+          {/* ABOUT */}
 
           <MobileNavLink
             href="/home/about"
@@ -396,12 +542,16 @@ export default function Navbar() {
             onClick={closeMenu}
           />
 
+          {/* SERVICES */}
+
           <MobileNavLink
             href="/home/services"
             label="Services"
             active={isActive("/home/services")}
             onClick={closeMenu}
           />
+
+          {/* CONTACT */}
 
           <MobileNavLink
             href="/home/contact"
@@ -413,6 +563,7 @@ export default function Navbar() {
           {/* =================================================
               MOBILE DRIVER
           ================================================== */}
+
           <Show when="signed-in">
             <MobileNavLink
               href="/home/driver"
@@ -422,53 +573,35 @@ export default function Navbar() {
             />
           </Show>
 
-          {/* MOBILE ACTIONS */}
-          <div className="mt-3 grid grid-cols-2 gap-2 border-t border-border/60 pt-4">
+          {/* =================================================
+              MOBILE THEME ACTION
+              
+              Cart is intentionally NOT here anymore because
+              it is now directly visible in the navbar.
+          ================================================== */}
 
-            {/* CART */}
-            <button
-              type="button"
-              onClick={() => {
-                toggleCart();
-                closeMenu();
-              }}
-              className="
-                group flex items-center justify-center gap-2
-                rounded-xl border border-border
-                bg-background
-                px-4 py-3
-                text-sm font-semibold
-                text-foreground/75
-                transition-all duration-300
-                hover:border-primary
-                hover:bg-primary/10
-                hover:text-primary
-                active:scale-95
-              "
-            >
-              <FaShoppingCart className="transition-transform group-hover:scale-110" />
-
-              <span>Cart</span>
-
-              {cartCount > 0 && (
-                <span className="rounded-full bg-primary px-1.5 py-0.5 text-[10px] font-bold text-primary-foreground">
-                  {cartCount > 99 ? "99+" : cartCount}
-                </span>
-              )}
-            </button>
-
-            {/* THEME */}
+          <div className="mt-3 border-t border-border/60 pt-4">
             <button
               type="button"
               onClick={toggleTheme}
               className="
-                group flex items-center justify-center gap-2
-                rounded-xl border border-border
+                group
+                flex
+                w-full
+                items-center
+                justify-center
+                gap-2
+                rounded-xl
+                border
+                border-border
                 bg-background
-                px-4 py-3
-                text-sm font-semibold
+                px-4
+                py-3
+                text-sm
+                font-semibold
                 text-foreground/75
-                transition-all duration-300
+                transition-all
+                duration-300
                 hover:border-primary
                 hover:bg-primary/10
                 hover:text-primary
@@ -478,12 +611,12 @@ export default function Navbar() {
               {theme === "dark" ? (
                 <>
                   <FaSun className="transition-transform duration-500 group-hover:rotate-45" />
-                  Light
+                  Switch to Light Mode
                 </>
               ) : (
                 <>
                   <FaMoon className="transition-transform duration-500 group-hover:-rotate-12" />
-                  Dark
+                  Switch to Dark Mode
                 </>
               )}
             </button>
@@ -492,8 +625,8 @@ export default function Navbar() {
           {/* =================================================
               MOBILE AUTH
           ================================================== */}
-          <div className="mt-3">
 
+          <div className="mt-3">
             <Show when="signed-out">
               <div className="grid grid-cols-2 gap-2">
 
@@ -502,9 +635,12 @@ export default function Navbar() {
                     onClick={closeMenu}
                     className="
                       rounded-xl
-                      border border-border
-                      px-4 py-3.5
-                      text-sm font-bold
+                      border
+                      border-border
+                      px-4
+                      py-3.5
+                      text-sm
+                      font-bold
                       text-foreground/80
                       transition
                       hover:border-primary
@@ -521,8 +657,10 @@ export default function Navbar() {
                     className="
                       rounded-xl
                       bg-primary
-                      px-4 py-3.5
-                      text-sm font-bold
+                      px-4
+                      py-3.5
+                      text-sm
+                      font-bold
                       text-primary-foreground
                       transition
                       hover:bg-primary-hover
@@ -540,7 +678,6 @@ export default function Navbar() {
                 <ProfileAvatar />
               </div>
             </Show>
-
           </div>
         </nav>
       </div>
@@ -565,12 +702,17 @@ function NavLink({
     <Link
       href={href}
       className={`
-        group relative
-        flex items-center
+        group
+        relative
+        flex
+        items-center
         rounded-xl
-        px-4 py-2.5
-        text-sm font-semibold
-        transition-all duration-300
+        px-4
+        py-2.5
+        text-sm
+        font-semibold
+        transition-all
+        duration-300
         ${
           active
             ? "bg-primary/10 text-primary"
@@ -582,10 +724,15 @@ function NavLink({
 
       <span
         className={`
-          absolute bottom-1 left-1/2
-          h-0.5 -translate-x-1/2
-          rounded-full bg-primary
-          transition-all duration-300
+          absolute
+          bottom-1
+          left-1/2
+          h-0.5
+          -translate-x-1/2
+          rounded-full
+          bg-primary
+          transition-all
+          duration-300
           ${active ? "w-5" : "w-0 group-hover:w-5"}
         `}
       />
@@ -614,11 +761,15 @@ function MobileNavLink({
       onClick={onClick}
       className={`
         mb-1
-        flex items-center
+        flex
+        items-center
         rounded-xl
-        px-4 py-3.5
-        text-sm font-semibold
-        transition-all duration-300
+        px-4
+        py-3.5
+        text-sm
+        font-semibold
+        transition-all
+        duration-300
         ${
           active
             ? "bg-primary/10 text-primary"

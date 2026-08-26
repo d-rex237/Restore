@@ -66,72 +66,95 @@ export default function Footer() {
           </div>
 
           {/* Quick Links */}
-          <div>
-            <h3 className="mb-6 text-lg font-semibold text-white">
-              Quick Links
-            </h3>
+<div>
+  <h3 className="mb-6 text-lg font-semibold text-white">
+    Quick Links
+  </h3>
 
-            <ul className="space-y-3">
+  <ul className="space-y-3">
+    <li>
+      <Link
+        href="/"
+        className="transition-colors hover:text-orange-500"
+      >
+        Home
+      </Link>
+    </li>
 
-              <li>
-                <Link href="/" className="hover:text-orange-500">
-                  Home
-                </Link>
-              </li>
+    <li>
+      <Link
+        href="/home/restaurants"
+        className="transition-colors hover:text-orange-500"
+      >
+        Menu
+      </Link>
+    </li>
 
-              <li>
-                <Link href="/menu" className="hover:text-orange-500">Menu</Link>
-              </li>
+    <li>
+      <Link
+        href="/home/about"
+        className="transition-colors hover:text-orange-500"
+      >
+        About Us
+      </Link>
+    </li>
 
-              <li>
-                <Link href="/about" className="hover:text-orange-500">
-                  About Us
-                </Link>
-              </li>
+    <li>
+      <Link
+        href="/home/services"
+        className="transition-colors hover:text-orange-500"
+      >
+        Services
+      </Link>
+    </li>
 
-              <li>
-                <Link href="/contact" className="hover:text-orange-500">
-                  Contact
-                </Link>
-              </li>
+    <li>
+      <Link
+        href="/home/contact"
+        className="transition-colors hover:text-orange-500"
+      >
+        Contact
+      </Link>
+    </li>
+  </ul>
+</div>
+{/* Customer */}
+<div>
+  <h3 className="mb-6 text-lg font-semibold text-white">
+    Customer
+  </h3>
 
-            </ul>
-          </div>
+  <ul className="space-y-3">
+    <li>
+      <Link
+        href="/sign-in"
+        className="transition-colors hover:text-orange-500"
+      >
+        Login
+      </Link>
+    </li>
 
-          {/* Customer */}
-          <div>
-            <h3 className="mb-6 text-lg font-semibold text-white">
-              Customer
-            </h3>
+    <li>
+      <Link
+        href="/sign-up"
+        className="transition-colors hover:text-orange-500"
+      >
+        Create Account
+      </Link>
+    </li>
 
-            <ul className="space-y-3">
+   
 
-              <li>
-                <Link href="/sign-in" className="hover:text-orange-500">
-                  Login
-                </Link>
-              </li>
-
-              <li>
-                <Link href="/sign-up" className="hover:text-orange-500">
-                  Create Account
-                </Link>
-              </li>
-
-              <li>
-                <Link href="#" className="hover:text-orange-500">
-                  Track Order
-                </Link>
-              </li>
-
-              <li>
-                <Link href="#" className="hover:text-orange-500">
-                  Help Center
-                </Link>
-              </li>
-
-            </ul>
-          </div>
+    <li>
+      <Link
+        href="/home/contact"
+        className="transition-colors hover:text-orange-500"
+      >
+        Help Center
+      </Link>
+    </li>
+  </ul>
+</div>
 
           {/* Contact */}
           <div>

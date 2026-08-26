@@ -39,6 +39,23 @@ export async function getMenuItems() {
   }
 }
 
+// Get all available menu items from all restaurants
+export async function getAllAvailableMenuItems() {
+  try {
+    return await prisma.menuItem.findMany({
+      where: {
+        available: true,
+      },
+      orderBy: {
+        createdAt: "desc",
+      },
+    });
+  } catch (error) {
+    console.error("Error fetching all available menu items:", error);
+    throw new Error("Failed to fetch available menu items");
+  }
+}
+
 export async function getMenuByRestaurantId(restaurantId: string) {
   try {
     return await prisma.menuItem.findMany({

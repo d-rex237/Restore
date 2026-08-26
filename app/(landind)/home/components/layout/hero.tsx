@@ -54,7 +54,7 @@ export default function Hero() {
           playsInline
           className="w-full h-full object-cover scale-105"
         >
-          <source src="/videos/hero-burger.mp4" type="video/mp4" />
+          <source src="/videos/Hero-burger.mp4" type="video/mp4" />
         </video>
       </div>
 
